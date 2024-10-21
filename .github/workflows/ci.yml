@@ -69,4 +69,4 @@ jobs:
 
       # Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
-        run: npx angular-cli-ghpages --dir=dist/hospital-management
+        run: npx angular-cli-ghpages --dir=dist/hospital-management/browser
