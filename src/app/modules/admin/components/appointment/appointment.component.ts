@@ -1,12 +1,10 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core'
 
 @Component({
   selector: 'app-appointment',
   standalone: true,
   imports: [],
   templateUrl: './appointment.component.html',
-  styleUrl: './appointment.component.css'
+  styleUrl: './appointment.component.css',
 })
-export class AppointmentComponent {
-
-}
+export class AppointmentComponent {}

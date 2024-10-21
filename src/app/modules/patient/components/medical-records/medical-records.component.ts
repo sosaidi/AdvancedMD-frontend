@@ -1,12 +1,10 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core'
 
 @Component({
   selector: 'app-medical-records',
   standalone: true,
   imports: [],
   templateUrl: './medical-records.component.html',
-  styleUrl: './medical-records.component.css'
+  styleUrl: './medical-records.component.css',
 })
-export class MedicalRecordsComponent {
-
-}
+export class MedicalRecordsComponent {}

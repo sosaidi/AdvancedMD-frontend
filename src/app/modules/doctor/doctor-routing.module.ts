@@ -1,11 +1,11 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { AppointmentsComponent } from './components/appointments/appointments.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { DoctorsComponent } from './components/doctors/doctors.component';
-import { PatientsComponent } from './components/patients/patients.component';
-import { PaymentsComponent} from './components/payments/payments.component';
-import { SettingsComponent} from './components/settings/settings.component';
+import { NgModule } from '@angular/core'
+import { RouterModule, Routes } from '@angular/router'
+import { AppointmentsComponent } from './components/appointments/appointments.component'
+import { DashboardComponent } from './components/dashboard/dashboard.component'
+import { DoctorsComponent } from './components/doctors/doctors.component'
+import { PatientsComponent } from './components/patients/patients.component'
+import { PaymentsComponent } from './components/payments/payments.component'
+import { SettingsComponent } from './components/settings/settings.component'
 
 const routes: Routes = [
   { path: 'appointments', component: AppointmentsComponent },
@@ -14,10 +14,10 @@ const routes: Routes = [
   { path: 'patients', component: PatientsComponent },
   { path: 'payments', component: PaymentsComponent },
   { path: 'settings', component: SettingsComponent },
-];
+]
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class DoctorRoutingModule { }
+export class DoctorRoutingModule {}
