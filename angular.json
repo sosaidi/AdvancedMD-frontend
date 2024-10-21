@@ -45,14 +45,15 @@
                   "maximumError": "4kB"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "baseHref": "/AdvancedMD-frontend/"
             },
             "development": {
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
             }
-          },
+        },
           "defaultConfiguration": "production"
         },
         "serve": {
