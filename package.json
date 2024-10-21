@@ -2,11 +2,11 @@
   "name": "hospital-management",
   "version": "0.0.0",
   "scripts": {
-    "ng": "hospital-management/node_modules/.bin/ng",
-    "start": "hospital-management/node_modules/.bin/ng serve",
-    "build": "hospital-management/node_modules/.bin/ng build",
-    "watch": "hospital-management/node_modules/.bin/ng build --watch --configuration development",
-    "test": "hospital-management/node_modules/.bin/ng test"
+    "format": "prettier --write \"src/**/*.ts\"",
+    "lint": "ng lint",
+    "start": "ng serve",
+    "build": "ng build",
+    "test": "ng test"
   },
   "private": true,
   "dependencies": {
