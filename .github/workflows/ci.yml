@@ -29,7 +29,9 @@ jobs:
       - name: Cache node modules
         uses: actions/cache@v3
         with:
-          path: node_modules
+          path: |
+            ~/.npm
+            node_modules
           key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
@@ -41,6 +43,18 @@ jobs:
       # Lint the code for static analysis
       - name: Lint code
         run: npm run lint
+
+      # Check code formatting
+      - name: Check code formatting
+        run: npx prettier --check "src/**/*.ts"
+
+      # Auto-format code
+      - name: Format code
+        run: npx prettier --write "src/**/*.ts"
+
+      # Run security audit
+      - name: Run npm audit
+        run: npm audit --production --audit-level=moderate
 
       # Run unit tests using ChromeHeadless browser
       - name: Run unit tests
@@ -67,6 +81,10 @@ jobs:
           name: build
           path: dist/
 
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build  # This ensures the deploy job only runs if the build job is successful
+    steps:
       # Set git user
       - name: Set git user
         run: |
