@@ -67,6 +67,12 @@ jobs:
           name: build
           path: dist/
 
+      # Set git user
+      - name: Set git user
+        run: |
+          git config --global user.email "noreply@github.com"
+          git config --global user.name "GitHub Actions Bot"
+
       # Deploy to GitHub Pages
       - name: Install angular-cli-ghpages
         run: npm install -g angular-cli-ghpages
