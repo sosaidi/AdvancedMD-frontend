@@ -98,6 +98,14 @@ jobs:
           git config --global user.name "GitHub Actions Bot"
           git remote set-url origin https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/sosaidi/AdvancedMD-frontend.git
 
+      # Create the browser directory if missing
+      - name: Create browser directory if missing
+        run: mkdir -p dist/hospital-management/browser
+
+      # List the dist directory to check if files exist
+      - name: List dist directory
+        run: ls -R dist/hospital-management/
+
       # Deploy to GitHub Pages
       - name: Install angular-cli-ghpages
         run: npm install -g angular-cli-ghpages
