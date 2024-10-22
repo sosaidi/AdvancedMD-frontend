@@ -74,7 +74,14 @@ jobs:
           name: coverage
           path: coverage/
 
-      # Run SonarCloud Scan using Node.js-based scanner
+      # Set up JDK 17 (SonarCloud requires Java 17)
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+
+      # Run SonarCloud Scan using the official GitHub action
       - name: SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@v1
         with:
