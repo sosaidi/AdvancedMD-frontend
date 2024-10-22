@@ -7,7 +7,8 @@
     "start": "ng serve",
     "build": "ng build --configuration production",
     "test": "ng test",
-    "prettier": "prettier --write \"src/**/*.ts\""
+    "prettier": "prettier --write \"src/**/*.ts\"",
+    "sonar": "sonarqube-scanner"
   },
   "private": true,
   "dependencies": {
@@ -38,6 +39,7 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "prettier": "^3.3.3",
+    "sonarqube-scanner": "^4.2.5",
     "typescript": "~5.5.2",
     "typescript-eslint": "8.2.0"
   }
