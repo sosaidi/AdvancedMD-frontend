@@ -40,10 +40,6 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # Install dev dependencies
-      - name: Install dev dependencies
-        run: npm install --only=dev
-
       # Lint the code for static analysis
       - name: Lint code
         run: npm run lint
@@ -74,23 +70,17 @@ jobs:
           name: coverage
           path: coverage/
 
-      # Set up JDK 17 (SonarCloud requires Java 17)
-      - name: Set up JDK 17
-        uses: actions/setup-java@v3
-        with:
-          java-version: '17'
-          distribution: 'adopt'
+      # SonarCloud analysis using Node.js
+      - name: Install SonarQube Scanner
+        run: npm install sonarqube-scanner --save-dev
 
-      # Run SonarCloud Scan using the official GitHub action
-      - name: SonarCloud Scan
-        uses: sonarsource/sonarcloud-github-action@v1
-        with:
-          args: >
-            -Dsonar.projectKey=sosaidi_AdvancedMD-frontend
-            -Dsonar.organization=sosaidi
-            -Dsonar.sources=src
-            -Dsonar.exclusions=**/node_modules/**
-            -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
+      - name: Run SonarCloud Scan
+        run: npx sonarqube-scanner \
+          -Dsonar.projectKey=sosaidi_AdvancedMD-frontend \
+          -Dsonar.organization=sosaidi \
+          -Dsonar.sources=src \
+          -Dsonar.exclusions=**/node_modules/** \
+          -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
