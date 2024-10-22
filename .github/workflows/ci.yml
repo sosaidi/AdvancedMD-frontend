@@ -73,8 +73,9 @@ jobs:
       # SonarCloud analysis
       - name: Run SonarCloud Analysis
         uses: sonarsource/sonarcloud-github-action@v1
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
-          token: ${{ secrets.SONAR_TOKEN }}
           args: >
             -Dsonar.projectKey=sosaidi_AdvancedMD-frontend
             -Dsonar.organization=sosaidi
