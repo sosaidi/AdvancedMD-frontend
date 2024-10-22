@@ -77,9 +77,8 @@ jobs:
 
       - name: Run Lighthouse Performance Audit
         run: |
-          npm run start &
-          sleep 15  # Wait for the server to start properly
-          lighthouse http://localhost:4200 --output json --output-path ./lighthouse-report.json --emulated-form-factor=mobile
+          npm start &
+          lighthouse http://localhost:4200 --output json --output-path ./lighthouse-report.json --chrome-flags="--headless --no-sandbox"
         env:
           CI: true
 
@@ -89,7 +88,7 @@ jobs:
           name: lighthouse-report
           path: ./lighthouse-report.json
 
-      # Run Cypress E2E tests
+        # Run Cypress E2E tests
       - name: Run Cypress tests
         uses: cypress-io/github-action@v4
         with:
