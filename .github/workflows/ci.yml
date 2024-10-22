@@ -64,18 +64,36 @@ jobs:
       - name: Build Angular app
         run: npm run build -- --configuration production
 
-      # Start Angular server for Cypress
-      - name: Start Angular server
-        run: npm start &
+      # Archive build artifacts
+      - name: Archive build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: build
+          path: dist/
+
+      # Performance Test using Lighthouse
+      - name: Install Lighthouse CLI
+        run: npm install -g lighthouse
+
+      - name: Run Lighthouse Performance Audit
+        run: |
+          npm run start &
+          sleep 15  # Wait for the server to start properly
+          lighthouse http://localhost:4200 --output json --output-path ./lighthouse-report.json --emulated-form-factor=mobile
         env:
           CI: true
+
+      - name: Upload Lighthouse Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: lighthouse-report
+          path: ./lighthouse-report.json
 
       # Run Cypress E2E tests
       - name: Run Cypress tests
         uses: cypress-io/github-action@v4
         with:
           build: npm run build
-          start: npm start
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
 
