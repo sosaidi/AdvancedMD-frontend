@@ -8,7 +8,9 @@
     "build": "ng build --configuration production",
     "test": "ng test",
     "prettier": "prettier --write \"src/**/*.ts\"",
-    "sonar": "sonarqube-scanner"
+    "sonar": "sonarqube-scanner",
+    "cy:run": "cypress run",
+    "cy:open": "cypress open"
   },
   "private": true,
   "dependencies": {
@@ -30,6 +32,7 @@
     "@angular/compiler-cli": "^18.2.0",
     "@types/jasmine": "~5.1.0",
     "angular-eslint": "18.3.1",
+    "cypress": "^13.15.0",
     "eslint": "^9.9.1",
     "husky": "^9.1.6",
     "jasmine-core": "~5.2.0",

@@ -62,14 +62,22 @@ jobs:
 
       # Build the project for production
       - name: Build Angular app
-        run: npm run build -- --configuration production --base-href "https://sosaidi.github.io/AdvancedMD-frontend/"
+        run: npm run build -- --configuration production
 
-      # Archive build artifacts
-      - name: Archive build artifacts
-        uses: actions/upload-artifact@v3
+      # Start Angular server for Cypress
+      - name: Start Angular server
+        run: npm start &
+        env:
+          CI: true
+
+      # Run Cypress E2E tests
+      - name: Run Cypress tests
+        uses: cypress-io/github-action@v4
         with:
-          name: build
-          path: dist/
+          build: npm run build
+          start: npm start
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
 
   deploy:
     runs-on: ubuntu-latest
