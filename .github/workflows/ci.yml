@@ -81,6 +81,7 @@ jobs:
         uses: sonarsource/sonarcloud-github-action@v1
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          JAVA_HOME: ${{ steps.setup-java.outputs.java-home }}  # Ensure JAVA_HOME points to JDK 17
         with:
           args: >
             -Dsonar.projectKey=sosaidi_AdvancedMD-frontend
