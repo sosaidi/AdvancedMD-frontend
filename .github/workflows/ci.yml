@@ -71,6 +71,11 @@ jobs:
           path: coverage/
 
       # SonarCloud analysis
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+
       - name: Run SonarCloud Analysis
         uses: sonarsource/sonarcloud-github-action@v1
         env:
