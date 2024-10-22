@@ -75,9 +75,16 @@ jobs:
       - name: Install Lighthouse CLI
         run: npm install -g lighthouse
 
+      - name: Start Angular server
+        run: npm start &
+        env:
+          CI: true
+
+      - name: Wait for server to start
+        run: sleep 30
+
       - name: Run Lighthouse Performance Audit
         run: |
-          npm start &
           lighthouse http://localhost:4200 --output json --output-path ./lighthouse-report.json --chrome-flags="--headless --no-sandbox"
         env:
           CI: true
