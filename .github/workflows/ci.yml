@@ -70,7 +70,14 @@ jobs:
           name: coverage
           path: coverage/
 
-      # SonarCloud analysis
+      # Install JDK 17 for SonarCloud (required for SonarCloud to run)
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      # SonarCloud analysis (the key Sonar step)
       - name: Run SonarCloud Analysis
         uses: sonarsource/sonarcloud-github-action@v1
         env:
