@@ -1,0 +1,138 @@
+name: Angular CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - develop
+      - main
+  pull_request:
+    branches:
+      - develop
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      # Cache node modules to improve speed
+      - name: Cache node modules
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.npm
+            node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      # Install project dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # Lint the code for static analysis
+      - name: Lint code
+        run: npm run lint
+
+      # Check code formatting
+      - name: Check code formatting
+        run: npx prettier --check "src/**/*.ts"
+
+      # Auto-format code
+      - name: Format code
+        run: npx prettier --write "src/**/*.ts"
+
+      # Run security audit
+      - name: Run npm audit
+        run: npm audit --production --audit-level=moderate
+
+      # Run unit tests using ChromeHeadless browser
+      - name: Run unit tests
+        run: npm run test -- --watch=false --browsers=ChromeHeadless
+
+      # Build the project for production
+      - name: Build Angular app
+        run: npm run build -- --configuration production
+
+      # Archive build artifacts
+      - name: Archive build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: build
+          path: dist/
+
+      # Performance Test using Lighthouse
+      - name: Install Lighthouse CLI
+        run: npm install -g lighthouse
+
+      - name: Start Angular server
+        run: npm start &
+        env:
+          CI: true
+
+      - name: Wait for server to start
+        run: sleep 30
+
+      - name: Run Lighthouse Performance Audit
+        run: |
+          lighthouse http://localhost:4200 --output json --output-path ./lighthouse-report.json --chrome-flags="--headless --no-sandbox"
+        env:
+          CI: true
+
+      - name: Upload Lighthouse Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: lighthouse-report
+          path: ./lighthouse-report.json
+
+        # Run Cypress E2E tests
+      - name: Run Cypress tests
+        uses: cypress-io/github-action@v4
+        with:
+          build: npm run build
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build  # This ensures the deploy job only runs if the build job is successful
+    steps:
+      # Checkout the repository again
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: false  # Ensure credentials aren't persisted
+
+      # Set git user and remote repository
+      - name: Set git user and remote
+        run: |
+          git config --global user.email "noreply@github.com"
+          git config --global user.name "GitHub Actions Bot"
+          git remote set-url origin https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/sosaidi/AdvancedMD-frontend.git
+
+      # Create the browser directory if missing
+      - name: Create browser directory if missing
+        run: mkdir -p dist/hospital-management/browser
+
+      # List the dist directory to check if files exist
+      - name: List dist directory
+        run: ls -R dist/hospital-management/
+
+      # Deploy to GitHub Pages
+      - name: Install angular-cli-ghpages
+        run: npm install -g angular-cli-ghpages
+
+      - name: Deploy to GitHub Pages
+        run: npx angular-cli-ghpages --dir=dist/hospital-management/browser --no-silent
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
