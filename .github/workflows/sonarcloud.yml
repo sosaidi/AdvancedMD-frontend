@@ -1,0 +1,45 @@
+name: SonarCloud Analysis
+
+on:
+  push:
+    branches:
+      - develop
+      - main
+  pull_request:
+    branches:
+      - develop
+      - main
+
+jobs:
+  sonarcloud:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      # Install project dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # Run unit tests and generate test coverage
+      - name: Run unit tests with coverage
+        run: npm run test -- --watch=false --code-coverage --browsers=ChromeHeadless
+
+      # Run SonarCloud Scan
+      - name: Run SonarCloud Scan
+        run: npx sonarqube-scanner \
+          -Dsonar.projectKey=sosaidi_AdvancedMD-frontend \
+          -Dsonar.organization=sosaidi \
+          -Dsonar.sources=src \
+          -Dsonar.exclusions=**/node_modules/** \
+          -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
