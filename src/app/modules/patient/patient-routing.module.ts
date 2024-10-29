@@ -14,10 +14,11 @@ const routes: Routes = [
   { path: 'medicalrecords', component: MedicalRecordsComponent },
   { path: 'prescriptions', component: PrescriptionsComponent },
   { path: 'settings', component: SettingsComponent },
+  { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
 ]
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class DoctorRoutingModule {}
+export class PatientRoutingModule {}

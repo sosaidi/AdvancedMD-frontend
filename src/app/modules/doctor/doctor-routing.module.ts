@@ -14,6 +14,7 @@ const routes: Routes = [
   { path: 'patients', component: PatientsComponent },
   { path: 'payments', component: PaymentsComponent },
   { path: 'settings', component: SettingsComponent },
+  { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
 ]
 
 @NgModule({
