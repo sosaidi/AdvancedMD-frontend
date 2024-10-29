@@ -14,7 +14,7 @@ const routes: Routes = [
   { path: 'medicalrecords', component: MedicalRecordsComponent },
   { path: 'prescriptions', component: PrescriptionsComponent },
   { path: 'settings', component: SettingsComponent },
-  { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
+  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
 ]
 
 @NgModule({
