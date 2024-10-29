@@ -11,21 +11,21 @@ describe('AppComponent', () => {
   it('should create the app', () => {
     const fixture = TestBed.createComponent(AppComponent)
     const app = fixture.componentInstance
-    expect(app).toBeTruthy()
+    expect(app).to.be.true
   })
 
-  it(`should have the 'hospital-management' title`, () => {
+  it(`should have the title 'Advanced Medical Data'`, () => {
     const fixture = TestBed.createComponent(AppComponent)
     const app = fixture.componentInstance
-    expect(app.title).toEqual('hospital-management')
+    expect(app.title).to.equal('Advanced Medical Data')
   })
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent)
     fixture.detectChanges()
     const compiled = fixture.nativeElement as HTMLElement
-    expect(compiled.querySelector('h1')?.textContent).toContain(
-      'Hello, hospital-management'
+    expect(compiled.querySelector('h1')?.textContent).to.contain(
+      'Advanced Medical Data'
     )
   })
 })
