@@ -1,32 +1,122 @@
-label {
-  display: block;
-  margin-top: 10px;
+/* Global font family */
+* {
+  font-family: 'Roboto', sans-serif; /* Use the Google font or switch to your preferred one */
 }
 
-.card-container.card {
-  max-width: 400px !important;
-  padding: 40px 40px;
+/* Adjusting container for better alignment */
+.container {
+  max-width: 300px; /* Increased max-width for a more balanced look */
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Roboto', sans-serif; /* Global font family for text */
 }
 
-.card {
-  background-color: #f7f7f7;
-  padding: 20px 25px 30px;
-  margin: 0 auto 25px;
-  margin-top: 50px;
-  -moz-border-radius: 2px;
-  -webkit-border-radius: 2px;
-  border-radius: 2px;
-  -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-  -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+/* Card styling */
+.card-container {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  font-family: 'Roboto', sans-serif; /* Ensure card uses the same font */
+  max-width: 400px; /* Set a max-width for the card container */
+  margin: 0 auto; /* Center the card container */
 }
 
+/* Profile image styling */
 .profile-img-card {
-  width: 96px;
-  height: 96px;
-  margin: 0 auto 10px;
-  display: block;
-  -moz-border-radius: 50%;
-  -webkit-border-radius: 50%;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
+  margin-bottom: 20px;
+  object-fit: cover;
+}
+
+/* Form styling */
+.form-group {
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+label {
+  font-weight: 500;
+  font-size: 1rem;
+  color: #333;
+}
+
+input.form-control {
+  width: 100%; /* Adjust to use full width of container */
+  max-width: 350px; /* Ensure inputs don't exceed 350px */
+  padding: 12px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  transition: border-color 0.3s ease;
+  font-family: 'Roboto', sans-serif; /* Ensure input uses the same font */
+  margin: 0 auto; /* Center align the input fields */
+  display: block; /* Ensure inputs are displayed as block-level elements */
+}
+
+input.form-control:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Invalid input styling */
+.is-invalid {
+  border-color: #dc3545;
+}
+
+.invalid-feedback {
+  color: #dc3545;
+  font-size: 0.85rem;
+}
+
+/* Button styling */
+button.btn {
+  width: 100%; /* Match the width of the button to input fields */
+  max-width: 350px; /* Ensure button doesn't exceed 350px */
+  padding: 12px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: none;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: 'Roboto', sans-serif; /* Ensure button uses the same font */
+  margin: 10px auto;
+  display: block;
+}
+
+button.btn:hover {
+  background-color: #0056b3;
+}
+
+/* Alerts */
+.alert {
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 5px;
+}
+
+.alert-danger {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.alert-success {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .container {
+    max-width: 90%;
+  }
+
+  .card-container {
+    padding: 15px;
+  }
 }

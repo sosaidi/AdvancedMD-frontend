@@ -1,10 +1,16 @@
+<br>
+<br>
+<br>
+<br>
+<br>
 <div class="col-md-12">
   <div class="card card-container">
     <img
-      id="profile-img"
-      src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-      class="profile-img-card"
-    />
+    id="profile-img"
+    src="./Swiss_pharmacy_logo.ico" 
+    alt="Swiss Pharmacy Logo"
+    class="profile-img-card"
+  />
     @if (!isSuccessful) {
     <form
       name="form"
@@ -13,12 +19,12 @@
       novalidate
     >
       <div class="form-group">
-        <label for="username">Username</label>
         <input
           type="text"
           class="form-control"
           name="username"
           [(ngModel)]="form.username"
+          placeholder="Enter Username"
           required
           minlength="3"
           maxlength="20"
@@ -41,11 +47,11 @@
       </div>
     
       <div class="form-group">
-        <label for="password">Password</label>
         <input
           type="password"
           class="form-control"
           name="password"
+          placeholder="Enter Password"
           [(ngModel)]="form.password"
           required
           minlength="6"
@@ -64,11 +70,11 @@
         }
       </div>
       <div class="form-group">
-        <button class="btn btn-primary btn-block">Sign Up</button>
+        <button class="btn btn-success btn-block">Sign Up</button>
       </div>
 
       @if (f.submitted && isSignUpFailed) {
-      <div class="alert alert-warning">
+      <div class="alert alert-danger">
         Signup failed!<br />{{ errorMessage }}
       </div>
       }
