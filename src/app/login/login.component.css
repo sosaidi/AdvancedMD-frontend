@@ -71,7 +71,7 @@
 }
 
 .form-control:focus {
-  border-color: #00796b;
+  border-color: #4CAF50;
   box-shadow: 0 0 5px rgba(0, 151, 137, 0.5);
 }
 
@@ -80,7 +80,7 @@
 }
 
 .btn {
-  background-color: #00796b;
+  background-color: #4CAF50;
   color: white;
   border-radius: 12px;
   padding: 10px;
