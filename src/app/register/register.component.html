@@ -1,86 +1,117 @@
-<br>
-<br>
-<br>
-<br>
-<br>
+<!-- Join Community Text Outside the Card -->
+<div class="join-community-text-container">
+  <h2 class="highlight-text">Join our vibrant community and get started today! 🌟</h2>
+  <p class="fancy-text">
+    Signing up is quick and easy. 🚀💬
+  </p>
+</div>
+
 <div class="col-md-12">
   <div class="card card-container">
+    <!-- Profile Image -->
     <img
-    id="profile-img"
-    src="./Swiss_pharmacy_logo.ico" 
-    alt="Swiss Pharmacy Logo"
-    class="profile-img-card"
-  />
-    @if (!isSuccessful) {
-    <form
-      name="form"
-      (ngSubmit)="f.form.valid && onSubmit()"
-      #f="ngForm"
-      novalidate
-    >
-      <div class="form-group">
-        <input
-          type="text"
-          class="form-control"
-          name="username"
-          [(ngModel)]="form.username"
-          placeholder="Enter Username"
-          required
-          minlength="3"
-          maxlength="20"
-          #username="ngModel"
-          [ngClass]="{ 'is-invalid': f.submitted && username.errors }"
-        />
-        @if (username.errors && f.submitted) {
-        <div class="invalid-feedback">
-          @if (username.errors['required']) {
-          <div>Username is required</div>
-          }
-          @if (username.errors['minlength']) {
-          <div>Username must be at least 3 characters</div>
-          }
-          @if (username.errors['maxlength']) {
-          <div>Username must be at most 20 characters</div>
-          }
-        </div>
-        }
-      </div>
+      id="profile-img"
+      src="./Swiss_pharmacy_logo.ico"
+      alt="Swiss Pharmacy Logo"
+      class="profile-img-card"
+    />
     
-      <div class="form-group">
-        <input
-          type="password"
-          class="form-control"
-          name="password"
-          placeholder="Enter Password"
-          [(ngModel)]="form.password"
-          required
-          minlength="6"
-          #password="ngModel"
-          [ngClass]="{ 'is-invalid': f.submitted && password.errors }"
-        />
-        @if (password.errors && f.submitted) {
-        <div class="invalid-feedback">
-          @if (password.errors['required']) {
-          <div>Password is required</div>
-          }
-          @if (password.errors['minlength']) {
-          <div>Password must be at least 6 characters</div>
-          }
+    <!-- Form: If registration is unsuccessful -->
+    @if (!isSuccessful) {
+      <form
+        name="form"
+        (ngSubmit)="f.form.valid && onSubmit()"
+        #f="ngForm"
+        novalidate
+      >
+        <!-- Username Field -->
+        <div class="form-group">
+          <input
+            type="text"
+            class="form-control"
+            name="username"
+            [(ngModel)]="form.username"
+            placeholder="Enter Username"
+            required
+            minlength="3"
+            maxlength="20"
+            #username="ngModel"
+            [ngClass]="{ 'is-invalid': f.submitted && username.errors }"
+          />
+          <div *ngIf="username.errors && f.submitted" class="invalid-feedback">
+            <div *ngIf="username.errors['required']">Username is required! ✨</div>
+            <div *ngIf="username.errors['minlength']">Username must be at least 3 characters 📝</div>
+            <div *ngIf="username.errors['maxlength']">Username must be at most 20 characters 💡</div>
+          </div>
         </div>
-        }
-      </div>
-      <div class="form-group">
-        <button class="btn btn-success btn-block">Sign Up</button>
-      </div>
 
-      @if (f.submitted && isSignUpFailed) {
-      <div class="alert alert-danger">
-        Signup failed!<br />{{ errorMessage }}
-      </div>
-      }
-    </form>
+        <!-- Password Field -->
+        <div class="form-group">
+          <input
+            type="password"
+            class="form-control"
+            name="password"
+            [(ngModel)]="form.password"
+            placeholder="Enter Password"
+            required
+            minlength="6"
+            #password="ngModel"
+            [ngClass]="{ 'is-invalid': f.submitted && password.errors }"
+          />
+          <div *ngIf="password.errors && f.submitted" class="invalid-feedback">
+            <div *ngIf="password.errors['required']">Password is required 🔒</div>
+            <div *ngIf="password.errors['minlength']">Password must be at least 6 characters 🔑</div>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="form-group">
+          <button class="btn btn-success btn-block">
+            🚀 Sign Up
+          </button>
+        </div>
+
+        <!-- Signup Error Message -->
+        <div *ngIf="f.submitted && isSignUpFailed">
+          <div class="alert alert-danger">
+            Signup failed! <br />{{ errorMessage }} ❌
+          </div>
+        </div>
+
+        <!-- Already Registered Message -->
+        <div class="text-center small-text">
+          Already registered? <a href="/login" class="highlight-text">Login here!</a>
+        </div>
+      </form>
     } @else {
-    <div class="alert alert-success">Your registration is successful!</div>
+      <!-- Success Message -->
+      <div class="alert alert-success">
+        😊 Your registration is successful! 🎉
+      </div>
     }
   </div>
 </div>
+<script>
+  angular.module('myApp', ['chart.js'])
+.controller('DashboardController', function($scope) {
+  // Recovered chart data and options
+  $scope.recoveredData = [30, 40, 50, 60, 70, 80];
+  $scope.recoveredLabels = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
+  $scope.recoveredOptions = {
+    responsive: true,
+    maintainAspectRatio: false
+  };
+
+  // Visitors chart data and options
+  $scope.visitorsData = [100, 120, 150, 180, 200, 220];
+  $scope.visitorsLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
+  $scope.visitorsOptions = {
+    responsive: true,
+    maintainAspectRatio: false
+  };
+
+  // Patients chart data and labels
+  $scope.patientsData = [41, 59];
+  $scope.patientsLabels = ['New', 'Recovered'];
+});
+</script>

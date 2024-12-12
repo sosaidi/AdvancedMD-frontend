@@ -2,12 +2,8 @@
 <!-- Welcome Text and Explanation (Added Above Login Form) -->
 <div  *ngIf="!isLoggedIn" class="welcome-container text-center">
   <h2>Welcome to <span class="highlight-text">AdvancedMD</span> 🎉</h2>
-  <p class="explanation-text">
-    <strong>AdvancedMD</strong> is a cutting-edge medical data management system designed to streamline patient data, enhance decision-making, and provide seamless access to healthcare professionals. 💼💉
-  </p>
-  <p class="explanation-text">
-    Our application offers <em>advanced tools</em> for managing and analyzing medical data, improving efficiency, and transforming the way healthcare is delivered. 🔍📊
-  </p>
+
+
   <p class="explanation-text">
     Join us in revolutionizing patient care and making healthcare more accessible and efficient! 🚀
   </p>
@@ -72,7 +68,11 @@
           <div class="alert alert-danger" role="alert">
             Login failed: {{ errorMessage }} ❌
           </div>
+          
         </div>
+        <div class="text-center small-text">
+            Not registered? <a href="/register" class="highlight-text">Register here!</a>
+          </div>
       </form>
     </div>
 
