@@ -1,1 +1,47 @@
-<p>dashboard works!</p>
+<div *ngIf="loading" class="loading-spinner">
+  Loading...
+</div>
+
+<div *ngIf="!loading">
+  <div class="dashboard-header">
+    <h1>Doctor Dashboard</h1>
+  </div>
+
+  <div class="dashboard-sections">
+    <section>
+      <h2>Upcoming Appointments</h2>
+      <ul>
+        <li *ngFor="let appointment of appointments">
+          {{ appointment.patient }} - {{ appointment.time }}
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Patient List</h2>
+      <ul>
+        <li *ngFor="let patient of patients">
+          {{ patient.name }} - {{ patient.status }}
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Recent Visits</h2>
+      <ul>
+        <li *ngFor="let visit of visits">
+          {{ visit.patient }} - {{ visit.reason }}
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Payments</h2>
+      <ul>
+        <li *ngFor="let payment of payments">
+          {{ payment.patient }} - {{ payment.amount }} ({{ payment.status }})
+        </li>
+      </ul>
+    </section>
+  </div>
+</div>

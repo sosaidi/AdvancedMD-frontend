@@ -1,4 +1,4 @@
-import { Routes } from '@angular/router'
+import { Routes } from '@angular/router';
 
 export const routes: Routes = [
   {
@@ -22,6 +22,6 @@ export const routes: Routes = [
         (m) => m.PatientRoutingModule
       ),
   },
-  { path: '', redirectTo: '/admin', pathMatch: 'full' },
-  { path: '**', redirectTo: '/admin' },
-]
+  { path: '', redirectTo: '/doctor', pathMatch: 'full' },
+  { path: '**', redirectTo: '/doctor' },
+];

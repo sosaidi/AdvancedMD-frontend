@@ -7,4 +7,6 @@ import { Component } from '@angular/core'
   templateUrl: './settings.component.html',
   styleUrl: './settings.component.css',
 })
-export class SettingsComponent {}
+export class SettingsComponent {
+  title = 'Settings';
+}
