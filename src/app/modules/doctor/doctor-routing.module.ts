@@ -8,14 +8,19 @@ import { PaymentsComponent } from './components/payments/payments.component'
 import { SettingsComponent } from './components/settings/settings.component'
 
 const routes: Routes = [
-  { path: 'appointments', component: AppointmentsComponent },
-  { path: 'dashboard', component: DoctorDashboardComponent },
-  { path: 'doctors', component: DoctorsComponent },
-  { path: 'patients', component: PatientsComponent },
-  { path: 'payments', component: PaymentsComponent },
-  { path: 'settings', component: SettingsComponent },
-  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-]
+    {
+    path: '',
+    component: DoctorDashboardComponent,
+    children: [
+      { path: 'appointments', component: AppointmentsComponent },
+      { path: 'doctors', component: DoctorsComponent },
+      { path: 'patients', component: PatientsComponent },
+      { path: 'payments', component: PaymentsComponent },
+      { path: 'settings', component: SettingsComponent },
+      { path: '', redirectTo: 'appointments', pathMatch: 'full' }, // Standard-Ansicht in Home
+    ],
+  },
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
