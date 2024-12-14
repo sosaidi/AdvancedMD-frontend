@@ -1,1 +1,152 @@
-<p>doctors works!</p>
+<div class="p-8 bg-gradient-to-br from-gray-100 via-white to-gray-200 min-h-screen">
+  <!-- Header -->
+  <div class="bg-white rounded-lg shadow-lg p-6 flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
+    <div>
+      <h1 class="text-4xl font-extrabold text-gray-800 tracking-wide mb-2">Doctors</h1>
+      <p class="text-lg text-gray-600">Meet our professional medical team</p>
+    </div>
+    <button
+      (click)="openForm()"
+      class="mt-4 md:mt-0 px-6 py-3 bg-green-500 text-white rounded-lg shadow-md hover:bg-green-600 transition-all duration-300"
+    >
+      Add New Doctor
+    </button>
+  </div>
+
+  <!-- Doctors List -->
+  <div *ngIf="doctors.length > 0; else noDoctors" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+    <div
+      *ngFor="let doctor of doctors"
+      class="bg-white rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+    >
+      <div class="p-6 flex flex-col items-center">
+        <!-- Profile Picture -->
+        <div class="w-24 h-24 rounded-full overflow-hidden shadow-md mb-4">
+          <img
+            [src]="doctor.photo || 'https://via.placeholder.com/150'"
+            alt="Doctor Profile"
+            class="w-full h-full object-cover"
+          />
+        </div>
+
+        <!-- Doctor Info -->
+        <h2 class="text-xl font-bold text-gray-800 text-center">{{ doctor.name }}</h2>
+        <p class="text-gray-500 text-sm text-center">{{ doctor.specialty }}</p>
+
+        <div class="mt-4 space-y-1 text-center">
+          <p class="text-sm text-gray-600">
+            <strong>Experience:</strong> {{ doctor.experience }}
+          </p>
+          <p
+            class="text-sm font-semibold"
+            [ngClass]="{
+              'text-green-500': doctor.availability === 'Available',
+              'text-yellow-500': doctor.availability === 'Busy',
+              'text-red-500': doctor.availability === 'Unavailable'
+            }"
+          >
+            <strong>Availability:</strong> {{ doctor.availability }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No Doctors Message -->
+  <ng-template #noDoctors>
+    <div class="text-center py-12">
+      <h2 class="text-2xl font-bold text-gray-700">No doctors found!</h2>
+      <p class="text-gray-500 mt-2">Add a new doctor to see them listed here.</p>
+    </div>
+  </ng-template>
+
+  <!-- Doctor Form Modal -->
+  <div *ngIf="showForm" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-lg shadow-lg p-6 max-w-md w-full">
+      <h2 class="text-xl font-bold mb-4">Add New Doctor</h2>
+      <form (ngSubmit)="addDoctor()" class="space-y-4">
+        <div>
+          <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+          <input
+            id="name"
+            [(ngModel)]="newDoctor.name"
+            name="name"
+            type="text"
+            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+            required
+          />
+        </div>
+        <div>
+          <label for="specialty" class="block text-sm font-medium text-gray-700">Specialty</label>
+          <input
+            id="specialty"
+            [(ngModel)]="newDoctor.specialty"
+            name="specialty"
+            type="text"
+            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+            required
+          />
+        </div>
+        <div>
+          <label for="experience" class="block text-sm font-medium text-gray-700">Experience</label>
+          <input
+            id="experience"
+            [(ngModel)]="newDoctor.experience"
+            name="experience"
+            type="text"
+            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+            required
+          />
+        </div>
+        <div>
+          <label for="availability" class="block text-sm font-medium text-gray-700">Availability</label>
+          <select
+            id="availability"
+            [(ngModel)]="newDoctor.availability"
+            name="availability"
+            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+            required
+          >
+            <option value="Available">Available</option>
+            <option value="Busy">Busy</option>
+            <option value="Unavailable">Unavailable</option>
+          </select>
+        </div>
+        <div>
+          <label for="photo" class="block text-sm font-medium text-gray-700">Photo</label>
+          <input
+            id="photo"
+            type="file"
+            (change)="onPhotoSelected($event)"
+            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+          />
+        </div>
+        <div>
+          <label for="textFile" class="block text-sm font-medium text-gray-700">Upload Doctor Info (Text File)</label>
+          <input
+            id="textFile"
+            type="file"
+            (change)="onFileUpload($event)"
+            accept=".txt"
+            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+          />
+        </div>
+        <div class="flex justify-end">
+          <button
+            type="button"
+            (click)="closeForm()"
+            class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition duration-300 mr-2"
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition duration-300"
+          >
+            Add Doctor
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
