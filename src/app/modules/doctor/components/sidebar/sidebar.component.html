@@ -1,30 +1,30 @@
 <div
-  class="sidebar bg-white shadow-lg fixed top-0 left-0 h-screen transition-all duration-200 flex flex-col"
+  class="sidebar bg-white shadow-lg fixed top-0 left-0 h-screen overflow-y-auto transition-all duration-200 flex flex-col"
   [class.w-64]="!collapsed" [class.w-20]="collapsed">
 
   <!-- Profile Section -->
-  <div
-    class="profile-section flex flex-col items-center py-8 mt-16 border-b border-gray-200">
+  <div class="profile-section flex flex-col items-center py-8 mt-16 border-b border-gray-200">
     <img
-      src="/images/doctor.jpg"
+      src="assets/doctor.jpg"
       alt="Profile"
       class="profile-picture w-16 h-16 rounded-full border-4 border-green-500 mb-4 transition-transform duration-300"
       [class.scale-75]="collapsed" />
     <div
       class="profile-details text-center transition-all duration-300"
       [class.opacity-0]="collapsed" [class.opacity-100]="!collapsed">
-    <span class="name text-lg font-semibold text-gray-800 block">
-      Dr. John Doe
-    </span>
+      <span class="name text-lg font-semibold text-gray-800 block">
+        Dr. John Doe
+      </span>
       <span class="role text-sm text-gray-600 block mt-1">
-      Cardiologist
-    </span>
+        Cardiologist
+      </span>
     </div>
   </div>
 
   <!-- Navigation Links -->
   <nav class="flex-grow mt-4 px-2">
     <ul class="space-y-3">
+      <!-- Dashboard -->
       <li>
         <a
           routerLink="/doctor/dashboard"
@@ -38,6 +38,8 @@
           </span>
         </a>
       </li>
+
+      <!-- Appointments -->
       <li>
         <a
           routerLink="/doctor/appointments"
@@ -51,6 +53,8 @@
           </span>
         </a>
       </li>
+
+      <!-- Doctors -->
       <li>
         <a
           routerLink="/doctor/doctors"
@@ -64,6 +68,8 @@
           </span>
         </a>
       </li>
+
+      <!-- Patients -->
       <li>
         <a
           routerLink="/doctor/patients"
@@ -77,6 +83,8 @@
           </span>
         </a>
       </li>
+
+      <!-- Payments -->
       <li>
         <a
           routerLink="/doctor/payments"
@@ -90,6 +98,8 @@
           </span>
         </a>
       </li>
+
+      <!-- Settings -->
       <li>
         <a
           routerLink="/doctor/settings"
@@ -100,6 +110,54 @@
             class="transition-all duration-300"
             [class.opacity-0]="collapsed" [class.opacity-100]="!collapsed">
             Settings
+          </span>
+        </a>
+      </li>
+
+      <!-- Others Section -->
+      <li>
+        <div
+          class="text-gray-500 text-sm font-semibold uppercase tracking-wide mt-6 px-4"
+          [class.opacity-0]="collapsed" [class.opacity-100]="!collapsed">
+          Others
+        </div>
+      </li>
+      <li>
+        <a
+          routerLink="/doctor/calendar"
+          routerLinkActive="bg-green-100 text-green-600"
+          class="flex items-center gap-4 px-4 py-3 rounded-md text-gray-700 hover:bg-green-50 transition-all">
+          <i class="bi bi-calendar-event text-xl"></i>
+          <span
+            class="transition-all duration-300"
+            [class.opacity-0]="collapsed" [class.opacity-100]="!collapsed">
+            Calendar
+          </span>
+        </a>
+      </li>
+      <li>
+        <a
+          routerLink="/doctor/todo-list"
+          routerLinkActive="bg-green-100 text-green-600"
+          class="flex items-center gap-4 px-4 py-3 rounded-md text-gray-700 hover:bg-green-50 transition-all">
+          <i class="bi bi-card-checklist text-xl"></i>
+          <span
+            class="transition-all duration-300"
+            [class.opacity-0]="collapsed" [class.opacity-100]="!collapsed">
+            To-Do List
+          </span>
+        </a>
+      </li>
+      <li>
+        <a
+          routerLink="/doctor/chat"
+          routerLinkActive="bg-green-100 text-green-600"
+          class="flex items-center gap-4 px-4 py-3 rounded-md text-gray-700 hover:bg-green-50 transition-all">
+          <i class="bi bi-chat-dots text-xl"></i>
+          <span
+            class="transition-all duration-300"
+            [class.opacity-0]="collapsed" [class.opacity-100]="!collapsed">
+            Chat
           </span>
         </a>
       </li>
