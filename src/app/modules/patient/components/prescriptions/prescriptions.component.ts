@@ -5,6 +5,5 @@ import { Component } from '@angular/core'
   standalone: true,
   imports: [],
   templateUrl: './prescriptions.component.html',
-  styleUrl: './prescriptions.component.css',
 })
 export class PrescriptionsComponent {}

@@ -5,6 +5,5 @@ import { Component } from '@angular/core'
   standalone: true,
   imports: [],
   templateUrl: './billing.component.html',
-  styleUrl: './billing.component.css',
 })
 export class BillingComponent {}
