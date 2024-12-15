@@ -2,38 +2,35 @@
   class="sidebar bg-white shadow-lg fixed top-0 left-0 h-screen overflow-y-auto transition-all duration-200 flex flex-col"
   [class.w-64]="!collapsed" [class.w-20]="collapsed">
 
-  <!-- Profile Section -->
-  <div class="profile-section flex flex-col items-center py-8 mt-16 border-b border-gray-200">
-    <img
-      src="assets/doctor.jpg"
-      alt="Profile"
-      class="profile-picture w-16 h-16 rounded-full border-4 border-green-500 mb-4 transition-transform duration-300"
-      [class.scale-75]="collapsed" />
-    <div
-      class="profile-details text-center transition-all duration-300"
-      [class.opacity-0]="collapsed" [class.opacity-100]="!collapsed">
-      <span class="name text-lg font-semibold text-gray-800 block">
-        Dr. John Doe
-      </span>
-      <span class="role text-sm text-gray-600 block mt-1">
-        Cardiologist
-      </span>
-    </div>
+  <!-- Navigation Header -->
+  <div class="flex items-center justify-center py-6 border-b border-gray-200">
+    <h1
+      class="text-xl font-bold text-gray-800 transition-all duration-300"
+      [class.hidden]="collapsed"
+    >
+      Main Menu
+    </h1>
+    <i
+      class="bi bi-menu-button text-2xl text-gray-700"
+      [class.hidden]="!collapsed"
+    ></i>
   </div>
 
   <!-- Navigation Links -->
-  <nav class="flex-grow mt-4 px-2">
+  <nav class="flex-grow mt-6 px-2">
     <ul class="space-y-3">
       <!-- Dashboard -->
       <li>
         <a
-          routerLink="/doctor/dashboard"
+          routerLink="/dashboard"
           routerLinkActive="bg-green-100 text-green-600"
-          class="flex items-center gap-4 px-4 py-3 rounded-md text-gray-700 hover:bg-green-50 transition-all">
+          class="flex items-center gap-4 px-4 py-3 rounded-md text-gray-700 hover:bg-green-50 transition-all"
+        >
           <i class="bi bi-speedometer2 text-xl"></i>
           <span
             class="transition-all duration-300"
-            [class.opacity-0]="collapsed" [class.opacity-100]="!collapsed">
+            [class.hidden]="collapsed"
+          >
             Dashboard
           </span>
         </a>
@@ -42,59 +39,84 @@
       <!-- Appointments -->
       <li>
         <a
-          routerLink="/doctor/appointments"
+          routerLink="/appointments"
           routerLinkActive="bg-green-100 text-green-600"
-          class="flex items-center gap-4 px-4 py-3 rounded-md text-gray-700 hover:bg-green-50 transition-all">
+          class="flex items-center gap-4 px-4 py-3 rounded-md text-gray-700 hover:bg-green-50 transition-all"
+        >
           <i class="bi bi-calendar-check text-xl"></i>
           <span
             class="transition-all duration-300"
-            [class.opacity-0]="collapsed" [class.opacity-100]="!collapsed">
+            [class.hidden]="collapsed"
+          >
             Appointments
           </span>
         </a>
       </li>
 
-      <!-- Doctors -->
+      <!-- Prescriptions -->
       <li>
         <a
-          routerLink="/doctor/doctors"
+          routerLink="/prescriptions"
           routerLinkActive="bg-green-100 text-green-600"
-          class="flex items-center gap-4 px-4 py-3 rounded-md text-gray-700 hover:bg-green-50 transition-all">
-          <i class="bi bi-person text-xl"></i>
+          class="flex items-center gap-4 px-4 py-3 rounded-md text-gray-700 hover:bg-green-50 transition-all"
+        >
+          <i class="bi bi-file-medical text-xl"></i>
           <span
             class="transition-all duration-300"
-            [class.opacity-0]="collapsed" [class.opacity-100]="!collapsed">
-            Doctors
+            [class.hidden]="collapsed"
+          >
+            Prescriptions
           </span>
         </a>
       </li>
 
-      <!-- Patients -->
+      <!-- Medical Records -->
       <li>
         <a
-          routerLink="/doctor/patients"
+          routerLink="/medical-records"
           routerLinkActive="bg-green-100 text-green-600"
-          class="flex items-center gap-4 px-4 py-3 rounded-md text-gray-700 hover:bg-green-50 transition-all">
-          <i class="bi bi-people text-xl"></i>
+          class="flex items-center gap-4 px-4 py-3 rounded-md text-gray-700 hover:bg-green-50 transition-all"
+        >
+          <i class="bi bi-folder2 text-xl"></i>
           <span
             class="transition-all duration-300"
-            [class.opacity-0]="collapsed" [class.opacity-100]="!collapsed">
-            Patients
+            [class.hidden]="collapsed"
+          >
+            Medical Records
           </span>
         </a>
       </li>
 
-      <!-- Payments -->
+      <!-- Billing -->
       <li>
         <a
-          routerLink="/doctor/payments"
+          routerLink="/billing"
           routerLinkActive="bg-green-100 text-green-600"
-          class="flex items-center gap-4 px-4 py-3 rounded-md text-gray-700 hover:bg-green-50 transition-all">
+          class="flex items-center gap-4 px-4 py-3 rounded-md text-gray-700 hover:bg-green-50 transition-all"
+        >
           <i class="bi bi-credit-card text-xl"></i>
           <span
             class="transition-all duration-300"
-            [class.opacity-0]="collapsed" [class.opacity-100]="!collapsed">
-            Payments
+            [class.hidden]="collapsed"
+          >
+            Billing
+          </span>
+        </a>
+      </li>
+
+      <!-- Chat -->
+      <li>
+        <a
+          routerLink="/chat"
+          routerLinkActive="bg-green-100 text-green-600"
+          class="flex items-center gap-4 px-4 py-3 rounded-md text-gray-700 hover:bg-green-50 transition-all"
+        >
+          <i class="bi bi-chat-dots text-xl"></i>
+          <span
+            class="transition-all duration-300"
+            [class.hidden]="collapsed"
+          >
+            Chat
           </span>
         </a>
       </li>
@@ -102,62 +124,32 @@
       <!-- Settings -->
       <li>
         <a
-          routerLink="/doctor/settings"
+          routerLink="/settings"
           routerLinkActive="bg-green-100 text-green-600"
-          class="flex items-center gap-4 px-4 py-3 rounded-md text-gray-700 hover:bg-green-50 transition-all">
+          class="flex items-center gap-4 px-4 py-3 rounded-md text-gray-700 hover:bg-green-50 transition-all"
+        >
           <i class="bi bi-gear text-xl"></i>
           <span
             class="transition-all duration-300"
-            [class.opacity-0]="collapsed" [class.opacity-100]="!collapsed">
+            [class.hidden]="collapsed"
+          >
             Settings
           </span>
         </a>
       </li>
 
-      <!-- Others Section -->
-      <li>
-        <div
-          class="text-gray-500 text-sm font-semibold uppercase tracking-wide mt-6 px-4"
-          [class.opacity-0]="collapsed" [class.opacity-100]="!collapsed">
-          Others
-        </div>
-      </li>
+      <!-- Logout -->
       <li>
         <a
-          routerLink="/doctor/calendar"
-          routerLinkActive="bg-green-100 text-green-600"
-          class="flex items-center gap-4 px-4 py-3 rounded-md text-gray-700 hover:bg-green-50 transition-all">
-          <i class="bi bi-calendar-event text-xl"></i>
+          routerLink="/logout"
+          class="flex items-center gap-4 px-4 py-3 rounded-md text-gray-700 hover:bg-red-50 transition-all"
+        >
+          <i class="bi bi-power text-xl"></i>
           <span
             class="transition-all duration-300"
-            [class.opacity-0]="collapsed" [class.opacity-100]="!collapsed">
-            Calendar
-          </span>
-        </a>
-      </li>
-      <li>
-        <a
-          routerLink="/doctor/todo-list"
-          routerLinkActive="bg-green-100 text-green-600"
-          class="flex items-center gap-4 px-4 py-3 rounded-md text-gray-700 hover:bg-green-50 transition-all">
-          <i class="bi bi-card-checklist text-xl"></i>
-          <span
-            class="transition-all duration-300"
-            [class.opacity-0]="collapsed" [class.opacity-100]="!collapsed">
-            To-Do List
-          </span>
-        </a>
-      </li>
-      <li>
-        <a
-          routerLink="/doctor/chat"
-          routerLinkActive="bg-green-100 text-green-600"
-          class="flex items-center gap-4 px-4 py-3 rounded-md text-gray-700 hover:bg-green-50 transition-all">
-          <i class="bi bi-chat-dots text-xl"></i>
-          <span
-            class="transition-all duration-300"
-            [class.opacity-0]="collapsed" [class.opacity-100]="!collapsed">
-            Chat
+            [class.hidden]="collapsed"
+          >
+            Logout
           </span>
         </a>
       </li>

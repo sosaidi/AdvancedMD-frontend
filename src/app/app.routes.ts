@@ -23,6 +23,5 @@ export const routes: Routes = [
         (m) => m.PatientRoutingModule
       ),
   },
-  { path: '', redirectTo: '/doctor', pathMatch: 'full' },
-  { path: '**', redirectTo: '/doctor' },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
 ];

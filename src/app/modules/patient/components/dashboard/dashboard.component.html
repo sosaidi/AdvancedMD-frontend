@@ -1,1 +1,199 @@
-<p>dashboard works!</p>
+<div class="p-12 bg-gradient-to-br from-pink-50 via-blue-50 to-green-50 min-h-screen space-y-12">
+  <!-- Dashboard Header -->
+  <div class="bg-white rounded-xl shadow-lg p-10 mb-8 text-center">
+    <h1 class="text-5xl font-bold text-gray-800">Welcome to Your Health Dashboard</h1>
+    <p class="text-lg text-gray-500 mt-4">Stay on top of your health with insights and reminders.</p>
+  </div>
+
+  <!-- Health Overview -->
+  <div class="space-y-8">
+    <h2 class="text-3xl font-bold text-gray-700">Health Overview</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+      <!-- Heart Rate -->
+      <div class="p-8 bg-pink-100 text-pink-800 rounded-lg shadow-md">
+        <h3 class="text-xl font-semibold">Heart Rate</h3>
+        <p class="text-5xl font-bold mt-4">{{ heartRate }} BPM</p>
+        <p class="text-sm mt-2">Resting Rate</p>
+      </div>
+      <!-- Prescriptions -->
+      <div class="p-8 bg-blue-100 text-blue-800 rounded-lg shadow-md">
+        <h3 class="text-xl font-semibold">Prescriptions</h3>
+        <ul class="mt-4 space-y-2">
+          <li
+            *ngFor="let prescription of prescriptions"
+            class="flex justify-between items-center text-sm"
+          >
+            <span>{{ prescription.name }}</span>
+            <span
+              [ngClass]="{
+                'text-red-600': prescription.status === 'Renewal Needed',
+                'text-green-600': prescription.status === 'Active'
+              }"
+            >
+              {{ prescription.status }}
+            </span>
+          </li>
+        </ul>
+      </div>
+      <!-- Next Appointment -->
+      <div class="p-8 bg-green-100 text-green-800 rounded-lg shadow-md">
+        <h3 class="text-xl font-semibold">Next Appointment</h3>
+        <p class="text-lg mt-4">{{ appointments[0].date }} at {{ appointments[0].time }}</p>
+        <p class="text-sm mt-2">With {{ appointments[0].doctor }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Health Goals -->
+  <div class="space-y-8">
+    <h2 class="text-3xl font-bold text-gray-700">Health Goals</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+      <!-- Steps Progress -->
+      <div class="p-8 bg-pink-100 text-pink-800 rounded-lg shadow-md">
+        <h3 class="text-xl font-semibold">Steps Walked</h3>
+        <p class="text-4xl font-bold mt-4">{{ stepsProgress }}/{{ stepsTarget }}</p>
+        <div class="flex space-x-6 mt-6">
+          <button
+            class="bg-green-500 text-white px-5 py-2 rounded-md shadow hover:bg-green-600"
+            (click)="increaseSteps()"
+          >
+            +
+          </button>
+          <button
+            class="bg-red-500 text-white px-5 py-2 rounded-md shadow hover:bg-red-600"
+            (click)="decreaseSteps()"
+          >
+            -
+          </button>
+        </div>
+      </div>
+      <!-- Water Intake -->
+      <div class="p-8 bg-blue-100 text-blue-800 rounded-lg shadow-md">
+        <h3 class="text-xl font-semibold">Water Intake</h3>
+        <p class="text-4xl font-bold mt-4">{{ waterIntake }}/{{ waterTarget }} Glasses</p>
+        <div class="flex space-x-6 mt-6">
+          <button
+            class="bg-green-500 text-white px-5 py-2 rounded-md shadow hover:bg-green-600"
+            (click)="increaseWaterIntake()"
+          >
+            +
+          </button>
+          <button
+            class="bg-red-500 text-white px-5 py-2 rounded-md shadow hover:bg-red-600"
+            (click)="decreaseWaterIntake()"
+          >
+            -
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Wellness Tips and Quick Actions -->
+  <div class="space-y-8">
+    <h2 class="text-3xl font-bold text-gray-700">Wellness Tips and Quick Actions</h2>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+      <!-- Wellness Tip -->
+      <div class="bg-pink-50 rounded-lg shadow-lg p-8">
+        <h3 class="text-xl font-bold mb-4">Wellness Tip</h3>
+        <p class="italic text-gray-700">{{ wellnessTip }}</p>
+      </div>
+      <!-- Quick Actions -->
+      <div class="bg-blue-50 rounded-lg shadow-lg p-8">
+        <h3 class="text-xl font-bold mb-4">Quick Actions</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <button
+            class="bg-green-500 text-white py-3 px-5 rounded-lg shadow-md hover:bg-green-600"
+          >
+            Request Appointment
+          </button>
+          <button
+            class="bg-blue-500 text-white py-3 px-5 rounded-lg shadow-md hover:bg-blue-600"
+          >
+            Download Records
+          </button>
+          <button
+            class="bg-yellow-500 text-white py-3 px-5 rounded-lg shadow-md hover:bg-yellow-600"
+          >
+            Renew Prescription
+          </button>
+          <button
+            class="bg-pink-500 text-white py-3 px-5 rounded-lg shadow-md hover:bg-pink-600"
+          >
+            Health Tips
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Content Section -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <!-- Blood Pressure Chart -->
+    <div class="bg-white rounded-lg shadow-lg p-6 lg:col-span-2">
+      <h3 class="text-lg font-bold mb-4">Blood Pressure Trends</h3>
+      <canvas id="bloodPressureChart" class="w-full"></canvas>
+    </div>
+
+    <!-- Reminders Section -->
+    <div class="bg-white rounded-lg shadow-lg p-6">
+      <h3 class="text-lg font-bold mb-4">Today's Reminders</h3>
+      <ul>
+        <li
+          *ngFor="let reminder of reminders"
+          class="flex justify-between items-center p-4 border rounded-lg hover:bg-gray-50 mb-2"
+        >
+          <span>{{ reminder.message }}</span>
+          <span class="text-gray-500">{{ reminder.time }}</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+    <!-- Emergency Contacts -->
+    <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+      <h3 class="text-lg font-bold mb-4">Emergency Contacts</h3>
+      <ul>
+        <li *ngFor="let contact of emergencyContacts" class="flex justify-between items-center p-4 border rounded-lg">
+          <span>{{ contact.name }} ({{ contact.relation }})</span>
+          <span>{{ contact.phone }}</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Lab Tests -->
+    <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+      <h3 class="text-lg font-bold mb-4">Recent Lab Tests</h3>
+      <ul>
+        <li *ngFor="let labTest of labTests" class="flex justify-between items-center p-4 border rounded-lg">
+          <span>{{ labTest.test }}</span>
+          <span>{{ labTest.status }} ({{ labTest.date }})</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Family Health Monitoring -->
+    <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+      <h3 class="text-lg font-bold mb-4">Family Health Monitoring</h3>
+      <ul>
+        <li *ngFor="let family of familyHealth" class="flex justify-between items-center p-4 border rounded-lg">
+          <span>{{ family.name }}</span>
+          <span>{{ family.metric }}: {{ family.value }}</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Daily Reminders -->
+    <div class="bg-white rounded-lg shadow-lg p-6">
+      <h3 class="text-lg font-bold mb-4">Today's Reminders</h3>
+      <ul>
+        <li
+          *ngFor="let reminder of reminders"
+          class="flex justify-between items-center p-4 border rounded-lg hover:bg-gray-50 mb-2"
+        >
+          <span>{{ reminder.message }}</span>
+          <span class="text-gray-500">{{ reminder.time }}</span>
+        </li>
+      </ul>
+    </div>
+</div>
