@@ -5,12 +5,7 @@ import { FormsModule } from '@angular/forms'
 @Component({
   selector: 'app-doctors',
   standalone: true,
-  imports: [
-    NgClass,
-    FormsModule,
-    NgForOf,
-    NgIf,
-  ],
+  imports: [NgClass, FormsModule, NgForOf, NgIf],
   templateUrl: './doctors.component.html',
 })
 export class DoctorsComponent {
@@ -57,50 +52,62 @@ export class DoctorsComponent {
       availability: 'Available',
       photo: 'https://via.placeholder.com/150',
     },
-  ];
+  ]
 
-  showForm = false;
-  newDoctor = { name: '', specialty: '', experience: '', availability: '', photo: '' };
+  showForm = false
+  newDoctor = {
+    name: '',
+    specialty: '',
+    experience: '',
+    availability: '',
+    photo: '',
+  }
 
   openForm(): void {
-    this.showForm = true;
+    this.showForm = true
   }
 
   closeForm(): void {
-    this.showForm = false;
-    this.newDoctor = { name: '', specialty: '', experience: '', availability: '', photo: '' };
+    this.showForm = false
+    this.newDoctor = {
+      name: '',
+      specialty: '',
+      experience: '',
+      availability: '',
+      photo: '',
+    }
   }
 
   addDoctor(): void {
-    this.doctors.push({ ...this.newDoctor });
-    this.closeForm();
+    this.doctors.push({ ...this.newDoctor })
+    this.closeForm()
   }
 
   onPhotoSelected(event: Event): void {
-    const input = event.target as HTMLInputElement;
+    const input = event.target as HTMLInputElement
     if (input.files?.length) {
-      const reader = new FileReader();
+      const reader = new FileReader()
       reader.onload = () => {
-        this.newDoctor.photo = reader.result as string;
-      };
-      reader.readAsDataURL(input.files[0]);
+        this.newDoctor.photo = reader.result as string
+      }
+      reader.readAsDataURL(input.files[0])
     }
   }
 
   onFileUpload(event: Event): void {
-    const input = event.target as HTMLInputElement;
+    const input = event.target as HTMLInputElement
     if (input.files?.length) {
-      const file = input.files[0];
-      const reader = new FileReader();
+      const file = input.files[0]
+      const reader = new FileReader()
       reader.onload = () => {
-        const content = reader.result as string;
-        const [name, specialty, experience, availability] = content.split('\n');
-        this.newDoctor.name = name.trim();
-        this.newDoctor.specialty = specialty.trim();
-        this.newDoctor.experience = experience.trim();
-        this.newDoctor.availability = availability.trim();
-      };
-      reader.readAsText(file);
+        const content = reader.result as string
+        const [name, specialty, experience, availability] = content.split('\n')
+        this.newDoctor.name = name.trim()
+        this.newDoctor.specialty = specialty.trim()
+        this.newDoctor.experience = experience.trim()
+        this.newDoctor.availability = availability.trim()
+      }
+      reader.readAsText(file)
     }
   }
 }

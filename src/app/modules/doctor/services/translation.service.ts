@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core'
 
 @Injectable({
   providedIn: 'root',
 })
 export class TranslationService {
-  currentLanguage: string = 'en';
+  currentLanguage: string = 'en'
 
   translations: any = {
     en: {
@@ -44,14 +44,14 @@ export class TranslationService {
       hospitalInfo: 'Krankenhausinformationen',
       savePreferences: 'Einstellungen speichern',
     },
-  };
+  }
 
   translate(key: string): string {
-    return this.translations[this.currentLanguage][key] || key;
+    return this.translations[this.currentLanguage][key] || key
   }
 
   setLanguage(language: string): void {
-    this.currentLanguage = language;
-    console.log(`Language switched to ${language}`);
+    this.currentLanguage = language
+    console.log(`Language switched to ${language}`)
   }
 }

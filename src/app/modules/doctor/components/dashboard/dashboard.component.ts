@@ -1,5 +1,5 @@
-import { Component, AfterViewInit, OnInit } from '@angular/core';
-import Chart from 'chart.js/auto';
+import { Component, AfterViewInit, OnInit } from '@angular/core'
+import Chart from 'chart.js/auto'
 import { NgClass, NgForOf, NgIf } from '@angular/common'
 
 @Component({
@@ -9,15 +9,15 @@ import { NgClass, NgForOf, NgIf } from '@angular/common'
   imports: [NgIf, NgForOf, NgClass],
 })
 export class DoctorDashboardComponent implements OnInit, AfterViewInit {
-  loading: boolean = true;
-  dailySchedule: { time: string; task: string }[] = [];
-  healthMetrics: { metric: string; value: string }[] = [];
-  motivationalQuote: string = '';
-  todos: { task: string; priority: string }[] = [];
+  loading: boolean = true
+  dailySchedule: { time: string; task: string }[] = []
+  healthMetrics: { metric: string; value: string }[] = []
+  motivationalQuote: string = ''
+  todos: { task: string; priority: string }[] = []
 
   ngOnInit(): void {
-    this.loading = false;
-    this.initializeMockData();
+    this.loading = false
+    this.initializeMockData()
   }
 
   private initializeMockData(): void {
@@ -26,31 +26,31 @@ export class DoctorDashboardComponent implements OnInit, AfterViewInit {
       { time: '10:00 AM', task: 'Surgery for Patient X' },
       { time: '1:00 PM', task: 'Consultation with Patient Y' },
       { time: '3:30 PM', task: 'Team meeting' },
-    ];
+    ]
 
     this.healthMetrics = [
       { metric: "Today's BMI Alerts", value: '5 Patients' },
       { metric: 'Critical Patients', value: '2 Patients' },
       { metric: 'Prescriptions Due', value: '8 Pending' },
-    ];
+    ]
 
     this.todos = [
       { task: 'Update medical reports', priority: 'High' },
       { task: 'Prepare for conference', priority: 'Medium' },
       { task: 'Check inventory levels', priority: 'Low' },
-    ];
+    ]
 
     this.motivationalQuote =
-      '“Wherever the art of medicine is loved, there is also a love of humanity.” – Hippocrates';
+      '“Wherever the art of medicine is loved, there is also a love of humanity.” – Hippocrates'
   }
 
   ngAfterViewInit(): void {
-    this.initPatientsChart();
-    this.initAppointmentsChart();
+    this.initPatientsChart()
+    this.initAppointmentsChart()
   }
 
   private initPatientsChart(): void {
-    const ctx = document.getElementById('patientsChart') as HTMLCanvasElement;
+    const ctx = document.getElementById('patientsChart') as HTMLCanvasElement
     if (ctx) {
       new Chart(ctx, {
         type: 'doughnut',
@@ -72,12 +72,14 @@ export class DoctorDashboardComponent implements OnInit, AfterViewInit {
             },
           },
         },
-      });
+      })
     }
   }
 
   private initAppointmentsChart(): void {
-    const ctx = document.getElementById('appointmentsChart') as HTMLCanvasElement;
+    const ctx = document.getElementById(
+      'appointmentsChart'
+    ) as HTMLCanvasElement
     if (ctx) {
       new Chart(ctx, {
         type: 'line',
@@ -109,7 +111,7 @@ export class DoctorDashboardComponent implements OnInit, AfterViewInit {
             },
           },
         },
-      });
+      })
     }
   }
 }
