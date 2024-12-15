@@ -1,115 +1,78 @@
-<div class="p-8 bg-gray-100 min-h-screen">
+<div class="p-8 bg-gradient-to-br from-pink-50 via-blue-50 to-green-50 min-h-screen">
   <!-- Dashboard Header -->
-  <div class="bg-white rounded-lg shadow-lg p-6 flex justify-between items-center mb-8">
-    <h1 class="text-3xl font-extrabold text-gray-800">Welcome to the Doctor Dashboard</h1>
-    <div class="flex items-center space-x-4">
-      <!-- Notifications -->
-      <div class="relative">
-        <button
-          class="bg-blue-500 text-white px-4 py-2 rounded-full shadow-md hover:bg-blue-600 transition duration-300 relative"
-        >
-          Notifications
-        </button>
-        <div
-          class="absolute right-0 mt-2 w-64 bg-white shadow-lg rounded-lg z-10"
-          *ngIf="notifications.length > 0"
-        >
-          <ul class="p-4 space-y-2">
-            <li *ngFor="let notification of notifications" class="text-sm">
-              {{ notification }}
-            </li>
-          </ul>
-        </div>
-      </div>
-      <!-- Profile Button -->
-      <button
-        class="bg-green-500 text-white px-4 py-2 rounded-full shadow-md hover:bg-green-600 transition duration-300"
-      >
-        Profile
-      </button>
-    </div>
+  <div class="bg-white rounded-xl shadow-lg p-8 mb-8 text-center">
+    <h1 class="text-4xl font-bold text-gray-800">Welcome Doctor!</h1>
+    <p class="text-sm text-gray-500 mt-2">Your personalized schedule and health insights for today.</p>
   </div>
 
-  <!-- Stats Overview -->
-  <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-    <div class="bg-purple-100 text-purple-700 rounded-lg p-6 shadow-md text-center">
-      <h2 class="text-lg font-semibold">Appointments</h2>
-      <p class="text-4xl font-bold mt-2">12+</p>
-      <p class="text-sm mt-1">Scheduled this week</p>
+  <!-- Health Metrics -->
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
+    <div class="p-6 bg-pink-100 text-pink-800 rounded-lg shadow-md">
+      <h2 class="text-lg font-semibold">Today's BMI Alerts</h2>
+      <p class="text-3xl font-bold mt-2">5 Patients</p>
     </div>
-    <div class="bg-red-100 text-red-700 rounded-lg p-6 shadow-md text-center">
-      <h2 class="text-lg font-semibold">Surgeries</h2>
-      <p class="text-4xl font-bold mt-2">3+</p>
-      <p class="text-sm mt-1">Critical cases</p>
+    <div class="p-6 bg-blue-100 text-blue-800 rounded-lg shadow-md">
+      <h2 class="text-lg font-semibold">Critical Patients</h2>
+      <p class="text-3xl font-bold mt-2">2 Patients</p>
     </div>
-    <div class="bg-green-100 text-green-700 rounded-lg p-6 shadow-md text-center">
-      <h2 class="text-lg font-semibold">Room Visits</h2>
-      <p class="text-4xl font-bold mt-2">12+</p>
-      <p class="text-sm mt-1">Patients seen today</p>
-    </div>
-    <div class="bg-blue-100 text-blue-700 rounded-lg p-6 shadow-md text-center">
-      <h2 class="text-lg font-semibold">Pending Payments</h2>
-      <p class="text-4xl font-bold mt-2">$300</p>
-      <p class="text-sm mt-1">Awaiting clearance</p>
+    <div class="p-6 bg-green-100 text-green-800 rounded-lg shadow-md">
+      <h2 class="text-lg font-semibold">Prescriptions Due</h2>
+      <p class="text-3xl font-bold mt-2">8 Pending</p>
     </div>
   </div>
 
   <!-- Dashboard Content -->
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-    <!-- Chart Section -->
-    <div class="col-span-2">
-      <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
-        <h3 class="text-lg font-semibold mb-4">Patients Survey</h3>
-        <canvas id="patientsChart" class="w-full"></canvas>
-      </div>
-      <div class="bg-white rounded-lg shadow-lg p-6">
-        <h3 class="text-lg font-semibold mb-4">Appointments Review</h3>
-        <canvas id="appointmentsChart" class="w-full"></canvas>
-      </div>
-    </div>
-
-    <!-- Todo List -->
+    <!-- Schedule Section -->
     <div class="bg-white rounded-lg shadow-lg p-6">
-      <h3 class="text-lg font-semibold mb-4">Todo List</h3>
-      <ul>
-        <li class="flex justify-between items-center mb-4">
-          <span>Review patient charts</span>
-          <span class="text-red-500 font-bold">High</span>
-        </li>
-        <li class="flex justify-between items-center mb-4">
-          <span>Follow-up with patients</span>
-          <span class="text-yellow-500 font-bold">Medium</span>
-        </li>
-        <li class="flex justify-between items-center">
-          <span>Organize medical supplies</span>
-          <span class="text-green-500 font-bold">Low</span>
+      <h3 class="text-lg font-bold mb-4">Today's Schedule</h3>
+      <ul class="space-y-4">
+        <li *ngFor="let schedule of dailySchedule" class="flex justify-between items-center">
+          <span class="text-gray-800 font-semibold">{{ schedule.time }}</span>
+          <span class="text-gray-600">{{ schedule.task }}</span>
         </li>
       </ul>
     </div>
 
-    <!-- Quick Actions and Recent Activities -->
-    <div>
-      <!-- Quick Actions -->
-      <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
-        <h3 class="text-lg font-semibold mb-4">Quick Actions</h3>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <button class="bg-green-500 text-white py-2 px-4 rounded-lg shadow-md hover:bg-green-600">
-            Add Patient
-          </button>
-          <button class="bg-blue-500 text-white py-2 px-4 rounded-lg shadow-md hover:bg-blue-600">
-            Schedule Appointment
-          </button>
-        </div>
-      </div>
-      <!-- Recent Activities -->
-      <div class="bg-white rounded-lg shadow-lg p-6">
-        <h3 class="text-lg font-semibold mb-4">Recent Activities</h3>
-        <ul class="space-y-4 text-sm">
-          <li><strong>Dr. Sarah:</strong> Performed surgery on Patient X</li>
-          <li><strong>Dr. John:</strong> Scheduled 3 new appointments</li>
-          <li><strong>Admin:</strong> Updated patient records</li>
-        </ul>
-      </div>
+    <!-- Todo List -->
+    <div class="bg-white rounded-lg shadow-lg p-6">
+      <h3 class="text-lg font-bold mb-4">Todo List</h3>
+      <ul>
+        <li
+          *ngFor="let todo of todos"
+          class="flex justify-between items-center p-4 border rounded-lg hover:bg-gray-50"
+        >
+          <span>{{ todo.task }}</span>
+          <span
+            class="px-3 py-1 rounded-full text-sm"
+            [ngClass]="{
+              'bg-red-500 text-white': todo.priority === 'High',
+              'bg-yellow-500 text-white': todo.priority === 'Medium',
+              'bg-green-500 text-white': todo.priority === 'Low'
+            }"
+          >
+            {{ todo.priority }}
+          </span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Motivational Quote -->
+    <div class="bg-pink-50 rounded-lg shadow-lg p-6">
+      <h3 class="text-lg font-bold mb-4">Motivational Quote</h3>
+      <p class="italic text-gray-700">{{ motivationalQuote }}</p>
+    </div>
+  </div>
+
+  <!-- Chart Section -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8">
+    <div class="bg-white rounded-lg shadow-lg p-6">
+      <h3 class="text-lg font-bold mb-4">Patients Overview</h3>
+      <canvas id="patientsChart" class="w-full"></canvas>
+    </div>
+    <div class="bg-white rounded-lg shadow-lg p-6">
+      <h3 class="text-lg font-bold mb-4">Weekly Appointments</h3>
+      <canvas id="appointmentsChart" class="w-full"></canvas>
     </div>
   </div>
 </div>
