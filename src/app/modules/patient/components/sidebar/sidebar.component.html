@@ -2,19 +2,17 @@
   class="sidebar bg-white shadow-lg fixed top-0 left-0 h-screen overflow-y-auto transition-all duration-200 flex flex-col"
   [class.w-64]="!collapsed" [class.w-20]="collapsed">
 
-  <!-- Navigation Header -->
-  <div class="flex items-center justify-center py-6 border-b border-gray-200">
-    <h1
-      class="text-xl font-bold text-gray-800 transition-all duration-300"
-      [class.hidden]="collapsed"
-    >
-      Main Menu
-    </h1>
-    <i
-      class="bi bi-menu-button text-2xl text-gray-700"
-      [class.hidden]="!collapsed"
-    ></i>
+  <!-- Profile Section -->
+  <div class="profile-section flex flex-col items-center py-8 mt-16 border-b border-gray-200">
+    <div
+      class="profile-details text-center transition-all duration-300"
+      [class.opacity-0]="collapsed" [class.opacity-100]="!collapsed">
+      <span class="name text-lg font-semibold text-gray-800 block">
+        John Doe
+      </span>
+    </div>
   </div>
+
 
   <!-- Navigation Links -->
   <nav class="flex-grow mt-6 px-2">
