@@ -1,1 +1,71 @@
-<p>billing works!</p>
+<div class="p-8 bg-gray-100 min-h-screen">
+  <!-- Billing Header -->
+  <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+    <h2 class="text-3xl font-bold text-gray-800 mb-4">Billing Overview</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- Total Due -->
+      <div class="bg-red-100 text-red-700 rounded-lg p-4 shadow-md">
+        <h3 class="text-lg font-semibold">Total Due</h3>
+        <p class="text-4xl font-bold mt-2">{{ billingSummary.totalDue | currency }}</p>
+      </div>
+      <!-- Total Paid -->
+      <div class="bg-green-100 text-green-700 rounded-lg p-4 shadow-md">
+        <h3 class="text-lg font-semibold">Total Paid</h3>
+        <p class="text-4xl font-bold mt-2">{{ billingSummary.totalPaid | currency }}</p>
+      </div>
+      <!-- Pending Payments -->
+      <div class="bg-yellow-100 text-yellow-700 rounded-lg p-4 shadow-md">
+        <h3 class="text-lg font-semibold">Pending Payments</h3>
+        <p class="text-4xl font-bold mt-2">{{ billingSummary.pending | currency }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Invoices Table -->
+  <div class="bg-white rounded-lg shadow-lg p-6">
+    <h3 class="text-2xl font-bold text-gray-800 mb-4">Invoices</h3>
+    <div class="overflow-auto">
+      <table class="min-w-full bg-white border border-gray-200">
+        <thead class="bg-gray-200">
+        <tr>
+          <th class="px-6 py-3 text-left font-semibold">Invoice ID</th>
+          <th class="px-6 py-3 text-left font-semibold">Date</th>
+          <th class="px-6 py-3 text-left font-semibold">Amount</th>
+          <th class="px-6 py-3 text-left font-semibold">Status</th>
+          <th class="px-6 py-3 text-center font-semibold">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let invoice of invoices" class="hover:bg-gray-100">
+          <td class="px-6 py-4">{{ invoice.id }}</td>
+          <td class="px-6 py-4">{{ invoice.date }}</td>
+          <td class="px-6 py-4">{{ invoice.amount | currency }}</td>
+          <td class="px-6 py-4">
+              <span
+                class="px-3 py-1 text-sm rounded-full"
+                [ngClass]="{
+                  'bg-green-100 text-green-600': invoice.status === 'Paid',
+                  'bg-yellow-100 text-yellow-600': invoice.status === 'Pending',
+                  'bg-red-100 text-red-600': invoice.status === 'Overdue'
+                }"
+              >
+                {{ invoice.status }}
+              </span>
+          </td>
+          <td class="px-6 py-4 flex justify-center space-x-4">
+            <button (click)="downloadInvoice(invoice)" class="text-blue-500 hover:text-blue-700">
+              <i class="bi bi-file-earmark-arrow-down"></i>
+            </button>
+            <button (click)="viewInvoice(invoice)" class="text-green-500 hover:text-green-700">
+              <i class="bi bi-eye"></i>
+            </button>
+            <button (click)="deleteInvoice(invoice.id)" class="text-red-500 hover:text-red-700">
+              <i class="bi bi-trash"></i>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
