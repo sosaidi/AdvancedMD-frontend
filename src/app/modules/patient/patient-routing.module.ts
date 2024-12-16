@@ -6,20 +6,20 @@ import { BillingComponent } from './components/billing/billing.component'
 import { MedicalRecordsComponent } from './components/medical-records/medical-records.component'
 import { PrescriptionsComponent } from './components/prescriptions/prescriptions.component'
 import { SettingsComponent } from './components/settings/settings.component'
-import { LayoutComponent } from '../doctor/layout/layout.component'
+import { LayoutComponent } from './layout/layout.component'
 
 const routes: Routes = [
   {
     path: '',
     component: LayoutComponent,
     children: [
-  { path: 'appointments', component: AppointmentsComponent },
-  { path: 'dashboard', component: PatientDashboardComponent },
-  { path: 'billing', component: BillingComponent },
-  { path: 'medicalrecords', component: MedicalRecordsComponent },
-  { path: 'prescriptions', component: PrescriptionsComponent },
-  { path: 'settings', component: SettingsComponent },
-  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: 'appointments', component: AppointmentsComponent },
+      { path: 'dashboard', component: PatientDashboardComponent },
+      { path: 'billing', component: BillingComponent },
+      { path: 'medical-records', component: MedicalRecordsComponent },
+      { path: 'prescriptions', component: PrescriptionsComponent },
+      { path: 'settings', component: SettingsComponent },
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
     ],
   },
   { path: '**', redirectTo: 'dashboard' },
