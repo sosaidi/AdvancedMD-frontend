@@ -7,6 +7,7 @@ import { MedicalRecordsComponent } from './components/medical-records/medical-re
 import { PrescriptionsComponent } from './components/prescriptions/prescriptions.component'
 import { SettingsComponent } from './components/settings/settings.component'
 import { LayoutComponent } from './layout/layout.component'
+import { ChatComponent } from './components/chat/chat.component'
 
 const routes: Routes = [
   {
@@ -19,6 +20,7 @@ const routes: Routes = [
       { path: 'medical-records', component: MedicalRecordsComponent },
       { path: 'prescriptions', component: PrescriptionsComponent },
       { path: 'settings', component: SettingsComponent },
+      { path: 'chat', component: ChatComponent },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
     ],
   },
