@@ -1,117 +1,97 @@
-<!-- Join Community Text Outside the Card -->
-<div class="join-community-text-container">
-  <h2 class="highlight-text">Join our vibrant community and get started today! 🌟</h2>
-  <p class="fancy-text">
-    Signing up is quick and easy. 🚀💬
-  </p>
-</div>
+<!-- Fullscreen Container -->
+<div class="relative flex items-center justify-center min-h-screen">
+  <!-- Registration Card -->
+  <div class="relative z-10 flex w-full max-w-4xl mx-4 md:mx-auto bg-white shadow-2xl rounded-3xl overflow-hidden">
+    <!-- Left Section: Branding & Community -->
+    <div class="hidden lg:flex w-1/2 flex-col justify-center items-center bg-gradient-to-b from-green-600 to-green-800 text-white p-12">
+      <h1 class="text-5xl font-bold mb-6 animate-fade-in">Join Us Today!</h1>
+      <p class="text-lg text-gray-200 leading-relaxed text-center">
+        Be part of our growing healthcare community and take control of your health journey.
+      </p>
+      <div class="mt-4 rounded-full bg-white p-4">
+        <img src="/Swiss_pharmacy_logo.ico" alt="AdvancedMD Logo" class="w-32 h-32 rounded-full shadow-lg">
+      </div>
+    </div>
 
-<div class="col-md-12">
-  <div class="card card-container">
-    <!-- Profile Image -->
-    <img
-      id="profile-img"
-      src="./Swiss_pharmacy_logo.ico"
-      alt="Swiss Pharmacy Logo"
-      class="profile-img-card"
-    />
-    
-    <!-- Form: If registration is unsuccessful -->
-    @if (!isSuccessful) {
-      <form
-        name="form"
-        (ngSubmit)="f.form.valid && onSubmit()"
-        #f="ngForm"
-        novalidate
-      >
+    <!-- Right Section: Registration Form -->
+    <div class="w-full lg:w-1/2 p-8 md:p-12">
+      <!-- Header -->
+      <div class="text-left mb-8">
+        <h2 class="text-4xl font-bold text-gray-800">
+          Sign Up to <span class="text-green-600">AdvancedMD</span>
+        </h2>
+        <p class="text-gray-500 mt-2 text-sm">Join our vibrant community today 🚀</p>
+      </div>
+
+      <!-- Registration Form -->
+      <form (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate class="space-y-6">
         <!-- Username Field -->
-        <div class="form-group">
+        <div>
+          <label for="username" class="block text-gray-700 font-medium mb-1">Username</label>
           <input
+            id="username"
             type="text"
-            class="form-control"
             name="username"
             [(ngModel)]="form.username"
-            placeholder="Enter Username"
             required
             minlength="3"
             maxlength="20"
             #username="ngModel"
-            [ngClass]="{ 'is-invalid': f.submitted && username.errors }"
+            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-4 focus:ring-green-400 focus:outline-none shadow-sm hover:shadow-md transition"
+            placeholder="Enter your username"
           />
-          <div *ngIf="username.errors && f.submitted" class="invalid-feedback">
-            <div *ngIf="username.errors['required']">Username is required! ✨</div>
-            <div *ngIf="username.errors['minlength']">Username must be at least 3 characters 📝</div>
-            <div *ngIf="username.errors['maxlength']">Username must be at most 20 characters 💡</div>
-          </div>
+          <p *ngIf="username.errors && f.submitted" class="text-red-500 text-sm mt-1">
+            Username must be 3-20 characters long.
+          </p>
         </div>
 
         <!-- Password Field -->
-        <div class="form-group">
-          <input
-            type="password"
-            class="form-control"
-            name="password"
-            [(ngModel)]="form.password"
-            placeholder="Enter Password"
-            required
-            minlength="6"
-            #password="ngModel"
-            [ngClass]="{ 'is-invalid': f.submitted && password.errors }"
-          />
-          <div *ngIf="password.errors && f.submitted" class="invalid-feedback">
-            <div *ngIf="password.errors['required']">Password is required 🔒</div>
-            <div *ngIf="password.errors['minlength']">Password must be at least 6 characters 🔑</div>
+        <div>
+          <label for="password" class="block text-gray-700 font-medium mb-1">Password</label>
+          <div class="relative">
+            <input
+              id="password"
+              type="password"
+              name="password"
+              [(ngModel)]="form.password"
+              required
+              minlength="6"
+              #password="ngModel"
+              class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-4 focus:ring-green-400 focus:outline-none shadow-sm hover:shadow-md transition"
+              placeholder="Enter your password"
+            />
+            <button type="button" class="absolute right-4 top-3 text-gray-400 hover:text-gray-600 transition">
+              <i class="bi bi-eye"></i>
+            </button>
           </div>
+          <p *ngIf="password.errors && f.submitted" class="text-red-500 text-sm mt-1">
+            Password must be at least 6 characters.
+          </p>
         </div>
 
         <!-- Submit Button -->
-        <div class="form-group">
-          <button class="btn btn-success btn-block">
+        <div>
+          <button
+            type="submit"
+            class="w-full py-3 px-6 bg-green-600 text-white font-semibold rounded-lg shadow-lg hover:bg-green-700 focus:ring-4 focus:ring-green-300 transition-all duration-300 transform hover:scale-105"
+          >
             🚀 Sign Up
           </button>
         </div>
 
-        <!-- Signup Error Message -->
-        <div *ngIf="f.submitted && isSignUpFailed">
-          <div class="alert alert-danger">
-            Signup failed! <br />{{ errorMessage }} ❌
-          </div>
+        <!-- Error Handling -->
+        <div *ngIf="f.submitted && isSignUpFailed" class="mt-4 text-center">
+          <p class="text-sm text-red-500">Signup failed: {{ errorMessage }} ❌</p>
         </div>
 
-        <!-- Already Registered Message -->
-        <div class="text-center small-text">
-          Already registered? <a href="/login" class="highlight-text">Login here!</a>
+        <!-- Already Registered -->
+        <div class="text-center mt-6">
+          <p class="text-sm text-gray-600">
+            Already have an account?
+            <a href="/login" class="text-green-600 font-semibold hover:underline transition">Login here</a>
+          </p>
         </div>
       </form>
-    } @else {
-      <!-- Success Message -->
-      <div class="alert alert-success">
-        😊 Your registration is successful! 🎉
-      </div>
-    }
+    </div>
   </div>
 </div>
-<script>
-  angular.module('myApp', ['chart.js'])
-.controller('DashboardController', function($scope) {
-  // Recovered chart data and options
-  $scope.recoveredData = [30, 40, 50, 60, 70, 80];
-  $scope.recoveredLabels = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
-  $scope.recoveredOptions = {
-    responsive: true,
-    maintainAspectRatio: false
-  };
-
-  // Visitors chart data and options
-  $scope.visitorsData = [100, 120, 150, 180, 200, 220];
-  $scope.visitorsLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
-  $scope.visitorsOptions = {
-    responsive: true,
-    maintainAspectRatio: false
-  };
-
-  // Patients chart data and labels
-  $scope.patientsData = [41, 59];
-  $scope.patientsLabels = ['New', 'Recovered'];
-});
-</script>
