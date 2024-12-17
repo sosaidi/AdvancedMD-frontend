@@ -1,11 +1,15 @@
 import { Component } from '@angular/core'
 import { FormsModule } from '@angular/forms'
+import { NgClass, NgForOf, NgIf } from '@angular/common'
 
 @Component({
   selector: 'app-settings',
   standalone: true,
   imports: [
     FormsModule,
+    NgForOf,
+    NgIf,
+    NgClass,
   ],
   templateUrl: './settings.component.html',
 })
@@ -29,6 +33,10 @@ export class SettingsComponent {
   };
 
   theme: 'light' | 'dark' = 'light';
+  emergencyContacts = [{ name: '', phone: '' }];
+  familyHealthNotes: string = '';
+  labTests: File[] = [];
+  activeTab: string = 'profile';
 
   ngOnInit(): void {
     this.loadTheme();
@@ -60,7 +68,26 @@ export class SettingsComponent {
     document.body.classList.toggle('dark', this.theme === 'dark');
   }
 
-  saveSettings() {
+  addEmergencyContact() {
+    this.emergencyContacts.push({ name: '', phone: '' });
+  }
 
+  removeEmergencyContact(index: number) {
+    this.emergencyContacts.splice(index, 1);
+  }
+
+  setActiveTab(tab: string): void {
+    this.activeTab = tab;
+  }
+
+  uploadLabTest(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files?.length) {
+      this.labTests.push(input.files[0]);
+    }
+  }
+
+  removeLabTest(file: File) {
+    this.labTests = this.labTests.filter((f) => f !== file);
   }
 }

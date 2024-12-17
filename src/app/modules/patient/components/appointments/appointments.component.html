@@ -1,13 +1,13 @@
-<div class="p-8 bg-gradient-to-br from-gray-100 via-white to-gray-200 min-h-screen">
+<div class="h-screen w-full bg-gradient-to-br from-gray-100 via-white to-gray-200">
   <!-- Tabs -->
-  <div class="bg-white rounded-xl shadow-2xl p-6">
+  <div class="bg-white rounded-none shadow-lg p-6 w-full">
     <div class="flex justify-between items-center border-b-2 pb-4">
-      <div class="text-center">
-        <h1 class="text-4xl font-extrabold text-gray-800">Appointments</h1>
-        <p class="text-sm text-gray-500">Manage your bookings seamlessly</p>
+      <div class="text-center w-[130vh] mx-auto">
+        <h1 class="text-5xl font-extrabold text-gray-800">Appointments</h1>
+        <p class="text-lg text-gray-500 mt-2">Manage your bookings seamlessly</p>
       </div>
     </div>
-    <div class="flex justify-center space-x-8 mt-4">
+    <div class="flex justify-center space-x-8 mt-9">
       <button
         (click)="setActiveTab('book')"
         [class.bg-blue-500]="activeTab === 'book'"

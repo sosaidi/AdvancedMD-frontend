@@ -51,6 +51,23 @@
         </a>
       </li>
 
+      <!-- Appointments -->
+      <li>
+        <a
+          routerLink="/patient/lab-results"
+          routerLinkActive="bg-green-100 text-green-600"
+          class="flex items-center gap-4 px-4 py-3 rounded-md text-gray-700 hover:bg-green-50 transition-all"
+        >
+          <i class="bi bi-calendar-check text-xl"></i>
+          <span
+            class="transition-all duration-300"
+            [class.hidden]="collapsed"
+          >
+            Lab Results
+          </span>
+        </a>
+      </li>
+
       <!-- Prescriptions -->
       <li>
         <a

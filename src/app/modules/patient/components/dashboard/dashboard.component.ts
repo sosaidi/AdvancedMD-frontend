@@ -1,35 +1,52 @@
 import { Component, AfterViewInit, OnInit } from '@angular/core';
 import Chart from 'chart.js/auto';
 import { NgClass, NgForOf, NgIf } from '@angular/common'
+import { FormsModule } from '@angular/forms'
 
 @Component({
   selector: 'app-patient-dashboard',
   templateUrl: './dashboard.component.html',
   standalone: true,
-  imports: [NgIf, NgForOf, NgClass],
+  imports: [NgIf, NgForOf, NgClass, FormsModule],
 })
 export class PatientDashboardComponent implements OnInit, AfterViewInit {
   loading: boolean = true;
   bloodPressureReadings: { date: string; systolic: number; diastolic: number }[] = [];
   prescriptions: { name: string; status: string }[] = [];
-  reminders: { message: string; time: string }[] = [];
+
   appointments: { date: string; time: string; doctor: string }[] = [];
   wellnessTip: string = '';
   heartRate: number = 72;
   healthGoals: { goal: string; progress: number; target: number }[] = [];
+
   labTests: { test: string; status: string; date: string }[] = [];
   allergies: string[] = [];
   healthHistory: { date: string; detail: string }[] = [];
   familyHealth: { name: string; metric: string; value: string }[] = [];
   emergencyContacts: { name: string; relation: string; phone: string }[] = [];
+
   waterIntake: number = 6;
   waterTarget: number = 8;
+
   stepsProgress: number = 6500;
   stepsTarget: number = 10000;
+
+  reminders: { message: string; time: string; completed: boolean; timestamp: number }[] = [];
+  activeReminders: any[] = [];
+  completedReminders: any[] = [];
+  newReminder = { message: '', time: '', timestamp: 0 };
 
   ngOnInit(): void {
     this.loading = false;
     this.initializeMockData();
+
+    this.reminders = [
+      { message: 'Take your morning medication', time: '8:00 AM', completed: false, timestamp: Date.now() },
+      { message: 'Drink water!', time: '2:00 PM', completed: false, timestamp: Date.now() },
+    ];
+
+    this.loadReminders();
+    this.autoDeleteReminders();
   }
 
   private initializeMockData(): void {
@@ -45,8 +62,8 @@ export class PatientDashboardComponent implements OnInit, AfterViewInit {
     ];
 
     this.reminders = [
-      { message: 'Take your morning medication', time: '8:00 AM' },
-      { message: 'Drink water!', time: '2:00 PM' },
+        { message: 'Take your morning medication', time: '8:00 AM', completed: false, timestamp: Date.now() },
+        { message: 'Drink water!', time: '2:00 PM', completed: false, timestamp: Date.now() },
     ];
 
     this.appointments = [
@@ -106,6 +123,43 @@ export class PatientDashboardComponent implements OnInit, AfterViewInit {
   // Decrease steps progress
   decreaseSteps(): void {
     if (this.stepsProgress > 0) this.stepsProgress -= 500;
+  }
+
+  // Remove a reminder
+  removeReminder(index: number): void {
+    this.activeReminders.splice(index, 1);
+    this.reminders = [...this.activeReminders];
+  }
+
+  // Load active reminders
+  loadReminders(): void {
+    const now = Date.now();
+    this.activeReminders = this.reminders.filter((reminder) => now - reminder.timestamp < 24 * 60 * 60 * 1000);
+  }
+
+  // Automatically delete reminders older than 24 hours
+  autoDeleteReminders(): void {
+    setInterval(() => {
+      const now = Date.now();
+      this.reminders = this.reminders.filter((reminder) => now - reminder.timestamp < 24 * 60 * 60 * 1000);
+      this.loadReminders();
+    }, 60 * 1000); // Check every minute
+  }
+
+  // Add a new reminder
+  addReminder(event: Event): void {
+    event.preventDefault();
+
+    const now = Date.now();
+    const reminder = {
+      ...this.newReminder,
+      completed: false,
+      timestamp: now,
+    };
+
+    this.reminders.unshift(reminder); // Add the new reminder at the top
+    this.newReminder = { message: '', time: '', timestamp: 0 }; // Clear the input fields
+    this.loadReminders();
   }
 
   private initBloodPressureChart(): void {

@@ -8,6 +8,7 @@ import { PrescriptionsComponent } from './components/prescriptions/prescriptions
 import { SettingsComponent } from './components/settings/settings.component'
 import { LayoutComponent } from './layout/layout.component'
 import { ChatComponent } from './components/chat/chat.component'
+import { LabResultsComponent } from './components/lab-results/lab-results.component'
 
 const routes: Routes = [
   {
@@ -21,6 +22,7 @@ const routes: Routes = [
       { path: 'prescriptions', component: PrescriptionsComponent },
       { path: 'settings', component: SettingsComponent },
       { path: 'chat', component: ChatComponent },
+      { path: 'lab-results', component: LabResultsComponent },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
     ],
   },

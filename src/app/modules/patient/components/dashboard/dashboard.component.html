@@ -135,20 +135,66 @@
       <canvas id="bloodPressureChart" class="w-full"></canvas>
     </div>
 
-    <!-- Reminders Section -->
-    <div class="bg-white rounded-lg shadow-lg p-6">
-      <h3 class="text-lg font-bold mb-4">Today's Reminders</h3>
-      <ul>
-        <li
-          *ngFor="let reminder of reminders"
-          class="flex justify-between items-center p-4 border rounded-lg hover:bg-gray-50 mb-2"
+    <!-- Reminders -->
+    <div class="bg-white p-9 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300">
+      <h2 class="text-2xl font-bold text-gray-700 flex items-center gap-1">
+        <i class="bi bi-alarm text-purple-500 text-2xl"></i> Today's Reminders
+      </h2>
+      <!-- Add Reminder -->
+      <form (submit)="addReminder($event)" class="mt-1 flex gap-1">
+        <input
+          [(ngModel)]="newReminder.message"
+          name="newReminderMessage"
+          type="text"
+          placeholder="Write a reminder..."
+          class="flex-grow px-1 py-1 border rounded-lg focus:ring-1 focus:ring-purple-500"
+          required
+        />
+        <input
+          [(ngModel)]="newReminder.time"
+          name="newReminderTime"
+          type="time"
+          class="px-1 py-1 border rounded-lg focus:ring-2 focus:ring-purple-500"
+          required
+        />
+        <button
+          type="submit"
+          class="bg-green-500 hover:bg-green-600 text-white px-1 py-1 rounded-lg transition"
         >
-          <span>{{ reminder.message }}</span>
+          Add
+        </button>
+      </form>
+      <!-- List -->
+      <ul class="mt-6 space-y-4" *ngIf="activeReminders.length > 0">
+        <li
+          *ngFor="let reminder of activeReminders; let i = index"
+          class="flex justify-between items-center p-4 border-l-4 rounded-lg shadow-sm"
+          [ngClass]="{ 'border-purple-500': true }"
+        >
+          <div class="flex items-center gap-4">
+            <!-- Circle Button -->
+            <button
+              (click)="removeReminder(i)"
+              class="text-2xl text-gray-400 hover:text-red-500 transition"
+            >
+              <i class="bi bi-circle"></i>
+            </button>
+            <span
+              class="text-gray-700"
+            >
+          {{ reminder.message }}
+        </span>
+          </div>
           <span class="text-gray-500">{{ reminder.time }}</span>
         </li>
       </ul>
+      <!-- No Reminders Message -->
+      <p *ngIf="activeReminders.length === 0" class="text-center text-gray-500 mt-6">
+        No reminders left for today. 🎉
+      </p>
     </div>
   </div>
+
 
     <!-- Emergency Contacts -->
     <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
@@ -179,20 +225,6 @@
         <li *ngFor="let family of familyHealth" class="flex justify-between items-center p-4 border rounded-lg">
           <span>{{ family.name }}</span>
           <span>{{ family.metric }}: {{ family.value }}</span>
-        </li>
-      </ul>
-    </div>
-
-    <!-- Daily Reminders -->
-    <div class="bg-white rounded-lg shadow-lg p-6">
-      <h3 class="text-lg font-bold mb-4">Today's Reminders</h3>
-      <ul>
-        <li
-          *ngFor="let reminder of reminders"
-          class="flex justify-between items-center p-4 border rounded-lg hover:bg-gray-50 mb-2"
-        >
-          <span>{{ reminder.message }}</span>
-          <span class="text-gray-500">{{ reminder.time }}</span>
         </li>
       </ul>
     </div>
