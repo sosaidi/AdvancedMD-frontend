@@ -1,97 +1,125 @@
-<div class="bg-white rounded-lg shadow-lg p-6">
-  <!-- Header with Task Stats -->
-  <div class="flex justify-between items-center mb-4">
-    <h3 class="text-lg font-semibold">Tasks</h3>
-    <span class="text-gray-600 text-sm">
+<div class="bg-white rounded-2xl shadow-2xl p-6 max-w-4xl w-[290vh] mx-auto">
+  <!-- Header: Title and Stats -->
+  <div class="bg-gradient-to-r from-green-200 to-green-300 text-white rounded-lg shadow-lg p-8 mb-10 flex flex-col md:flex-row justify-between items-start md:items-center">
+    <h3 class="text-5xl font-bold tracking-wide mb-2">Task Manager</h3>
+    <div
+      class="bg-white-100 text-white-600 text-sm font-semibold px-4 py-1 rounded-full shadow-sm"
+    >
       {{ completedCount }} / {{ todos.length }} Completed
-    </span>
+    </div>
   </div>
 
-  <!-- Task Entry -->
-  <div class="flex items-center gap-2 mb-4">
-    <span
-      class="w-5 h-5 border-2 border-gray-300 rounded-full flex-shrink-0 cursor-pointer"
-    ></span>
+  <!-- Task Entry Section -->
+  <div
+    class="flex flex-wrap items-center gap-4 bg-gray-50 p-4 rounded-lg shadow-sm"
+  >
+    <!-- Task Input -->
     <input
       [(ngModel)]="newTodo.task"
       (keydown.enter)="addTodo()"
       placeholder="Add a new task..."
-      class="flex-grow px-4 py-2 border-b border-gray-300 focus:outline-none focus:border-green-500"
-      required
+      class="flex-grow px-4 py-2 border rounded-lg focus:ring-4 focus:ring-green-300 focus:outline-none"
     />
+
+    <!-- Priority Dropdown -->
     <select
       [(ngModel)]="newTodo.priority"
-      name="newTodoPriority"
-      class="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+      class="px-4 py-2 border rounded-lg focus:ring-4 focus:ring-green-300"
     >
       <option value="High">High</option>
       <option value="Medium">Medium</option>
       <option value="Low">Low</option>
     </select>
+
+    <!-- Due Date Picker -->
     <input
       type="date"
       [(ngModel)]="newTodo.dueDate"
-      class="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+      class="px-4 py-2 border rounded-lg focus:ring-4 focus:ring-green-300"
     />
+
+    <!-- Add Task Button -->
+    <button
+      (click)="addTodo()"
+      class="px-6 py-2 bg-green-500 text-white font-medium rounded-lg shadow-md hover:bg-green-600 transition-all duration-300"
+    >
+      Add Task
+    </button>
   </div>
 
-  <!-- Todo List -->
-  <ul class="space-y-2 max-h-40 overflow-auto">
+  <!-- Task List Section -->
+  <ul class="mt-6 space-y-4 max-h-60 overflow-y-auto pr-2">
     <li
       *ngFor="let todo of todos"
-      class="flex justify-between items-center p-2 border-b border-gray-200"
+      class="flex justify-between items-center bg-white rounded-lg p-4 shadow-sm border border-gray-200 hover:shadow-md transition-all duration-300"
     >
-      <!-- Left Section: Completion and Task Info -->
-      <div class="flex items-center gap-2">
-        <span
+      <!-- Left: Task Info & Completion -->
+      <div class="flex items-center gap-4">
+        <!-- Completion Checkbox -->
+        <div
           (click)="toggleComplete(todo)"
-          class="w-5 h-5 border-2 rounded-full flex-shrink-0 cursor-pointer"
+          class="w-6 h-6 flex items-center justify-center border-2 rounded-full cursor-pointer transition-all duration-300"
           [ngClass]="{
             'bg-green-500 border-green-500': todo.completed,
             'border-gray-300': !todo.completed
           }"
-        ></span>
+        >
+          <i
+            class="bi bi-check text-white"
+            *ngIf="todo.completed"
+          ></i>
+        </div>
+
+        <!-- Task Details -->
         <div>
           <span
+            class="text-lg font-medium"
             [class.line-through]="todo.completed"
             [class.text-gray-400]="todo.completed"
-            class="text-sm"
           >
             {{ todo.task }}
           </span>
-          <span
-            class="ml-2 text-xs text-gray-500"
-            *ngIf="todo.dueDate"
-          >
-            (Due: {{ todo.dueDate | date: 'shortDate' }})
-          </span>
+          <div class="text-sm text-gray-500">
+            <span *ngIf="todo.dueDate" class="block">
+              Due: {{ todo.dueDate | date: 'shortDate' }}
+            </span>
+          </div>
         </div>
       </div>
 
-      <!-- Right Section: Priority, Edit & Delete -->
-      <div class="flex items-center gap-2">
-        <!-- Priority Indicator -->
+      <!-- Right: Priority Selector & Delete Button -->
+      <div class="flex items-center gap-4">
+        <!-- Priority Selector -->
         <select
           [(ngModel)]="todo.priority"
-          class="text-xs bg-transparent border-none text-gray-500"
+          class="px-2 py-1 rounded-lg text-sm font-semibold"
           [ngClass]="{
-            'text-red-500': todo.priority === 'High',
-            'text-yellow-500': todo.priority === 'Medium',
-            'text-green-500': todo.priority === 'Low'
+            'text-red-600 bg-red-100': todo.priority === 'High',
+            'text-yellow-600 bg-yellow-100': todo.priority === 'Medium',
+            'text-green-600 bg-green-100': todo.priority === 'Low'
           }"
         >
           <option value="High">High</option>
           <option value="Medium">Medium</option>
           <option value="Low">Low</option>
         </select>
+
         <!-- Delete Button -->
         <button
           (click)="deleteTodo(todo)"
-          class="text-xs px-2 py-1 rounded bg-red-500 text-white hover:bg-red-600"
+          class="bg-red-500 text-white px-4 py-1 rounded-lg text-sm font-medium hover:bg-red-600 transition-all duration-300"
         >
           Delete
         </button>
       </div>
     </li>
   </ul>
+
+  <!-- Empty State -->
+  <div
+    *ngIf="todos.length === 0"
+    class="mt-6 text-center text-gray-500 text-lg italic"
+  >
+    No tasks available. Start adding some!
+  </div>
 </div>

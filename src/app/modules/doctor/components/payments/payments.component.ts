@@ -1,7 +1,7 @@
 import { Component } from '@angular/core'
 import jsPDF from 'jspdf'
 import { FormsModule } from '@angular/forms'
-import { NgClass, NgIf, CurrencyPipe, NgForOf } from '@angular/common'
+import { NgClass, NgIf, CurrencyPipe, NgForOf, NgOptimizedImage } from '@angular/common'
 
 @Component({
   selector: 'app-payments',
@@ -12,6 +12,7 @@ import { NgClass, NgIf, CurrencyPipe, NgForOf } from '@angular/common'
     NgClass,
     CurrencyPipe,
     NgForOf,
+    NgOptimizedImage,
     // Explicitly import CurrencyPipe
   ],
   templateUrl: './payments.component.html',

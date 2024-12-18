@@ -1,13 +1,13 @@
 <div class="p-8 bg-gradient-to-br from-gray-100 via-white to-gray-200 min-h-screen">
   <!-- Header Section -->
-  <div class="bg-white rounded-lg shadow-lg p-6 flex justify-between items-center mb-8">
+  <div class="bg-gradient-to-r from-green-200 to-green-300 text-white rounded-lg shadow-lg p-8 mb-10 flex flex-col md:flex-row justify-between items-start md:items-center">
     <div class="flex items-center gap-4">
-      <i class="bi bi-calendar-event text-4xl text-green-500"></i>
-      <h1 class="text-4xl font-extrabold text-gray-800">{{ currentViewTitle }}</h1>
+      <i class="bi bi-calendar-event text-4xl text-white-500"></i>
+      <h1 class="text-5xl font-bold tracking-wide mb-2">{{ currentViewTitle }}</h1>
     </div>
     <button
       (click)="openAddEventModal()"
-      class="flex items-center gap-2 px-6 py-3 bg-green-500 text-white rounded-lg shadow-md hover:bg-green-600 transition"
+      class="mt-4 md:mt-0 px-6 py-3 bg-white text-green-600 rounded-lg shadow-lg hover:bg-gray-100 transition-all duration-300"
     >
       <i class="bi bi-plus-circle-fill"></i>
       Add Event
@@ -52,7 +52,6 @@
   <!-- FullCalendar -->
   <div class="bg-white rounded-lg shadow-lg p-6">
     <full-calendar
-      #calendar
       [options]="calendarOptions"
       class="w-[120vh] mx-auto"
     ></full-calendar>

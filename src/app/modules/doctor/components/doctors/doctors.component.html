@@ -1,8 +1,8 @@
 <div class="p-8 bg-gradient-to-br from-gray-100 via-white to-gray-200 min-h-screen">
   <!-- Header Section -->
-  <div class="bg-gradient-to-r from-green-400 to-green-500 text-white rounded-lg shadow-lg p-8 mb-10 flex flex-col md:flex-row justify-between items-start md:items-center">
+  <div class="bg-gradient-to-r from-green-200 to-green-300 text-white rounded-lg shadow-lg p-8 mb-10 flex flex-col md:flex-row justify-between items-start md:items-center">
     <div>
-      <h1 class="text-5xl font-extrabold tracking-wide mb-2">Doctors</h1>
+      <h1 class="text-5xl font-bold tracking-wide mb-2">Doctors</h1>
       <p class="text-lg">Meet our professional medical team</p>
     </div>
     <button
@@ -23,10 +23,10 @@
         <!-- Profile Picture -->
         <div class="w-28 h-28 rounded-full overflow-hidden border-4 border-green-400 shadow-md mb-4">
           <img
-            [src]="doctor.photo || 'https://via.placeholder.com/150'"
+            ngSrc="doctor.photo || 'https://via.placeholder.com/150'"
             alt="Doctor Profile"
             class="w-full h-full object-cover"
-          />
+            fill />
         </div>
 
         <!-- Doctor Info -->
@@ -65,7 +65,7 @@
   <!-- No Doctors Message -->
   <ng-template #noDoctors>
     <div class="text-center py-20">
-      <img src="https://via.placeholder.com/150" alt="No Doctors" class="w-40 mx-auto mb-6">
+      <img ngSrc="https://via.placeholder.com/150" alt="No Doctors" class="w-40 mx-auto mb-6" fill>
       <h2 class="text-3xl font-bold text-gray-700">No doctors found!</h2>
       <p class="text-gray-500 mt-2">Add a new doctor to see them listed here.</p>
     </div>

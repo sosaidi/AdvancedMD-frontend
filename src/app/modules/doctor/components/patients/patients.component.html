@@ -1,7 +1,7 @@
-<div class="p-8 bg-gradient-to-br from-gray-100 via-white to-gray-200 min-h-screen">
+<div class="p-8 bg-gradient-to-br from-gray-100 via-white to-gray-200 min-h-screen w-[130vh] mx-auto">
   <!-- Header -->
-  <div class="bg-gradient-to-r from-green-400 to-green-500 text-white rounded-lg shadow-lg p-8 mb-10 flex justify-between items-center">
-    <h1 class="text-5xl font-extrabold">Patients</h1>
+  <div class="bg-gradient-to-r from-green-200 to-green-300 text-white rounded-lg shadow-lg p-8 mb-10 flex justify-between items-center">
+    <h1 class="text-5xl font-bold">Patients</h1>
     <button
       (click)="openForm()"
       class="px-6 py-3 bg-white text-green-600 rounded-lg shadow-md hover:bg-gray-100 transition duration-300"
@@ -43,10 +43,10 @@
             class="flex items-center px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
           >
             <img
-              src="/assets/pdf-icon.png"
+              ngSrc="/assets/pdf-icon.png"
               alt="PDF Logo"
               class="w-5 h-5 mr-2"
-            />
+              height="512" width="512" />
             Generate PDF
           </button>
         </div>
@@ -57,7 +57,7 @@
   <!-- No Patients Message -->
   <ng-template #noPatients>
     <div class="text-center py-20">
-      <img src="https://via.placeholder.com/150" alt="No Patients" class="w-40 mx-auto mb-6">
+      <img ngSrc="https://via.placeholder.com/150" alt="No Patients" class="w-40 mx-auto mb-6" fill>
       <h2 class="text-3xl font-bold text-gray-700">No patients found!</h2>
       <p class="text-gray-500 mt-2">Add a new patient to see them listed here.</p>
     </div>

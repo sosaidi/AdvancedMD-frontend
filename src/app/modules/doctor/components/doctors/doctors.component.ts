@@ -1,11 +1,11 @@
 import { Component } from '@angular/core'
-import { NgClass, NgForOf, NgIf } from '@angular/common'
+import { NgClass, NgForOf, NgIf, NgOptimizedImage } from '@angular/common'
 import { FormsModule } from '@angular/forms'
 
 @Component({
   selector: 'app-doctors',
   standalone: true,
-  imports: [NgClass, FormsModule, NgForOf, NgIf],
+  imports: [NgClass, FormsModule, NgForOf, NgIf, NgOptimizedImage],
   templateUrl: './doctors.component.html',
 })
 export class DoctorsComponent {

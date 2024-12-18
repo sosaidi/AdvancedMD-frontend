@@ -1,10 +1,10 @@
 <div class="p-8 bg-gradient-to-br from-gray-100 via-white to-gray-200 min-h-screen">
   <!-- Header -->
-  <div class="bg-gradient-to-r from-green-400 to-green-500 text-white rounded-lg shadow-lg p-8 mb-10 flex justify-between items-center">
-    <h1 class="text-5xl font-extrabold">Payments</h1>
+  <div class="bg-gradient-to-r from-green-200 to-green-300 text-white rounded-lg shadow-lg p-8 mb-10 flex justify-between items-center">
+    <h1 class="text-5xl font-bold">Payments</h1>
     <button
       (click)="openForm()"
-      class="px-6 py-3 bg-white text-blue-600 rounded-lg shadow-md hover:bg-gray-100 transition duration-300"
+      class="px-6 py-3 bg-white text-green-600 rounded-lg shadow-md hover:bg-gray-100 transition duration-300"
     >
       + Add Payment
     </button>
@@ -79,7 +79,7 @@
   <!-- No Payments Message -->
   <ng-template #noPayments>
     <div class="text-center py-20">
-      <img src="https://via.placeholder.com/150" alt="No Payments" class="w-40 mx-auto mb-6">
+      <img ngSrc="https://via.placeholder.com/150" alt="No Payments" class="w-40 mx-auto mb-6" fill>
       <h2 class="text-3xl font-bold text-gray-700">No payments found!</h2>
       <p class="text-gray-500 mt-2">Add a new payment to see it listed here.</p>
     </div>
