@@ -80,23 +80,25 @@ export class AppointmentsComponent implements OnInit {
     ]
     this.filteredAppointments = this.appointments.slice()
     this.calculateAppointmentStats()
-    this.appointments = this.appointmentService.getAppointments();
-    this.loadAppointments();
+    this.appointments = this.appointmentService.getAppointments()
+    this.loadAppointments()
   }
 
   searchAppointments(): void {
     this.filteredAppointments = this.appointments.filter((appointment) => {
       const matchesSearch =
-        appointment.patient.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-        appointment.date.includes(this.searchQuery);
+        appointment.patient
+          .toLowerCase()
+          .includes(this.searchQuery.toLowerCase()) ||
+        appointment.date.includes(this.searchQuery)
       const matchesDate = this.filterDate
         ? appointment.date === this.filterDate
-        : true;
+        : true
       const matchesStatus = this.filterStatus
         ? appointment.status === this.filterStatus
-        : true;
-      return matchesSearch && matchesDate && matchesStatus;
-    });
+        : true
+      return matchesSearch && matchesDate && matchesStatus
+    })
   }
 
   sortAppointments(): void {
@@ -178,22 +180,22 @@ export class AppointmentsComponent implements OnInit {
   }
 
   private loadAppointments(): void {
-    this.appointments = this.appointmentService.getAppointments();
-    this.filteredAppointments = [...this.appointments];
-    this.calculateAppointmentStats();
+    this.appointments = this.appointmentService.getAppointments()
+    this.filteredAppointments = [...this.appointments]
+    this.calculateAppointmentStats()
   }
 
   private calculateAppointmentStats(): void {
-    this.totalAppointments = this.appointments.length;
+    this.totalAppointments = this.appointments.length
     this.upcomingAppointments = this.appointments.filter(
       (a) => a.status === 'Upcoming'
-    ).length;
+    ).length
     this.completedAppointments = this.appointments.filter(
       (a) => a.status === 'Completed'
-    ).length;
+    ).length
     this.cancelledAppointments = this.appointments.filter(
       (a) => a.status === 'Cancelled'
-    ).length;
+    ).length
   }
 
   exportAppointments(): void {
@@ -228,14 +230,20 @@ export class AppointmentsComponent implements OnInit {
       time: '9:00 AM',
       status: 'Upcoming',
       details: 'Newly added appointment.',
-    };
+    }
 
-    this.appointmentService.addAppointment(newAppointment);
-    this.loadAppointments();
+    this.appointmentService.addAppointment(newAppointment)
+    this.loadAppointments()
   }
 
-  updateAppointmentStatus({ appointment, newStatus }: { appointment: any, newStatus: any }): void {
-    this.appointmentService.updateAppointmentStatus(appointment, newStatus);
-    this.loadAppointments();
+  updateAppointmentStatus({
+    appointment,
+    newStatus,
+  }: {
+    appointment: any
+    newStatus: any
+  }): void {
+    this.appointmentService.updateAppointmentStatus(appointment, newStatus)
+    this.loadAppointments()
   }
 }

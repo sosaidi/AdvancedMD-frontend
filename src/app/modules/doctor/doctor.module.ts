@@ -27,7 +27,7 @@ import { FullCalendarModule } from '@fullcalendar/angular'
     TodoListComponent,
     ChatComponent,
     HttpClientModule,
-    FullCalendarModule
+    FullCalendarModule,
   ],
 })
 export class DoctorModule {}

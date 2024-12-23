@@ -1,12 +1,12 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Injectable } from '@angular/core'
+import { BehaviorSubject } from 'rxjs'
 
 export interface Appointment {
-  patient: string;
-  date: string;
-  time: string;
-  status: string;
-  details: string;
+  patient: string
+  date: string
+  time: string
+  status: string
+  details: string
 }
 
 @Injectable({
@@ -42,34 +42,36 @@ export class AppointmentService {
       status: 'Cancelled',
       details: 'Post-op check-up.',
     },
-  ];
+  ]
 
   // BehaviorSubject to enable real-time updates
-  private appointmentsSubject = new BehaviorSubject<Appointment[]>(this.appointments);
+  private appointmentsSubject = new BehaviorSubject<Appointment[]>(
+    this.appointments
+  )
 
   getAppointmentsObservable() {
-    return this.appointmentsSubject.asObservable();
+    return this.appointmentsSubject.asObservable()
   }
 
   getAppointments() {
-    return this.appointments;
+    return this.appointments
   }
 
   addAppointment(appointment: Appointment) {
-    this.appointments.unshift(appointment);
-    this.appointmentsSubject.next(this.appointments); // Notify all subscribers
+    this.appointments.unshift(appointment)
+    this.appointmentsSubject.next(this.appointments) // Notify all subscribers
   }
 
   updateAppointmentStatus(appointment: Appointment, newStatus: string) {
-    const index = this.appointments.findIndex((a) => a === appointment);
+    const index = this.appointments.findIndex((a) => a === appointment)
     if (index !== -1) {
-      this.appointments[index].status = newStatus;
-      this.appointmentsSubject.next(this.appointments); // Notify all subscribers
+      this.appointments[index].status = newStatus
+      this.appointmentsSubject.next(this.appointments) // Notify all subscribers
     }
   }
 
   deleteAppointment(appointment: Appointment) {
-    this.appointments = this.appointments.filter((a) => a !== appointment);
-    this.appointmentsSubject.next(this.appointments); // Notify all subscribers
+    this.appointments = this.appointments.filter((a) => a !== appointment)
+    this.appointmentsSubject.next(this.appointments) // Notify all subscribers
   }
 }

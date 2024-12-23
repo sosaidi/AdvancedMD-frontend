@@ -29,9 +29,7 @@ export class CalendarComponent {
       selectable: true,
       headerToolbar: false,
       dayHeaderFormat: { weekday: 'long' },
-      events: [
-
-      ],
+      events: [],
       dateClick: this.handleDateClick.bind(this),
       eventClick: this.handleEventClick.bind(this),
     }
@@ -57,17 +55,21 @@ export class CalendarComponent {
   }
 
   closeAddEventModal(): void {
-    this.showAddEventModal = false;
-    this.newEvent = { title: '', start: '', description: '' };
+    this.showAddEventModal = false
+    this.newEvent = { title: '', start: '', description: '' }
   }
 
   saveNewEvent(event: Event): void {
-    event.preventDefault();
+    event.preventDefault()
     if (this.newEvent.title && this.newEvent.start) {
-      this.addEvent(this.newEvent.title, this.newEvent.start, this.newEvent.description);
-      this.closeAddEventModal();
+      this.addEvent(
+        this.newEvent.title,
+        this.newEvent.start,
+        this.newEvent.description
+      )
+      this.closeAddEventModal()
     } else {
-      alert('Please fill out all required fields.');
+      alert('Please fill out all required fields.')
     }
   }
 
@@ -100,49 +102,53 @@ export class CalendarComponent {
   }
 
   updateViewTitle(): void {
-    const calendarElement = document.querySelector('full-calendar') as any;
+    const calendarElement = document.querySelector('full-calendar') as any
     if (!calendarElement) {
-      console.error('FullCalendar element not found.');
-      return;
+      console.error('FullCalendar element not found.')
+      return
     }
 
-    const calendarApi = calendarElement.getApi();
+    const calendarApi = calendarElement.getApi()
     if (!calendarApi) {
-      console.error('Calendar API is not available.');
-      return;
+      console.error('Calendar API is not available.')
+      return
     }
 
-    const view = calendarApi.view;
+    const view = calendarApi.view
     if (view.type === 'dayGridMonth') {
       this.currentViewTitle =
-        'Month View: ' + this.datePipe.transform(view.currentStart, 'MMMM y');
+        'Month View: ' + this.datePipe.transform(view.currentStart, 'MMMM y')
     } else if (view.type === 'timeGridWeek') {
-      const start = this.datePipe.transform(view.currentStart, 'MMM d');
-      const end = this.datePipe.transform(view.currentEnd, 'MMM d');
-      this.currentViewTitle = `Week View: ${start} - ${end}`;
+      const start = this.datePipe.transform(view.currentStart, 'MMM d')
+      const end = this.datePipe.transform(view.currentEnd, 'MMM d')
+      this.currentViewTitle = `Week View: ${start} - ${end}`
     } else if (view.type === 'timeGridDay') {
       this.currentViewTitle =
-        'Day View: ' + this.datePipe.transform(view.currentStart, 'fullDate');
+        'Day View: ' + this.datePipe.transform(view.currentStart, 'fullDate')
     } else {
-      this.currentViewTitle = 'Unknown View';
+      this.currentViewTitle = 'Unknown View'
     }
   }
 
-  addEvent(title: string, date: string, description: string = 'No description provided'): void {
+  addEvent(
+    title: string,
+    date: string,
+    description: string = 'No description provided'
+  ): void {
     if (title && date) {
       const newEvent = {
         title,
         start: date,
         description,
-      };
+      }
       this.calendarOptions = {
         ...this.calendarOptions,
         events: [...this.calendarOptions.events, newEvent],
-      };
-      this.updateViewTitle();
-      alert(`Event "${title}" added on ${date}!`);
+      }
+      this.updateViewTitle()
+      alert(`Event "${title}" added on ${date}!`)
     } else {
-      alert('Event title and date are required.');
+      alert('Event title and date are required.')
     }
   }
 

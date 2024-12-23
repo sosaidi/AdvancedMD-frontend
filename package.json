@@ -7,7 +7,6 @@
     "start": "ng serve",
     "build": "ng build --configuration production",
     "test": "ng test",
-    "prettier": "prettier --write \"src/**/*.ts\"",
     "sonar": "sonarqube-scanner",
     "cy:run": "cypress run",
     "cy:open": "cypress open",

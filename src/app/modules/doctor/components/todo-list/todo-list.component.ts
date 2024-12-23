@@ -1,7 +1,7 @@
 import { Component } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { DatePipe, NgClass, NgForOf, NgIf } from '@angular/common'
-import { TodoService } from '../../services/todo.service';
+import { TodoService } from '../../services/todo.service'
 
 @Component({
   selector: 'app-todo-list',
@@ -17,7 +17,7 @@ export class TodoListComponent {
 
   // Todo-Service
   get todos() {
-    return this.todoService.getTodos();
+    return this.todoService.getTodos()
   }
 
   // Add a new task
@@ -37,13 +37,13 @@ export class TodoListComponent {
   // Toggle completion status
   toggleComplete(todo: { completed: boolean }): void {
     //todo.completed = !todo.completed
-    this.todoService.toggleComplete(todo);
+    this.todoService.toggleComplete(todo)
     this.updateCompletedCount()
   }
 
   // Delete a task
   deleteTodo(todo: { task: string }): void {
-    this.todoService.deleteTodo(todo);
+    this.todoService.deleteTodo(todo)
     this.updateCompletedCount()
   }
 
