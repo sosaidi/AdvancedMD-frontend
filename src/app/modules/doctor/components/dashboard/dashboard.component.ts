@@ -2,6 +2,7 @@ import { Component, AfterViewInit, OnInit } from '@angular/core'
 import Chart from 'chart.js/auto'
 import { NgClass, NgForOf, NgIf } from '@angular/common'
 import { HttpClient } from '@angular/common/http'
+import { TodoService } from '../../services/todo.service'
 
 @Component({
   selector: 'app-doctor-dashboard',
@@ -14,7 +15,7 @@ export class DoctorDashboardComponent implements OnInit, AfterViewInit {
   dailySchedule: { time: string; task: string }[] = []
   healthMetrics: { metric: string; value: string }[] = []
   motivationalQuote: string = ''
-  todos: { task: string; priority: string }[] = []
+  //todos: { task: string; priority: string }[] = []
   currentTime: string = ''
 
   ngOnInit(): void {
@@ -25,7 +26,11 @@ export class DoctorDashboardComponent implements OnInit, AfterViewInit {
     this.startQuoteUpdater();
   }
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private todoService: TodoService) {}
+
+  get todos() {
+    return this.todoService.getTodos();
+  }
 
   private initializeMockData(): void {
     this.dailySchedule = [
@@ -41,11 +46,11 @@ export class DoctorDashboardComponent implements OnInit, AfterViewInit {
       { metric: 'Prescriptions Due', value: '8 Pending' },
     ]
 
-    this.todos = [
+    /*this.todos = [
       { task: 'Update medical reports', priority: 'High' },
       { task: 'Prepare for conference', priority: 'Medium' },
       { task: 'Check inventory levels', priority: 'Low' },
-    ]
+    ]*/
   }
 
   ngAfterViewInit(): void {
