@@ -1,21 +1,21 @@
-<div class="p-8 bg-gradient-to-br from-pink-50 via-blue-50 to-green-50 min-h-screen">
+<div class="p-8 bg-gradient-to-br from-green-50 via-white to-green-100 min-h-screen">
   <!-- Dashboard Header -->
   <div class="bg-white rounded-xl shadow-lg p-8 mb-8 text-center">
-    <h1 class="text-4xl font-bold text-gray-800">Welcome Doctor!</h1>
-    <p class="text-sm text-gray-500 mt-2">Your personalized schedule and health insights for today.</p>
+    <h1 class="text-4xl font-bold text-gray-800">Welcome, Doctor!</h1>
+    <p class="text-gray-600 mt-2">Your personalized schedule and health insights for today.</p>
   </div>
 
   <!-- Health Metrics -->
   <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
-    <div class="p-6 bg-pink-100 text-pink-800 rounded-lg shadow-md">
+    <div class="p-6 bg-gradient-to-r from-pink-100 to-pink-200 text-pink-800 rounded-lg shadow-md hover:shadow-lg transition">
       <h2 class="text-lg font-semibold">Today's BMI Alerts</h2>
       <p class="text-3xl font-bold mt-2">5 Patients</p>
     </div>
-    <div class="p-6 bg-blue-100 text-blue-800 rounded-lg shadow-md">
+    <div class="p-6 bg-gradient-to-r from-blue-100 to-blue-200 text-blue-800 rounded-lg shadow-md hover:shadow-lg transition">
       <h2 class="text-lg font-semibold">Critical Patients</h2>
       <p class="text-3xl font-bold mt-2">2 Patients</p>
     </div>
-    <div class="p-6 bg-green-100 text-green-800 rounded-lg shadow-md">
+    <div class="p-6 bg-gradient-to-r from-green-100 to-green-200 text-green-800 rounded-lg shadow-md hover:shadow-lg transition">
       <h2 class="text-lg font-semibold">Prescriptions Due</h2>
       <p class="text-3xl font-bold mt-2">8 Pending</p>
     </div>
@@ -40,11 +40,11 @@
       <ul>
         <li
           *ngFor="let todo of todos"
-          class="flex justify-between items-center p-4 border rounded-lg hover:bg-gray-50"
+          class="flex justify-between items-center p-4 border rounded-lg hover:bg-gray-50 transition"
         >
-          <span>{{ todo.task }}</span>
+          <span class="text-gray-700">{{ todo.task }}</span>
           <span
-            class="px-3 py-1 rounded-full text-sm"
+            class="px-3 py-1 rounded-full text-sm font-semibold"
             [ngClass]="{
               'bg-red-500 text-white': todo.priority === 'High',
               'bg-yellow-500 text-white': todo.priority === 'Medium',
@@ -57,10 +57,16 @@
       </ul>
     </div>
 
-    <!-- Motivational Quote -->
-    <div class="bg-pink-50 rounded-lg shadow-lg p-6">
-      <h3 class="text-lg font-bold mb-4">Motivational Quote</h3>
-      <p class="italic text-gray-700">{{ motivationalQuote }}</p>
+    <!-- Motivational Quote & Clock -->
+    <div class="bg-gradient-to-r from-green-100 to-white rounded-lg shadow-lg p-6">
+      <h3 class="text-lg font-bold text-gray-800 mb-4">Motivational Quote</h3>
+      <p class="text-gray-600 italic text-center mb-6">
+        "{{ motivationalQuote }}"
+      </p>
+      <div class="text-center">
+        <h4 class="text-xl font-bold text-gray-800">Current Time</h4>
+        <p class="text-2xl text-green-600 font-semibold">{{ currentTime }}</p>
+      </div>
     </div>
   </div>
 

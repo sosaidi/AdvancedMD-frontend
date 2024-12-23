@@ -1,6 +1,7 @@
 import { Component, AfterViewInit, OnInit } from '@angular/core'
 import Chart from 'chart.js/auto'
 import { NgClass, NgForOf, NgIf } from '@angular/common'
+import { HttpClient } from '@angular/common/http'
 
 @Component({
   selector: 'app-doctor-dashboard',
@@ -14,11 +15,17 @@ export class DoctorDashboardComponent implements OnInit, AfterViewInit {
   healthMetrics: { metric: string; value: string }[] = []
   motivationalQuote: string = ''
   todos: { task: string; priority: string }[] = []
+  currentTime: string = ''
 
   ngOnInit(): void {
     this.loading = false
     this.initializeMockData()
+    this.updateClock();
+    this.fetchMotivationalQuote();
+    this.startQuoteUpdater();
   }
+
+  constructor(private http: HttpClient) {}
 
   private initializeMockData(): void {
     this.dailySchedule = [
@@ -39,14 +46,38 @@ export class DoctorDashboardComponent implements OnInit, AfterViewInit {
       { task: 'Prepare for conference', priority: 'Medium' },
       { task: 'Check inventory levels', priority: 'Low' },
     ]
-
-    this.motivationalQuote =
-      '“Wherever the art of medicine is loved, there is also a love of humanity.” – Hippocrates'
   }
 
   ngAfterViewInit(): void {
     this.initPatientsChart()
     this.initAppointmentsChart()
+  }
+
+  private fetchMotivationalQuote(): void {
+    this.http.get<any>('https://api.quotable.io/random').subscribe((response) => {this.motivationalQuote = `“${response.content}” – ${response.author}`;
+      },
+      (error) => {
+        console.error('Error fetching quote', error);
+        this.motivationalQuote =
+          '“Wherever the art of medicine is loved, there is also a love of humanity.” – Hippocrates';
+      }
+    );
+  }
+
+  private startQuoteUpdater(): void {
+    setInterval(() => {
+      this.fetchMotivationalQuote();
+    }, 3600000);
+  }
+
+  private updateClock(): void {
+    setInterval(() => {
+      const now = new Date();
+      this.currentTime = now.toLocaleTimeString([], {
+        hour: '2-digit',
+        minute: '2-digit',
+      });
+    }, 1000);
   }
 
   private initPatientsChart(): void {

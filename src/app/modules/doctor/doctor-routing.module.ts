@@ -11,6 +11,7 @@ import { SettingsComponent } from './components/settings/settings.component'
 import { CalendarComponent } from './components/calendar/calendar.component'
 import { TodoListComponent } from './components/todo-list/todo-list.component'
 import { ChatComponent } from './components/chat/chat.component'
+import { HttpClientModule } from '@angular/common/http'
 
 const routes: Routes = [
   {
@@ -33,7 +34,7 @@ const routes: Routes = [
 ]
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [RouterModule.forChild(routes), HttpClientModule],
   exports: [RouterModule],
 })
 export class DoctorRoutingModule {}
