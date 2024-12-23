@@ -30,13 +30,7 @@ export class CalendarComponent {
       headerToolbar: false,
       dayHeaderFormat: { weekday: 'long' },
       events: [
-        { title: 'Meeting', start: '2024-12-20', description: 'Discussion' },
-        {
-          title: 'Surgery',
-          start: '2024-12-21',
-          end: '2024-12-22',
-          description: 'Operation',
-        },
+
       ],
       dateClick: this.handleDateClick.bind(this),
       eventClick: this.handleEventClick.bind(this),
@@ -63,15 +57,18 @@ export class CalendarComponent {
   }
 
   closeAddEventModal(): void {
-    this.showAddEventModal = false
-    this.newEvent = { title: '', start: '', description: '' }
+    this.showAddEventModal = false;
+    this.newEvent = { title: '', start: '', description: '' };
   }
 
-  saveNewEvent(event: any): void {
-    event.preventDefault()
-    this.calendarOptions.events.push({ ...this.newEvent })
-    this.closeAddEventModal()
-    alert('Event added successfully!')
+  saveNewEvent(event: Event): void {
+    event.preventDefault();
+    if (this.newEvent.title && this.newEvent.start) {
+      this.addEvent(this.newEvent.title, this.newEvent.start, this.newEvent.description);
+      this.closeAddEventModal();
+    } else {
+      alert('Please fill out all required fields.');
+    }
   }
 
   today(): void {
@@ -103,40 +100,50 @@ export class CalendarComponent {
   }
 
   updateViewTitle(): void {
-    const calendarElement = document.querySelector('full-calendar') as any
-    const calendarApi = calendarElement?.getApi()
+    const calendarElement = document.querySelector('full-calendar') as any;
+    if (!calendarElement) {
+      console.error('FullCalendar element not found.');
+      return;
+    }
 
-    if (calendarApi) {
-      const view = calendarApi.view
+    const calendarApi = calendarElement.getApi();
+    if (!calendarApi) {
+      console.error('Calendar API is not available.');
+      return;
+    }
 
-      if (view.type === 'dayGridMonth') {
-        this.currentViewTitle =
-          'Month View: ' + this.datePipe.transform(view.currentStart, 'MMMM y')
-      } else if (view.type === 'timeGridWeek') {
-        const start = this.datePipe.transform(view.currentStart, 'MMM d')
-        const end = this.datePipe.transform(view.currentEnd, 'MMM d')
-        this.currentViewTitle = `Week View: ${start} - ${end}`
-      } else if (view.type === 'timeGridDay') {
-        this.currentViewTitle =
-          'Day View: ' + this.datePipe.transform(view.currentStart, 'fullDate')
-      } else {
-        this.currentViewTitle = 'Unknown View'
-      }
+    const view = calendarApi.view;
+    if (view.type === 'dayGridMonth') {
+      this.currentViewTitle =
+        'Month View: ' + this.datePipe.transform(view.currentStart, 'MMMM y');
+    } else if (view.type === 'timeGridWeek') {
+      const start = this.datePipe.transform(view.currentStart, 'MMM d');
+      const end = this.datePipe.transform(view.currentEnd, 'MMM d');
+      this.currentViewTitle = `Week View: ${start} - ${end}`;
+    } else if (view.type === 'timeGridDay') {
+      this.currentViewTitle =
+        'Day View: ' + this.datePipe.transform(view.currentStart, 'fullDate');
     } else {
-      console.error('Calendar API is not available.')
-      this.currentViewTitle = 'Calendar Unavailable'
+      this.currentViewTitle = 'Unknown View';
     }
   }
 
-  addEvent(title: string, date: string, description: string): void {
-    const newEvent = {
-      title: title,
-      start: date,
-      description: description,
+  addEvent(title: string, date: string, description: string = 'No description provided'): void {
+    if (title && date) {
+      const newEvent = {
+        title,
+        start: date,
+        description,
+      };
+      this.calendarOptions = {
+        ...this.calendarOptions,
+        events: [...this.calendarOptions.events, newEvent],
+      };
+      this.updateViewTitle();
+      alert(`Event "${title}" added on ${date}!`);
+    } else {
+      alert('Event title and date are required.');
     }
-    this.calendarOptions.events.push(newEvent)
-    this.updateViewTitle()
-    alert(`Event "${title}" added on ${date}!`)
   }
 
   closeEventModal(): void {

@@ -11,6 +11,7 @@ import { CalendarComponent } from './components/calendar/calendar.component'
 import { TodoListComponent } from './components/todo-list/todo-list.component'
 import { ChatComponent } from './components/chat/chat.component'
 import { HttpClientModule } from '@angular/common/http'
+import { FullCalendarModule } from '@fullcalendar/angular'
 
 @NgModule({
   imports: [
@@ -25,7 +26,8 @@ import { HttpClientModule } from '@angular/common/http'
     CalendarComponent,
     TodoListComponent,
     ChatComponent,
-    HttpClientModule
+    HttpClientModule,
+    FullCalendarModule
   ],
 })
 export class DoctorModule {}
