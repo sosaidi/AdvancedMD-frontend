@@ -16,15 +16,12 @@ import { RouterLink } from '@angular/router'
   imports: [NgIf, NgForOf, NgClass, RouterLink],
 })
 export class DoctorDashboardComponent implements OnInit, AfterViewInit {
-  loading: boolean = true
+  loading = true
   dailySchedule: { time: string; task: string }[] = []
   healthMetrics: { metric: string; value: string }[] = []
-  motivationalQuote: string = ''
-  //todos: { task: string; priority: string }[] = []
-  currentTime: string = ''
+  motivationalQuote = ''
+  currentTime = ''
   appointments: Appointment[] = []
-  upcomingCount: number = 0
-  completedCount: number = 0
   weeklyMetrics: {
     total: number
     upcoming: number
@@ -77,12 +74,6 @@ export class DoctorDashboardComponent implements OnInit, AfterViewInit {
       { metric: 'Critical Patients', value: '2 Patients' },
       { metric: 'Prescriptions Due', value: '8 Pending' },
     ]
-
-    /*this.todos = [
-      { task: 'Update medical reports', priority: 'High' },
-      { task: 'Prepare for conference', priority: 'Medium' },
-      { task: 'Check inventory levels', priority: 'Low' },
-    ]*/
   }
 
   ngAfterViewInit(): void {

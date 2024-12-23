@@ -11,7 +11,7 @@ import { TodoService } from '../../services/todo.service'
 })
 export class TodoListComponent {
   newTodo = { task: '', priority: 'Low', completed: false, dueDate: '' }
-  completedCount: number = 0
+  completedCount = 0
 
   constructor(private todoService: TodoService) {}
 

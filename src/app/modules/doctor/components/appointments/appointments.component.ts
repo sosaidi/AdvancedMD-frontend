@@ -32,17 +32,17 @@ export class AppointmentsComponent implements OnInit {
     status: string
     details: string
   }[] = []
-  searchQuery: string = ''
-  currentPage: number = 1
-  pageSize: number = 5
-  sortColumn: string = 'date'
-  sortDirection: boolean = true // true = ascending, false = descending
-  selectedAppointment: any = null
+  searchQuery = '';
+  currentPage = 1
+  pageSize = 5
+  sortColumn = 'date'
+  sortDirection = true // true = ascending, false = descending
+  selectedAppointment: Appointment | null = null;
 
-  totalAppointments: number = 0
-  upcomingAppointments: number = 0
-  completedAppointments: number = 0
-  cancelledAppointments: number = 0
+  totalAppointments = 0
+  upcomingAppointments = 0
+  completedAppointments = 0
+  cancelledAppointments = 0
 
   constructor(private appointmentService: AppointmentService) {}
 
@@ -125,8 +125,8 @@ export class AppointmentsComponent implements OnInit {
     })
   }
 
-  filterDate: string = ''
-  filterStatus: string = ''
+  filterDate = ''
+  filterStatus = ''
 
   filterAppointments(): void {
     this.filteredAppointments = this.appointments.filter((appointment) => {
@@ -166,12 +166,12 @@ export class AppointmentsComponent implements OnInit {
     this.sortAppointments()
   }
 
-  get paginatedAppointments(): any[] {
+  get paginatedAppointments(): Appointment[] {
     const start = (this.currentPage - 1) * this.pageSize
     return this.filteredAppointments.slice(start, start + this.pageSize)
   }
 
-  openDetailsModal(appointment: any): void {
+  openDetailsModal(appointment: Appointment): void {
     this.selectedAppointment = appointment
   }
 
@@ -237,13 +237,13 @@ export class AppointmentsComponent implements OnInit {
   }
 
   updateAppointmentStatus({
-    appointment,
-    newStatus,
-  }: {
-    appointment: any
-    newStatus: any
+                            appointment,
+                            newStatus,
+                          }: {
+    appointment: Appointment;
+    newStatus: string;
   }): void {
-    this.appointmentService.updateAppointmentStatus(appointment, newStatus)
-    this.loadAppointments()
+    this.appointmentService.updateAppointmentStatus(appointment, newStatus);
+    this.loadAppointments();
   }
 }

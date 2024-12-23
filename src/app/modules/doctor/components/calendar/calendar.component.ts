@@ -15,11 +15,11 @@ import { DatePipe, NgIf } from '@angular/common'
 })
 export class CalendarComponent {
   calendarOptions: any
-  showEventModal: boolean = false
+  showEventModal = false
   selectedEvent: any = {}
-  showAddEventModal: boolean = false
+  showAddEventModal = false
   newEvent: any = { title: '', start: '', description: '' }
-  currentViewTitle: string = 'My Calendar'
+  currentViewTitle = 'My Calendar'
 
   constructor(private datePipe: DatePipe) {
     this.calendarOptions = {
@@ -133,7 +133,7 @@ export class CalendarComponent {
   addEvent(
     title: string,
     date: string,
-    description: string = 'No description provided'
+    description = 'No description provided'
   ): void {
     if (title && date) {
       const newEvent = {

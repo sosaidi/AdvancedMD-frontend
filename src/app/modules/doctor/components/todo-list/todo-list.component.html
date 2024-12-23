@@ -58,17 +58,19 @@
         <!-- Completion Checkbox -->
         <div
           (click)="toggleComplete(todo)"
+          (keydown.enter)="toggleComplete(todo)"
+          tabindex="0"
+          role="checkbox"
+          aria-checked="{{ todo.completed }}"
           class="w-6 h-6 flex items-center justify-center border-2 rounded-full cursor-pointer transition-all duration-300"
-          [ngClass]="{
-            'bg-green-500 border-green-500': todo.completed,
-            'border-gray-300': !todo.completed
-          }"
+          [ngClass]="{'bg-green-500 border-green-500': todo.completed,'border-gray-300': !todo.completed}"
         >
           <i
             class="bi bi-check text-white"
             *ngIf="todo.completed"
           ></i>
         </div>
+
 
         <!-- Task Details -->
         <div>

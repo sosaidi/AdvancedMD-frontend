@@ -151,10 +151,13 @@
         </select>
       </div>
       <div>
-        <label class="block text-sm font-medium text-gray-700">Notifications</label>
-        <div class="flex items-center space-x-4">
-          <label>
+        <label for="notifications" class="block text-sm font-medium text-gray-700">
+          Notifications
+        </label>
+        <div id="notifications" class="flex items-center space-x-4">
+          <label for="emailNotifications">
             <input
+              id="emailNotifications"
               type="checkbox"
               [(ngModel)]="preferences.notifications.email"
               name="notifications.email"
@@ -162,8 +165,9 @@
             />
             Email Notifications
           </label>
-          <label>
+          <label for="appNotifications">
             <input
+              id="appNotifications"
               type="checkbox"
               [(ngModel)]="preferences.notifications.app"
               name="notifications.app"

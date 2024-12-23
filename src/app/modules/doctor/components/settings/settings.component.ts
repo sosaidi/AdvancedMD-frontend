@@ -9,7 +9,7 @@ import { NgClass, NgIf } from '@angular/common'
   templateUrl: './settings.component.html',
 })
 export class SettingsComponent {
-  currentTab: string = 'profile'
+  currentTab = 'profile'
 
   profile = {
     name: '',

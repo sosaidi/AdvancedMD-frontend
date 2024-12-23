@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core'
   providedIn: 'root',
 })
 export class TranslationService {
-  currentLanguage: string = 'en'
+  currentLanguage = 'en'
 
   translations: any = {
     en: {
