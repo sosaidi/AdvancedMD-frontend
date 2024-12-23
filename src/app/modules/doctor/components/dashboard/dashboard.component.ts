@@ -3,12 +3,14 @@ import Chart from 'chart.js/auto'
 import { NgClass, NgForOf, NgIf } from '@angular/common'
 import { HttpClient } from '@angular/common/http'
 import { TodoService } from '../../services/todo.service'
+import { Appointment, AppointmentService } from '../../services/appointments.service'
+import { RouterLink } from '@angular/router'
 
 @Component({
   selector: 'app-doctor-dashboard',
   templateUrl: './dashboard.component.html',
   standalone: true,
-  imports: [NgIf, NgForOf, NgClass],
+  imports: [NgIf, NgForOf, NgClass, RouterLink],
 })
 export class DoctorDashboardComponent implements OnInit, AfterViewInit {
   loading: boolean = true
@@ -17,6 +19,17 @@ export class DoctorDashboardComponent implements OnInit, AfterViewInit {
   motivationalQuote: string = ''
   //todos: { task: string; priority: string }[] = []
   currentTime: string = ''
+  appointments: Appointment[] = [];
+  upcomingCount: number = 0;
+  completedCount: number = 0;
+  weeklyMetrics: { total: number; upcoming: number; completed: number; cancelled: number } = {
+    total: 0,
+    upcoming: 0,
+    completed: 0,
+    cancelled: 0,
+  };
+
+  appointmentsChart: any;
 
   ngOnInit(): void {
     this.loading = false
@@ -24,9 +37,14 @@ export class DoctorDashboardComponent implements OnInit, AfterViewInit {
     this.updateClock();
     this.fetchMotivationalQuote();
     this.startQuoteUpdater();
+    this.appointmentService.getAppointmentsObservable().subscribe((appointments) => {
+      this.appointments = appointments;
+      this.calculateWeeklyMetrics();
+      this.updateAppointmentsChart();
+    });
   }
 
-  constructor(private http: HttpClient, private todoService: TodoService) {}
+  constructor(private http: HttpClient, private todoService: TodoService, private appointmentService: AppointmentService) {}
 
   get todos() {
     return this.todoService.getTodos();
@@ -112,42 +130,110 @@ export class DoctorDashboardComponent implements OnInit, AfterViewInit {
     }
   }
 
+  private calculateWeeklyMetrics(): void {
+    const startOfWeek = this.getStartOfWeek();
+    const endOfWeek = this.getEndOfWeek();
+
+    const weeklyAppointments = this.appointments.filter((appointment) => {
+      const appointmentDate = new Date(appointment.date);
+      return appointmentDate >= startOfWeek && appointmentDate <= endOfWeek;
+    });
+
+    this.weeklyMetrics.total = weeklyAppointments.length;
+    this.weeklyMetrics.upcoming = weeklyAppointments.filter((a) => a.status === 'Upcoming').length;
+    this.weeklyMetrics.completed = weeklyAppointments.filter((a) => a.status === 'Completed').length;
+    this.weeklyMetrics.cancelled = weeklyAppointments.filter((a) => a.status === 'Cancelled').length;
+  }
+
+  private getStartOfWeek(): Date {
+    const now = new Date();
+    const dayOfWeek = now.getDay();
+    const start = new Date(now);
+    start.setDate(now.getDate() - dayOfWeek + 1); // Start from Monday
+    start.setHours(0, 0, 0, 0);
+    return start;
+  }
+
+  private getEndOfWeek(): Date {
+    const now = new Date();
+    const dayOfWeek = now.getDay();
+    const end = new Date(now);
+    end.setDate(now.getDate() - dayOfWeek + 7); // End on Sunday
+    end.setHours(23, 59, 59, 999);
+    return end;
+  }
+
   private initAppointmentsChart(): void {
-    const ctx = document.getElementById(
-      'appointmentsChart'
-    ) as HTMLCanvasElement
+    const ctx = document.getElementById('appointmentsChart') as HTMLCanvasElement;
     if (ctx) {
       new Chart(ctx, {
         type: 'line',
         data: {
-          labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+          labels: ['Total', 'Upcoming', 'Completed', 'Cancelled'], // Data points
           datasets: [
             {
-              label: 'Appointments',
-              data: [4, 8, 5, 7, 6, 9],
-              borderColor: '#FFB5E8',
-              backgroundColor: 'rgba(255, 181, 232, 0.5)',
+              label: 'Appointments Overview',
+              data: [
+                this.appointments.length, // Total appointments
+                this.appointments.filter((a) => a.status === 'Upcoming').length, // Upcoming
+                this.appointments.filter((a) => a.status === 'Completed').length, // Completed
+                this.appointments.filter((a) => a.status === 'Cancelled').length, // Cancelled
+              ],
+              borderColor: '#A3C4F3', // Pastel blue
+              backgroundColor: 'rgba(163, 196, 243, 0.3)', // Light blue fill
+              pointBackgroundColor: '#A3C4F3', // Blue dots
+              pointHoverBackgroundColor: '#7399E0', // Darker blue hover dots
+              borderWidth: 2,
+              tension: 0.4, // Smooth curves
               fill: true,
             },
           ],
         },
         options: {
           responsive: true,
+          plugins: {
+            legend: {
+              display: false, // No legend for simplicity
+            },
+          },
           scales: {
             x: {
               grid: {
-                display: false,
+                display: false, // Cleaner look
+              },
+              ticks: {
+                font: {
+                  size: 14,
+                  family: "'Helvetica', sans-serif", // Professional font
+                },
               },
             },
             y: {
               beginAtZero: true,
               grid: {
-                color: '#F5F5F5',
+                color: 'rgba(200, 200, 200, 0.2)', // Subtle grid lines
+              },
+              ticks: {
+                stepSize: 1, // Step by 1 for better readability
+                font: {
+                  size: 14,
+                  family: "'Helvetica', sans-serif", // Professional font
+                },
               },
             },
           },
         },
-      })
+      });
+    }
+  }
+
+  private updateAppointmentsChart(): void {
+    if (this.appointmentsChart) {
+      this.appointmentsChart.data.datasets[0].data = [this.weeklyMetrics.total];
+      this.appointmentsChart.data.datasets[1].data = [this.weeklyMetrics.upcoming];
+      this.appointmentsChart.data.datasets[2].data = [this.weeklyMetrics.completed];
+      this.appointmentsChart.data.datasets[3].data = [this.weeklyMetrics.cancelled];
+      this.appointmentsChart.update();
     }
   }
 }

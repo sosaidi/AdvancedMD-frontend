@@ -23,7 +23,7 @@
   <!-- Summary Cards -->
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
     <div class="p-8 bg-white rounded-xl shadow-md text-center">
-      <h2 class="text-xl font-semibold text-gray-700">Total Appointments</h2>
+      <h2 class="text-xl font-semibold text-gray-700">Total</h2>
       <p class="text-4xl font-bold text-green-500 mt-4">{{ totalAppointments }}</p>
     </div>
     <div class="p-8 bg-white rounded-xl shadow-md text-center">
@@ -114,7 +114,7 @@
           <select
             class="px-4 py-2 rounded-full border border-gray-300 text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500"
             [(ngModel)]="appointment.status"
-            (change)="updateAppointmentStatus(appointment, appointment.status)"
+            (change)="updateAppointmentStatus({appointment : appointment, newStatus : appointment.status})"
           >
             <option value="Upcoming">Upcoming</option>
             <option value="Completed">Completed</option>

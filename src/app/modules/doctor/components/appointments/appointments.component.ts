@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { NgClass, NgForOf, NgIf } from '@angular/common'
+import { AppointmentService } from '../../services/appointments.service'
 
 interface Appointment {
   patient: string
@@ -43,6 +44,8 @@ export class AppointmentsComponent implements OnInit {
   completedAppointments: number = 0
   cancelledAppointments: number = 0
 
+  constructor(private appointmentService: AppointmentService) {}
+
   ngOnInit(): void {
     // Mock Data
     this.appointments = [
@@ -77,17 +80,23 @@ export class AppointmentsComponent implements OnInit {
     ]
     this.filteredAppointments = this.appointments.slice()
     this.calculateAppointmentStats()
+    this.appointments = this.appointmentService.getAppointments();
+    this.loadAppointments();
   }
 
   searchAppointments(): void {
-    this.filteredAppointments = this.appointments.filter(
-      (appointment) =>
-        appointment.patient
-          .toLowerCase()
-          .includes(this.searchQuery.toLowerCase()) ||
-        appointment.date.includes(this.searchQuery)
-    )
-    this.sortAppointments()
+    this.filteredAppointments = this.appointments.filter((appointment) => {
+      const matchesSearch =
+        appointment.patient.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+        appointment.date.includes(this.searchQuery);
+      const matchesDate = this.filterDate
+        ? appointment.date === this.filterDate
+        : true;
+      const matchesStatus = this.filterStatus
+        ? appointment.status === this.filterStatus
+        : true;
+      return matchesSearch && matchesDate && matchesStatus;
+    });
   }
 
   sortAppointments(): void {
@@ -168,17 +177,23 @@ export class AppointmentsComponent implements OnInit {
     this.selectedAppointment = null
   }
 
-  calculateAppointmentStats(): void {
-    this.totalAppointments = this.appointments.length
+  private loadAppointments(): void {
+    this.appointments = this.appointmentService.getAppointments();
+    this.filteredAppointments = [...this.appointments];
+    this.calculateAppointmentStats();
+  }
+
+  private calculateAppointmentStats(): void {
+    this.totalAppointments = this.appointments.length;
     this.upcomingAppointments = this.appointments.filter(
       (a) => a.status === 'Upcoming'
-    ).length
+    ).length;
     this.completedAppointments = this.appointments.filter(
       (a) => a.status === 'Completed'
-    ).length
+    ).length;
     this.cancelledAppointments = this.appointments.filter(
       (a) => a.status === 'Cancelled'
-    ).length
+    ).length;
   }
 
   exportAppointments(): void {
@@ -213,14 +228,14 @@ export class AppointmentsComponent implements OnInit {
       time: '9:00 AM',
       status: 'Upcoming',
       details: 'Newly added appointment.',
-    }
+    };
 
-    this.appointments.unshift(newAppointment)
-    this.filterAppointments()
+    this.appointmentService.addAppointment(newAppointment);
+    this.loadAppointments();
   }
 
-  updateAppointmentStatus(appointment: Appointment, newStatus: string): void {
-    appointment.status = newStatus
-    this.calculateAppointmentStats()
+  updateAppointmentStatus({ appointment, newStatus }: { appointment: any, newStatus: any }): void {
+    this.appointmentService.updateAppointmentStatus(appointment, newStatus);
+    this.loadAppointments();
   }
 }
