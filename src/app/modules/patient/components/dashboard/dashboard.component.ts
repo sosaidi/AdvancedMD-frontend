@@ -2,6 +2,7 @@ import { Component, AfterViewInit, OnInit } from '@angular/core';
 import Chart from 'chart.js/auto';
 import { NgClass, NgForOf, NgIf } from '@angular/common'
 import { FormsModule } from '@angular/forms'
+import { LabResultsService } from '../../services/lab-results.service'
 
 @Component({
   selector: 'app-patient-dashboard',
@@ -35,6 +36,8 @@ export class PatientDashboardComponent implements OnInit, AfterViewInit {
   activeReminders: any[] = [];
   completedReminders: any[] = [];
   newReminder = { message: '', time: '', timestamp: 0 };
+
+  constructor(public labResultsService: LabResultsService) {}
 
   ngOnInit(): void {
     this.loading = false;

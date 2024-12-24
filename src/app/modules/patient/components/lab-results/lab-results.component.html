@@ -1,1 +1,118 @@
-<p>lab-results works!</p>
+<div class="p-6 bg-gradient-to-br from-white to-gray-100 rounded-lg shadow-lg max-w-3xl mx-auto w-[130vh]">
+  <h2 class="text-3xl font-bold mb-6 text-green-600">Add Lab Results</h2>
+
+  <!-- Add Lab Result Form -->
+  <form (submit)="addLabResult()" class="space-y-6">
+    <!-- Test Name -->
+    <div>
+      <label for="test" class="block text-sm font-medium text-gray-700">Test Name</label>
+      <div class="relative">
+        <i class="bi bi-clipboard text-gray-400 absolute left-3 top-3"></i>
+        <input
+          id="test"
+          [(ngModel)]="newLabResult.test"
+          name="test"
+          type="text"
+          class="w-full pl-10 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+          placeholder="e.g., Blood Glucose"
+          required
+        />
+      </div>
+    </div>
+
+    <!-- Value -->
+    <div>
+      <label for="value" class="block text-sm font-medium text-gray-700">Value</label>
+      <div class="relative">
+        <i class="bi bi-bar-chart-fill text-gray-400 absolute left-3 top-3"></i>
+        <input
+          id="value"
+          [(ngModel)]="newLabResult.value"
+          name="value"
+          type="text"
+          class="w-full pl-10 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+          placeholder="e.g., 110"
+          required
+        />
+      </div>
+    </div>
+
+    <!-- Unit -->
+    <div>
+      <label for="unit" class="block text-sm font-medium text-gray-700">Unit</label>
+      <div class="relative">
+        <i class="bi bi-rulers text-gray-400 absolute left-3 top-3"></i>
+        <input
+          id="unit"
+          [(ngModel)]="newLabResult.unit"
+          name="unit"
+          type="text"
+          class="w-full pl-10 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+          placeholder="e.g., mg/dL"
+          required
+        />
+      </div>
+    </div>
+
+    <!-- Date -->
+    <div>
+      <label for="date" class="block text-sm font-medium text-gray-700">Date</label>
+      <div class="relative">
+        <i class="bi bi-calendar2-date-fill text-gray-400 absolute left-3 top-3"></i>
+        <input
+          id="date"
+          [(ngModel)]="newLabResult.date"
+          name="date"
+          type="date"
+          class="w-full pl-10 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+          required
+        />
+      </div>
+    </div>
+
+    <!-- Submit Button -->
+    <button
+      type="submit"
+      class="w-full px-4 py-2 bg-green-500 text-white text-lg font-semibold rounded-lg shadow-md hover:bg-green-600 transition"
+    >
+      Add Lab Result
+    </button>
+  </form>
+
+  <!-- Display Lab Results -->
+  <div *ngIf="labResults.length > 0" class="mt-10">
+    <h3 class="text-2xl font-bold mb-4 text-green-600">Lab Results</h3>
+    <ul class="space-y-4">
+      <li
+        *ngFor="let result of labResults; let i = index"
+        class="flex justify-between items-center bg-white rounded-lg p-4 shadow-md hover:shadow-lg transition"
+      >
+        <!-- Result Details -->
+        <div class="flex items-center gap-4">
+          <i class="bi bi-beaker-fill text-green-500 text-2xl"></i>
+          <div>
+            <p class="text-lg font-semibold text-gray-700">{{ result.test }}</p>
+            <p class="text-gray-600">
+              {{ result.value }} {{ result.unit }}
+              <span class="text-sm text-gray-400">({{ result.date }})</span>
+            </p>
+          </div>
+        </div>
+
+        <!-- Delete Button -->
+        <button
+          (click)="deleteLabResult(i)"
+          class="px-4 py-2 bg-red-500 text-white text-sm font-semibold rounded-lg hover:bg-red-600 transition"
+        >
+          Delete
+        </button>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="labResults.length === 0" class="mt-10 text-center">
+    <i class="bi bi-clipboard-x text-gray-400 text-4xl"></i>
+    <p class="mt-4 text-gray-500 text-lg italic">No lab results added yet. Start by adding one!</p>
+  </div>
+</div>

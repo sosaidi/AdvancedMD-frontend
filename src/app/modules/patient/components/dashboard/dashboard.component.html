@@ -207,25 +207,25 @@
       </ul>
     </div>
 
-    <!-- Lab Tests -->
-    <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
-      <h3 class="text-lg font-bold mb-4">Recent Lab Tests</h3>
-      <ul>
-        <li *ngFor="let labTest of labTests" class="flex justify-between items-center p-4 border rounded-lg">
-          <span>{{ labTest.test }}</span>
-          <span>{{ labTest.status }} ({{ labTest.date }})</span>
-        </li>
-      </ul>
-    </div>
-
-    <!-- Family Health Monitoring -->
-    <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
-      <h3 class="text-lg font-bold mb-4">Family Health Monitoring</h3>
-      <ul>
-        <li *ngFor="let family of familyHealth" class="flex justify-between items-center p-4 border rounded-lg">
-          <span>{{ family.name }}</span>
-          <span>{{ family.metric }}: {{ family.value }}</span>
-        </li>
-      </ul>
-    </div>
+  <!-- Lab Tests -->
+  <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+    <h3 class="text-lg font-bold mb-4">Recent Lab Results</h3>
+    <ul *ngIf="labResultsService.getLabResults().length > 0" class="space-y-4">
+      <li
+        *ngFor="let result of labResultsService.getLabResults(); let i = index"
+        class="flex justify-between items-center p-4 border rounded-lg"
+      >
+        <div>
+          <p class="text-lg font-semibold">{{ result.test }}</p>
+          <p class="text-gray-600">
+            {{ result.value }} {{ result.unit }}
+            <span class="text-sm text-gray-400">({{ result.date }})</span>
+          </p>
+        </div>
+      </li>
+    </ul>
+    <p *ngIf="labResultsService.getLabResults().length === 0" class="text-center text-gray-500">
+      No lab results available.
+    </p>
+  </div>
 </div>
