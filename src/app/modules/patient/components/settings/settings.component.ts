@@ -1,6 +1,7 @@
 import { Component } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { NgClass, NgForOf, NgIf } from '@angular/common'
+import { EmergencyContactsService } from '../../services/contact.service'
 
 @Component({
   selector: 'app-settings',
@@ -33,10 +34,15 @@ export class SettingsComponent {
   };
 
   theme: 'light' | 'dark' = 'light';
-  emergencyContacts = [{ name: '', phone: '' }];
   familyHealthNotes: string = '';
   labTests: File[] = [];
   activeTab: string = 'profile';
+
+  constructor(public contactsService: EmergencyContactsService) {}
+
+  get emergencyContacts() {
+    return this.contactsService.getContacts();
+  }
 
   ngOnInit(): void {
     this.loadTheme();
@@ -69,7 +75,7 @@ export class SettingsComponent {
   }
 
   addEmergencyContact() {
-    this.emergencyContacts.push({ name: '', phone: '' });
+    this.contactsService.addContact({ name: '', relation: '', phone: '' });
   }
 
   removeEmergencyContact(index: number) {

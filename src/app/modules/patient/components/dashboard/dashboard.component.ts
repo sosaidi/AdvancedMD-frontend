@@ -3,6 +3,7 @@ import Chart from 'chart.js/auto';
 import { NgClass, NgForOf, NgIf } from '@angular/common'
 import { FormsModule } from '@angular/forms'
 import { LabResultsService } from '../../services/lab-results.service'
+import { EmergencyContactsService } from '../../services/contact.service'
 
 @Component({
   selector: 'app-patient-dashboard',
@@ -24,7 +25,6 @@ export class PatientDashboardComponent implements OnInit, AfterViewInit {
   allergies: string[] = [];
   healthHistory: { date: string; detail: string }[] = [];
   familyHealth: { name: string; metric: string; value: string }[] = [];
-  emergencyContacts: { name: string; relation: string; phone: string }[] = [];
 
   waterIntake: number = 6;
   waterTarget: number = 8;
@@ -37,7 +37,11 @@ export class PatientDashboardComponent implements OnInit, AfterViewInit {
   completedReminders: any[] = [];
   newReminder = { message: '', time: '', timestamp: 0 };
 
-  constructor(public labResultsService: LabResultsService) {}
+  constructor(public labResultsService: LabResultsService, public contactsService: EmergencyContactsService) {}
+
+  get emergencyContacts() {
+    return this.contactsService.getContacts();
+  }
 
   ngOnInit(): void {
     this.loading = false;
@@ -97,11 +101,6 @@ export class PatientDashboardComponent implements OnInit, AfterViewInit {
     this.familyHealth = [
       { name: 'John (Father)', metric: 'Blood Pressure', value: '130/85' },
       { name: 'Emma (Daughter)', metric: 'Heart Rate', value: '78 BPM' },
-    ];
-
-    this.emergencyContacts = [
-      { name: 'John Doe', relation: 'Husband', phone: '+1234567890' },
-      { name: 'Jane Smith', relation: 'Sister', phone: '+0987654321' },
     ];
   }
 

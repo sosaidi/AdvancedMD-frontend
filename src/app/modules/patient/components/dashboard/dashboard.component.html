@@ -196,16 +196,22 @@
   </div>
 
 
-    <!-- Emergency Contacts -->
-    <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
-      <h3 class="text-lg font-bold mb-4">Emergency Contacts</h3>
-      <ul>
-        <li *ngFor="let contact of emergencyContacts" class="flex justify-between items-center p-4 border rounded-lg">
-          <span>{{ contact.name }} ({{ contact.relation }})</span>
-          <span>{{ contact.phone }}</span>
-        </li>
-      </ul>
-    </div>
+  <!-- Emergency Contacts -->
+  <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+    <h3 class="text-lg font-bold mb-4">Emergency Contacts</h3>
+    <ul>
+      <li
+        *ngFor="let contact of emergencyContacts; let i = index"
+        class="flex justify-between items-center p-4 border rounded-lg"
+      >
+        <span>{{ contact.name }} ({{ contact.relation }})</span>
+        <span>{{ contact.phone }}</span>
+      </li>
+    </ul>
+    <p *ngIf="emergencyContacts.length === 0" class="text-gray-500 text-center mt-4">
+      No emergency contacts available.
+    </p>
+  </div>
 
   <!-- Lab Tests -->
   <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
