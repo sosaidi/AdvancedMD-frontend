@@ -2,6 +2,7 @@ import { Component } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { NgClass, NgForOf, NgIf } from '@angular/common'
 import { EmergencyContactsService } from '../../services/contact.service'
+import { NameService } from '../../services/name.service'
 
 @Component({
   selector: 'app-settings',
@@ -38,7 +39,7 @@ export class SettingsComponent {
   labTests: File[] = [];
   activeTab: string = 'profile';
 
-  constructor(public contactsService: EmergencyContactsService) {}
+  constructor(public contactsService: EmergencyContactsService, private nameService: NameService) {}
 
   get emergencyContacts() {
     return this.contactsService.getContacts();
@@ -49,6 +50,10 @@ export class SettingsComponent {
   }
 
   saveProfile() {
+    this.nameService.updateProfile({
+      firstName: this.profile.firstName,
+      lastName: this.profile.lastName,
+    });
     alert('Profile updated successfully!');
   }
 
