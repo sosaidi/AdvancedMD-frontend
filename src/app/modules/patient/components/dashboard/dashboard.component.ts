@@ -4,6 +4,7 @@ import { NgClass, NgForOf, NgIf } from '@angular/common'
 import { FormsModule } from '@angular/forms'
 import { LabResultsService } from '../../services/lab-results.service'
 import { EmergencyContactsService } from '../../services/contact.service'
+import { AppointmentsService } from '../../services/appointment.service'
 
 @Component({
   selector: 'app-patient-dashboard',
@@ -36,8 +37,9 @@ export class PatientDashboardComponent implements OnInit, AfterViewInit {
   activeReminders: any[] = [];
   completedReminders: any[] = [];
   newReminder = { message: '', time: '', timestamp: 0 };
+  nextAppointment: { date: string; time: string; reason: string } | null = null;
 
-  constructor(public labResultsService: LabResultsService, public contactsService: EmergencyContactsService) {}
+  constructor(public labResultsService: LabResultsService, public contactsService: EmergencyContactsService, public appointmentService: AppointmentsService) {}
 
   get emergencyContacts() {
     return this.contactsService.getContacts();
@@ -54,6 +56,9 @@ export class PatientDashboardComponent implements OnInit, AfterViewInit {
 
     this.loadReminders();
     this.autoDeleteReminders();
+    this.appointmentService.upcomingAppointments$.subscribe((appointments) => {
+      this.nextAppointment = appointments.length > 0 ? appointments[0] : null;
+    });
   }
 
   private initializeMockData(): void {

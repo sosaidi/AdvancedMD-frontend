@@ -38,11 +38,17 @@
       <!-- Next Appointment -->
       <div class="p-8 bg-green-100 text-green-800 rounded-lg shadow-md">
         <h3 class="text-xl font-semibold">Next Appointment</h3>
-        <p class="text-lg mt-4">{{ appointments[0].date }} at {{ appointments[0].time }}</p>
-        <p class="text-sm mt-2">With {{ appointments[0].doctor }}</p>
+        <p *ngIf="nextAppointment; else noAppointment" class="text-lg mt-4">
+          {{ nextAppointment?.date }} at {{ nextAppointment?.time }}
+        </p>
+        <p *ngIf="nextAppointment" class="text-sm mt-2">
+          Reason: {{ nextAppointment?.reason }}
+        </p>
+        <ng-template #noAppointment>
+          <p class="text-lg mt-4">No upcoming appointments</p>
+        </ng-template>
       </div>
     </div>
-  </div>
 
   <!-- Health Goals -->
   <div class="space-y-8">

@@ -1,6 +1,8 @@
 import { Component } from '@angular/core'
 import { NgForOf, NgIf } from '@angular/common'
 import { FormsModule } from '@angular/forms'
+import { AppointmentsService } from '../../services/appointment.service'
+import { NameService } from '../../services/name.service'
 
 @Component({
   selector: 'app-appointments',
@@ -26,16 +28,18 @@ export class AppointmentsComponent {
   upcomingAppointments: { date: string; time: string; reason: string }[] = [];
   pastAppointments: { date: string; time: string; reason: string }[] = [];
 
+  constructor(public appointmentsService: AppointmentsService, public nameService: NameService) {}
+
   setActiveTab(tab: string): void {
     this.activeTab = tab;
   }
 
+  // ToDo
   bookAppointment(event: Event) {
     event.preventDefault();
-
+    const { date, time, reason } = this.newAppointment;
     // Add the new appointment to upcoming appointments
-    this.upcomingAppointments.push({ ...this.newAppointment });
-
+    this.appointmentsService.addAppointment({ date, time, reason });
     // Clear the form after booking
     this.clearForm();
     alert('Appointment booked successfully!');
@@ -47,7 +51,7 @@ export class AppointmentsComponent {
       lastName: '',
       email: '',
       phone: '',
-      date: '',
+      date: new Date().toISOString().split('T')[0], // Reset to today's date
       time: '',
       reason: '',
     };
@@ -58,17 +62,35 @@ export class AppointmentsComponent {
     time: string;
     reason: string;
   }): void {
-    this.upcomingAppointments = this.upcomingAppointments.filter(
-      (a) => a !== appointment
-    );
+    this.appointmentsService.cancelAppointment(appointment);
     alert('Appointment canceled.');
   }
 
-  // Example past appointment data
   ngOnInit(): void {
-    this.pastAppointments = [
+    this.nameService.profile$.subscribe((profile) => {
+      this.newAppointment = {
+        ...this.newAppointment,
+        firstName: profile.firstName,
+        lastName: profile.lastName,
+        email: profile.email,
+        phone: profile.phone,
+        date: new Date().toISOString().split('T')[0], // Today's date
+      };
+    });
+
+    this.appointmentsService.upcomingAppointments$.subscribe((appointments) => {
+      const now = new Date();
+      this.upcomingAppointments = appointments.filter(
+        (appointment) => new Date(`${appointment.date}T${appointment.time}`) >= now
+      );
+      this.pastAppointments = appointments.filter(
+        (appointment) => new Date(`${appointment.date}T${appointment.time}`) < now
+      );
+    });
+  // Will be commented out (might still be needed)
+    /*this.pastAppointments = [
       { date: '2024-12-10', time: '10:00', reason: 'Routine Checkup' },
       { date: '2024-12-12', time: '14:30', reason: 'Follow-up' },
-    ];
+    ];*/
   }
 }

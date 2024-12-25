@@ -47,6 +47,9 @@ export class SettingsComponent {
 
   ngOnInit(): void {
     this.loadTheme();
+    this.nameService.profile$.subscribe((profile) => {
+      this.profile = profile;
+    });
   }
 
   saveProfile() {
