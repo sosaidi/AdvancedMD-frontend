@@ -7,6 +7,7 @@
   padding: 25px;
   position: fixed;
   overflow-y: auto;
+  /* cursor: pointer; */
 }
 
 .sidebar-header {
@@ -39,6 +40,7 @@
 .sidebar-menu li.active {
   background-color: #25656e;
   color: white;
+  cursor: pointer;
 }
 
 .sidebar-menu i {
@@ -48,6 +50,7 @@
 .dashboard-content {
   margin-left: 60px;
   padding: 30px;
+  cursor: pointer;
 }
 
 .metrics {

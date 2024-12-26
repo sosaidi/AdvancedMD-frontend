@@ -50,7 +50,6 @@ h2 {
 }
 
 
-/* Align table text properly */
 table.payments-table {
   width: 100%;
   border-collapse: collapse;
@@ -65,7 +64,7 @@ table.payments-table td {
 }
 
 table.payments-table th {
-  background-color: #2d3e50;
+  background-color: #286770;
   color: #ffffff;
   font-weight: bold;
   /* text-transform: uppercase; */

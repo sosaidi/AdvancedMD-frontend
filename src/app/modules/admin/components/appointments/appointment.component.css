@@ -41,6 +41,7 @@
   border-collapse: collapse;
   text-align: left;
   font-size: 1.2rem;
+  cursor: pointer;
 }
 
 .appointments-table th,

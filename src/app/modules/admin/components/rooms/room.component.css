@@ -1,39 +1,70 @@
-.room-table {
-    width: 100%;
-    margin-top: 10px;
-    border-collapse: collapse;
+.rooms-container {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    max-width: 90%;
+  }
+  
+  .rooms-container h2 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #225e64;
     text-align: left;
-    font-size: 20px;
-}
-
-.room-table th, .room-table td {
-    padding: 8px;
-    border: 1px solid #ddd;
-}
-
-.room-table th {
-    background-color: #1d6b69ea;
-    color: white;
-}
-
-.room-table tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
-
-.room-actions {
+    margin-bottom: 20px;
+    border-bottom: 2px solid #f1f1f1;
+    padding-bottom: 10px;
+  }
+  
+  .rooms-table {
+    width: 100%;
+    border-collapse: collapse;
     margin-top: 20px;
-}
-
-.btn {
-    background-color: #196b85;
+    font-size: 1.2rem;
+  }
+  
+  .rooms-table thead {
+    background-color: #235e66;
     color: white;
-    padding: 10px 20px;
-    border: none;
+  }
+  
+  .rooms-table thead th {
+    padding: 12px;
+    text-align: left;
+  }
+  
+  .rooms-table tbody tr {
+    background-color: #f9f9f9;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  
+  .rooms-table tbody tr:nth-child(even) {
+    background-color: #f1f1f1;
+  }
+  
+  .rooms-table tbody td {
+    padding: 12px;
+    text-align: left;
+    color: #333333;
+  }
+  
+  .rooms-table tbody tr:hover {
+    background-color: #dfe4ea;
     cursor: pointer;
-    margin: 5px;
-    border-radius: 4px;
-}
-
-.btn:hover {
-    background-color: #1b809f;
-}
+  }
+  
+  .rooms-table tbody tr:last-child td {
+    border-bottom: none;
+  }
+  
+  .rooms-table tbody td:first-child,
+  .rooms-table thead th:first-child {
+    border-radius: 8px 0 0 8px;
+  }
+  
+  .rooms-table tbody td:last-child,
+  .rooms-table thead th:last-child {
+    border-radius: 0 8px 8px 0;
+  }
+  
