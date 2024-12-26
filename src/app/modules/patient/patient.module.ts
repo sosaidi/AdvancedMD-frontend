@@ -8,6 +8,7 @@ import { SettingsComponent } from './components/settings/settings.component'
 import { SidebarComponent } from './components/sidebar/sidebar.component'
 import { TopbarComponent } from './components/topbar/topbar.component'
 import { LayoutComponent } from './layout/layout.component'
+import { HttpClientModule } from '@angular/common/http'
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import { LayoutComponent } from './layout/layout.component'
     SettingsComponent,
     SidebarComponent,
     TopbarComponent,
-    LayoutComponent
+    LayoutComponent,
+    HttpClientModule
   ],
 })
 export class DoctorModule {}

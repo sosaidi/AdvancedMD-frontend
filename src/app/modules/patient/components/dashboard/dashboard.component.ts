@@ -4,7 +4,6 @@ import { NgClass, NgForOf, NgIf } from '@angular/common'
 import { FormsModule } from '@angular/forms'
 import { LabResultsService } from '../../services/lab-results.service'
 import { EmergencyContactsService } from '../../services/contact.service'
-import { AppointmentsService } from '../../services/appointment.service'
 
 @Component({
   selector: 'app-patient-dashboard',
@@ -37,9 +36,8 @@ export class PatientDashboardComponent implements OnInit, AfterViewInit {
   activeReminders: any[] = [];
   completedReminders: any[] = [];
   newReminder = { message: '', time: '', timestamp: 0 };
-  nextAppointment: { date: string; time: string; reason: string } | null = null;
 
-  constructor(public labResultsService: LabResultsService, public contactsService: EmergencyContactsService, public appointmentService: AppointmentsService) {}
+  constructor(public labResultsService: LabResultsService, public contactsService: EmergencyContactsService) {}
 
   get emergencyContacts() {
     return this.contactsService.getContacts();
@@ -56,9 +54,6 @@ export class PatientDashboardComponent implements OnInit, AfterViewInit {
 
     this.loadReminders();
     this.autoDeleteReminders();
-    this.appointmentService.upcomingAppointments$.subscribe((appointments) => {
-      this.nextAppointment = appointments.length > 0 ? appointments[0] : null;
-    });
   }
 
   private initializeMockData(): void {
@@ -153,6 +148,20 @@ export class PatientDashboardComponent implements OnInit, AfterViewInit {
     }, 60 * 1000); // Check every minute
   }
 
+  // Calculate the average systolic blood pressure
+  getAverageSystolic(): number {
+    if (!this.bloodPressureReadings.length) return 0;
+    const total = this.bloodPressureReadings.reduce((sum, reading) => sum + reading.systolic, 0);
+    return Math.round(total / this.bloodPressureReadings.length);
+  }
+
+  // Calculate the average diastolic blood pressure
+  getAverageDiastolic(): number {
+    if (!this.bloodPressureReadings.length) return 0;
+    const total = this.bloodPressureReadings.reduce((sum, reading) => sum + reading.diastolic, 0);
+    return Math.round(total / this.bloodPressureReadings.length);
+  }
+
   // Add a new reminder
   addReminder(event: Event): void {
     event.preventDefault();
@@ -169,23 +178,40 @@ export class PatientDashboardComponent implements OnInit, AfterViewInit {
     this.loadReminders();
   }
 
+  private updateBloodPressureReadings(): void {
+    const labResults = this.labResultsService.getLabResults();
+    this.bloodPressureReadings = labResults
+      .filter((result) => result.test.toLowerCase().includes('blood pressure'))
+      .map((result) => {
+        const [systolic, diastolic] = result.value.split('/').map(Number);
+        return {
+          date: result.date,
+          systolic,
+          diastolic,
+        };
+      });
+
+    // Refresh chart after updating data
+    this.initBloodPressureChart();
+  }
+
   private initBloodPressureChart(): void {
     const ctx = document.getElementById('bloodPressureChart') as HTMLCanvasElement;
-    if (ctx) {
+    if (ctx && this.bloodPressureReadings.length) {
       new Chart(ctx, {
         type: 'line',
         data: {
           labels: this.bloodPressureReadings.map((r) => r.date),
           datasets: [
             {
-              label: 'Systolic',
+              label: 'Systolic Pressure',
               data: this.bloodPressureReadings.map((r) => r.systolic),
               borderColor: '#FFB5E8',
               backgroundColor: 'rgba(255, 181, 232, 0.5)',
               fill: true,
             },
             {
-              label: 'Diastolic',
+              label: 'Diastolic Pressure',
               data: this.bloodPressureReadings.map((r) => r.diastolic),
               borderColor: '#85E3FF',
               backgroundColor: 'rgba(133, 227, 255, 0.5)',
@@ -197,15 +223,11 @@ export class PatientDashboardComponent implements OnInit, AfterViewInit {
           responsive: true,
           scales: {
             x: {
-              grid: {
-                display: false,
-              },
+              grid: { display: false },
             },
             y: {
               beginAtZero: true,
-              grid: {
-                color: '#F5F5F5',
-              },
+              grid: { color: '#F5F5F5' },
             },
           },
         },

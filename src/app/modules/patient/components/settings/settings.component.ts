@@ -83,7 +83,7 @@ export class SettingsComponent {
   }
 
   addEmergencyContact() {
-    this.contactsService.addContact({ name: '', relation: '', phone: '' });
+    this.contactsService.addContact({ name: '', relation: '', phone: '', familyMember: 'No' });
   }
 
   removeEmergencyContact(index: number) {

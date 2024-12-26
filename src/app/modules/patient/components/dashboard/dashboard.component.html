@@ -1,8 +1,13 @@
-<div class="p-12 bg-gradient-to-br from-pink-50 via-blue-50 to-green-50 min-h-screen space-y-12">
+<div class="p-12 bg-gradient-to-br from-pink-50 via-blue-50 to-green-50 min-h-screen space-y-12 animate-fade-in">
   <!-- Dashboard Header -->
   <div class="bg-white rounded-xl shadow-lg p-10 mb-8 text-center">
     <h1 class="text-5xl font-bold text-gray-800">Welcome to Your Health Dashboard</h1>
-    <p class="text-lg text-gray-500 mt-4">Stay on top of your health with insights and reminders.</p>
+    <p class="text-lg text-gray-500 mt-4">Stay on top of your health with personalized insights and reminders.</p>
+  </div>
+
+  <!-- Real-Time Health Banner -->
+  <div class="text-center text-red-600 text-sm font-semibold animate-pulse">
+    🚨 Blood pressure above normal limits! <a href="#" class="font-semibold underline">View Details</a>
   </div>
 
   <!-- Health Overview -->
@@ -10,19 +15,17 @@
     <h2 class="text-3xl font-bold text-gray-700">Health Overview</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
       <!-- Heart Rate -->
-      <div class="p-8 bg-pink-100 text-pink-800 rounded-lg shadow-md">
+      <div class="p-8 bg-gradient-to-br from-red-50 to-pink-100 text-pink-800 rounded-lg shadow-md hover:scale-105 transition-transform">
         <h3 class="text-xl font-semibold">Heart Rate</h3>
         <p class="text-5xl font-bold mt-4">{{ heartRate }} BPM</p>
         <p class="text-sm mt-2">Resting Rate</p>
       </div>
+
       <!-- Prescriptions -->
-      <div class="p-8 bg-blue-100 text-blue-800 rounded-lg shadow-md">
+      <div class="p-8 bg-gradient-to-br from-blue-50 to-blue-100 text-blue-800 rounded-lg shadow-md hover:scale-105 transition-transform">
         <h3 class="text-xl font-semibold">Prescriptions</h3>
         <ul class="mt-4 space-y-2">
-          <li
-            *ngFor="let prescription of prescriptions"
-            class="flex justify-between items-center text-sm"
-          >
+          <li *ngFor="let prescription of prescriptions" class="flex justify-between items-center text-sm">
             <span>{{ prescription.name }}</span>
             <span
               [ngClass]="{
@@ -35,172 +38,186 @@
           </li>
         </ul>
       </div>
+
       <!-- Next Appointment -->
-      <div class="p-8 bg-green-100 text-green-800 rounded-lg shadow-md">
+      <div class="p-8 bg-gradient-to-br from-green-50 to-green-100 text-green-800 rounded-lg shadow-md hover:scale-105 transition-transform">
         <h3 class="text-xl font-semibold">Next Appointment</h3>
-        <p *ngIf="nextAppointment; else noAppointment" class="text-lg mt-4">
-          {{ nextAppointment?.date }} at {{ nextAppointment?.time }}
-        </p>
-        <p *ngIf="nextAppointment" class="text-sm mt-2">
-          Reason: {{ nextAppointment?.reason }}
-        </p>
-        <ng-template #noAppointment>
-          <p class="text-lg mt-4">No upcoming appointments</p>
-        </ng-template>
+        <p class="text-lg mt-4">{{ appointments[0]?.date || 'No Appointment' }} at {{ appointments[0]?.time || '-' }}</p>
+        <p *ngIf="appointments[0]" class="text-sm mt-2">With {{ appointments[0].doctor }}</p>
       </div>
     </div>
+  </div>
 
-  <!-- Health Goals -->
+  <!-- Progress Goals -->
   <div class="space-y-8">
-    <h2 class="text-3xl font-bold text-gray-700">Health Goals</h2>
+    <h2 class="text-3xl font-bold text-gray-700">Today's Goals</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
       <!-- Steps Progress -->
-      <div class="p-8 bg-pink-100 text-pink-800 rounded-lg shadow-md">
+      <div class="p-8 bg-gradient-to-br from-yellow-50 to-pink-100 text-pink-800 rounded-lg shadow-md">
         <h3 class="text-xl font-semibold">Steps Walked</h3>
         <p class="text-4xl font-bold mt-4">{{ stepsProgress }}/{{ stepsTarget }}</p>
-        <div class="flex space-x-6 mt-6">
+        <div class="relative">
+          <div class="w-full bg-gray-200 rounded-full h-2.5 mt-4">
+            <div
+              class="bg-pink-300 h-2.5 rounded-full transition-all duration-500"
+              [style.width]="(stepsProgress / stepsTarget) * 100 + '%'"
+            ></div>
+          </div>
+          <span
+            class="absolute right-0 text-sm text-pink-500 font-semibold mt-1"
+            *ngIf="stepsTarget - stepsProgress <= 0"
+          >Goal Achieved 🎉</span>
+        </div>
+        <div class="flex space-x-4 mt-6">
           <button
-            class="bg-green-500 text-white px-5 py-2 rounded-md shadow hover:bg-green-600"
+            class="px-4 py-2 bg-gradient-to-br from-pink-200 to-pink-300 text-pink-800 font-semibold rounded-lg shadow-md hover:shadow-lg hover:from-pink-300 hover:to-pink-400 transition"
             (click)="increaseSteps()"
           >
-            +
+            + Add Steps
           </button>
           <button
-            class="bg-red-500 text-white px-5 py-2 rounded-md shadow hover:bg-red-600"
+            class="px-4 py-2 bg-gradient-to-br from-gray-200 to-gray-300 text-gray-700 font-semibold rounded-lg shadow-md hover:shadow-lg hover:from-gray-300 hover:to-gray-400 transition"
             (click)="decreaseSteps()"
           >
-            -
+            - Remove Steps
           </button>
         </div>
       </div>
+
       <!-- Water Intake -->
-      <div class="p-8 bg-blue-100 text-blue-800 rounded-lg shadow-md">
+      <div class="p-8 bg-gradient-to-br from-blue-50 to-blue-100 text-blue-800 rounded-lg shadow-md">
         <h3 class="text-xl font-semibold">Water Intake</h3>
         <p class="text-4xl font-bold mt-4">{{ waterIntake }}/{{ waterTarget }} Glasses</p>
-        <div class="flex space-x-6 mt-6">
+        <div class="relative">
+          <div class="w-full bg-gray-200 rounded-full h-2.5 mt-4">
+            <div
+              class="bg-blue-300 h-2.5 rounded-full transition-all duration-500"
+              [style.width]="(waterIntake / waterTarget) * 100 + '%'"
+            ></div>
+          </div>
+          <span
+            class="absolute right-0 text-sm text-blue-500 font-semibold mt-1"
+            *ngIf="waterTarget - waterIntake <= 0"
+          >Hydrated 💧</span>
+        </div>
+        <div class="flex space-x-4 mt-6">
           <button
-            class="bg-green-500 text-white px-5 py-2 rounded-md shadow hover:bg-green-600"
+            class="px-4 py-2 bg-gradient-to-br from-blue-200 to-blue-300 text-blue-800 font-semibold rounded-lg shadow-md hover:shadow-lg hover:from-blue-300 hover:to-blue-400 transition"
             (click)="increaseWaterIntake()"
           >
-            +
+            + Add Water
           </button>
           <button
-            class="bg-red-500 text-white px-5 py-2 rounded-md shadow hover:bg-red-600"
+            class="px-4 py-2 bg-gradient-to-br from-gray-200 to-gray-300 text-gray-700 font-semibold rounded-lg shadow-md hover:shadow-lg hover:from-gray-300 hover:to-gray-400 transition"
             (click)="decreaseWaterIntake()"
           >
-            -
+            - Remove Water
           </button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Wellness Tips and Quick Actions -->
+
+  <!-- Wellness Tips and Health Insights -->
   <div class="space-y-8">
-    <h2 class="text-3xl font-bold text-gray-700">Wellness Tips and Quick Actions</h2>
+    <h2 class="text-3xl font-bold text-gray-700">Wellness Tips & Insights</h2>
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
       <!-- Wellness Tip -->
       <div class="bg-pink-50 rounded-lg shadow-lg p-8">
         <h3 class="text-xl font-bold mb-4">Wellness Tip</h3>
         <p class="italic text-gray-700">{{ wellnessTip }}</p>
       </div>
-      <!-- Quick Actions -->
+
+      <!-- Health Insights -->
       <div class="bg-blue-50 rounded-lg shadow-lg p-8">
-        <h3 class="text-xl font-bold mb-4">Quick Actions</h3>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <button
-            class="bg-green-500 text-white py-3 px-5 rounded-lg shadow-md hover:bg-green-600"
-          >
-            Request Appointment
-          </button>
-          <button
-            class="bg-blue-500 text-white py-3 px-5 rounded-lg shadow-md hover:bg-blue-600"
-          >
-            Download Records
-          </button>
-          <button
-            class="bg-yellow-500 text-white py-3 px-5 rounded-lg shadow-md hover:bg-yellow-600"
-          >
-            Renew Prescription
-          </button>
-          <button
-            class="bg-pink-500 text-white py-3 px-5 rounded-lg shadow-md hover:bg-pink-600"
-          >
-            Health Tips
-          </button>
-        </div>
+        <h3 class="text-xl font-bold mb-4">Health Insights</h3>
+        <ul class="space-y-4">
+          <li *ngIf="bloodPressureReadings.length" class="text-gray-700">
+            <strong>Blood Pressure:</strong> Your average systolic:
+            <span class="text-blue-500 font-bold">{{ getAverageSystolic() }}</span> mmHg, diastolic:
+            <span class="text-blue-500 font-bold">{{ getAverageDiastolic() }}</span> mmHg.
+          </li>
+          <li *ngIf="stepsProgress < stepsTarget" class="text-gray-700">
+            <strong>Steps:</strong> You're
+            <span class="text-blue-500 font-bold">{{ stepsTarget - stepsProgress }}</span> steps away from today's goal.
+          </li>
+          <li *ngIf="waterIntake < waterTarget" class="text-gray-700">
+            <strong>Hydration:</strong> Drink
+            <span class="text-blue-500 font-bold">{{ waterTarget - waterIntake }}</span> more glasses of water today.
+          </li>
+          <li *ngIf="appointments.length" class="text-gray-700">
+            <strong>Next Appointment:</strong> {{ appointments[0]?.date }} at {{ appointments[0]?.time }}.
+          </li>
+        </ul>
       </div>
     </div>
   </div>
 
-  <!-- Content Section -->
+  <!-- Blood Pressure Trends -->
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-    <!-- Blood Pressure Chart -->
     <div class="bg-white rounded-lg shadow-lg p-6 lg:col-span-2">
       <h3 class="text-lg font-bold mb-4">Blood Pressure Trends</h3>
       <canvas id="bloodPressureChart" class="w-full"></canvas>
     </div>
 
-    <!-- Reminders -->
-    <div class="bg-white p-9 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300">
-      <h2 class="text-2xl font-bold text-gray-700 flex items-center gap-1">
-        <i class="bi bi-alarm text-purple-500 text-2xl"></i> Today's Reminders
+  <!-- Reminders -->
+    <div class="bg-gradient-to-br from-purple-50 to-blue-50 p-6 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300">
+      <h2 class="text-xl font-bold text-purple-600 flex items-center gap-2">
+        <i class="bi bi-alarm text-purple-500 text-lg"></i> Today's Reminders
       </h2>
-      <!-- Add Reminder -->
-      <form (submit)="addReminder($event)" class="mt-1 flex gap-1">
+      <!-- Reminder Form -->
+      <form (submit)="addReminder($event)" class="mt-3 flex gap-2 items-center">
         <input
           [(ngModel)]="newReminder.message"
           name="newReminderMessage"
           type="text"
-          placeholder="Write a reminder..."
-          class="flex-grow px-1 py-1 border rounded-lg focus:ring-1 focus:ring-purple-500"
+          placeholder="Reminder..."
+          class="w-2/5 px-2 py-1 text-sm border border-gray-300 rounded-md focus:ring-1 focus:ring-purple-300 transition"
           required
         />
         <input
           [(ngModel)]="newReminder.time"
           name="newReminderTime"
           type="time"
-          class="px-1 py-1 border rounded-lg focus:ring-2 focus:ring-purple-500"
+          class="w-1/4 px-2 py-1 text-sm border border-gray-300 rounded-md focus:ring-1 focus:ring-purple-300 transition"
           required
         />
         <button
           type="submit"
-          class="bg-green-500 hover:bg-green-600 text-white px-1 py-1 rounded-lg transition"
+          class="px-4 py-1 bg-gradient-to-br from-green-200 to-green-300 text-green-800 font-medium text-sm rounded-md shadow hover:from-green-300 hover:to-green-400 hover:shadow-md transition"
         >
           Add
         </button>
       </form>
-      <!-- List -->
-      <ul class="mt-6 space-y-4" *ngIf="activeReminders.length > 0">
+
+      <!-- Active Reminders -->
+      <ul class="mt-4 space-y-3" *ngIf="activeReminders.length > 0">
         <li
           *ngFor="let reminder of activeReminders; let i = index"
-          class="flex justify-between items-center p-4 border-l-4 rounded-lg shadow-sm"
-          [ngClass]="{ 'border-purple-500': true }"
+          class="flex justify-between items-center p-3 bg-white border-l-4 rounded-md shadow-sm hover:shadow-md transition"
+          [ngClass]="{ 'border-purple-400': true }"
         >
-          <div class="flex items-center gap-4">
-            <!-- Circle Button -->
+          <div class="flex items-center gap-2">
+            <!-- Complete Reminder Button -->
             <button
               (click)="removeReminder(i)"
-              class="text-2xl text-gray-400 hover:text-red-500 transition"
+              class="text-lg text-gray-400 hover:text-red-500 transition"
             >
               <i class="bi bi-circle"></i>
             </button>
-            <span
-              class="text-gray-700"
-            >
-          {{ reminder.message }}
-        </span>
+            <span class="text-gray-700 text-sm font-medium">{{ reminder.message }}</span>
           </div>
-          <span class="text-gray-500">{{ reminder.time }}</span>
+          <span class="text-gray-500 text-xs">{{ reminder.time }}</span>
         </li>
       </ul>
+
       <!-- No Reminders Message -->
-      <p *ngIf="activeReminders.length === 0" class="text-center text-gray-500 mt-6">
+      <p *ngIf="activeReminders.length === 0" class="text-center text-gray-500 text-sm mt-4">
         No reminders left for today. 🎉
       </p>
     </div>
   </div>
-
 
   <!-- Emergency Contacts -->
   <div class="bg-white rounded-lg shadow-lg p-6 mb-8">

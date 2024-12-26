@@ -4,21 +4,20 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class EmergencyContactsService {
-  private emergencyContacts: { name: string; relation: string; phone: string }[] = [
-    { name: 'John Doe', relation: 'Husband', phone: '+1234567890' },
-    { name: 'Jane Smith', relation: 'Sister', phone: '+0987654321' },
+  private emergencyContacts: { name: string; relation: string; phone: string; familyMember: string }[] = [
+    { name: 'John Doe', relation: 'Husband', phone: '+1234567890', familyMember: 'Yes' },
+    { name: 'Jane Smith', relation: 'Sister', phone: '+0987654321', familyMember: 'Yes' },
   ];
 
   getContacts() {
     return this.emergencyContacts;
   }
 
-  //ToDo (later on)
-  addContact(contact: { name: string; relation: string; phone: string }) {
+  addContact(contact: { name: string; relation: string; phone: string; familyMember: string }) {
     this.emergencyContacts.push(contact);
   }
 
-  updateContact(index: number, updatedContact: { name: string; relation: string; phone: string }) {
+  updateContact(index: number, updatedContact: { name: string; relation: string; phone: string; familyMember: string }) {
     this.emergencyContacts[index] = updatedContact;
   }
 
