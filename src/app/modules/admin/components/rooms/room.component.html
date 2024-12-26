@@ -1,0 +1,21 @@
+<div class="rooms-container">
+  <h2>Rooms</h2>
+  <table class="rooms-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Room Number</th>
+        <th>Type</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let room of roomList">
+        <td>{{ room.room_id }}</td>
+        <td>{{ room.room_num }}</td>
+        <td>{{ room.room_type }}</td>
+        <td>{{ room.status }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

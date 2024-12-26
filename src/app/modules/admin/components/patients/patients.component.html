@@ -1,1 +1,35 @@
-<p>patients works!</p>
+<div class="container">
+  <h2>Patients</h2>
+  <div *ngIf="isLoading" class="loading">Loading patient data...</div>
+  <table *ngIf="!isLoading && patients.length > 0" class="styled-table">
+    <thead>
+      <tr>
+        <th>Patient ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Date of Birth</th>
+        <th>Gender</th>
+        <th>Address</th>
+        <th>Phone Number</th>
+        <th>Admission Date</th>
+        <th>Discharge Date</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let patient of patients">
+        <td>{{ patient.patient_id }}</td>
+        <td>{{ patient.firstname }}</td>
+        <td>{{ patient.lastname }}</td>
+        <td>{{ patient.dob | date: 'mediumDate' }}</td>
+        <td>{{ patient.gender }}</td>
+        <td>{{ patient.address }}</td>
+        <td>{{ patient.phone_number }}</td>
+        <td>{{ patient.admission_date | date: 'mediumDate' }}</td>
+        <td>{{ patient.discharge_date ? (patient.discharge_date | date: 'mediumDate') : 'N/A' }}</td>
+        <td>{{ patient.status }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div *ngIf="!isLoading && patients.length === 0" class="no-data">No patients found.</div>
+</div>

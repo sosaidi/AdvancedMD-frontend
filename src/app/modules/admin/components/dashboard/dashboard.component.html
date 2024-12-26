@@ -1,7 +1,25 @@
-<!-- 
-  <!-- <h1>Admin Dashboard</h1> -->
-  <!-- <div class="dashboard-container"></div> -->
-  <!-- <p>
-    Welcome to the Admin Dashboard! Here you can manage appointments, doctors,
-    patients, payments, rooms, and more.
-  </p> -->
+<div class="dashboard-content">
+  <h2>Admin Dashboard</h2>
+  <div class="metrics">
+    <div class="card">
+      <h3>Total Patients</h3>
+      <p>{{ dashboardData.totalPatients }}</p>
+    </div>
+    <div class="card">
+      <h3>Total Staff</h3>
+      <p>{{ dashboardData.totalStaff }}</p>
+    </div>
+    <div class="card">
+      <h3>Total Rooms</h3>
+      <p>{{ dashboardData.totalRooms }}</p>
+    </div>
+    <div class="card">
+      <h3>Active Appointments</h3>
+      <p>{{ dashboardData.activeAppointments }}</p>
+    </div>
+    <div class="card">
+      <h3>Available Rooms</h3>
+      <p>{{ dashboardData.availableRooms }}</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,31 @@
+<div class="appointments-container">
+  <div class="header">
+    <h2>Appointments</h2>
+    <button class="add-btn">
+      <i class="fa fa-plus"></i>+ Add Appointment
+    </button>
+  </div>
+
+  <table class="appointments-table">
+    <thead>
+      <tr>
+        <th>Appointment ID</th>
+        <th>Patient ID</th>
+        <th>Staff ID</th>
+        <th>Room ID</th>
+        <th>Appointment Date</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let appointment of appointments">
+        <td>{{ appointment.app_id }}</td>
+        <td>{{ appointment.patient_id }}</td>
+        <td>{{ appointment.staff_id }}</td>
+        <td>{{ appointment.room_id || 'N/A' }}</td>
+        <td>{{ appointment.app_date }}</td>
+        <td>{{ appointment.status }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,42 +1,94 @@
-nav a {
-    display: inline-block;
-    gap: 20x;
-    /* display: flex; */
-    flex: 1;
-    text-decoration: none;
-    padding: 10px 15px;
-    margin: 10px;
-    background-color: #51b3a5;
-    color: white;
-    border-radius:  5px;
-    font-size: 16px;
-    font-style:inherit;
-    font-weight: bold;
-    visibility: visible;
-    opacity: 1;
-    /* display: contents; */
-    /* display: none; */
-  }
-  nav a {
-    pointer-events: auto;
-    cursor: pointer;
-  }
-  .header-title {
-    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    color: #0d859a; 
-    font-size: 50px; 
-    text-align: center;
-    margin-top: 20px;
-  }
-  .header-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 20px;
-  }
-  
-  .logo {
-    max-width: 60px; 
-    height: auto;
-    margin-right: 25px; 
-  }
+/* General Layout */
+.layout-container {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 200px;
+  background-color: #125f55;
+  color: #ecf0f1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.logo img {
+  width: 150px;
+  margin-bottom: 20px;
+}
+
+.menu ul {
+  list-style: none;
+  padding: 0;
+  width: 100%;
+}
+
+.menu li {
+  margin: 5%;
+  font-size: 1.3rem;
+}
+
+.menu li a {
+  text-decoration: none;
+  color: #ecf0f1;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+}
+
+.menu li a.active {
+  background-color: #34495e;
+  font-weight: bold;
+}
+
+.main-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  margin-left: 30px;
+  font-size: 16px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  background-color: #ecf0f1;
+  border-bottom: 1px solid #bdc3c7;
+}
+
+.header h1 {
+  margin: 5;
+  font-size: 24px;
+}
+
+.header .profile {
+  display: flex;
+  align-items: center;
+}
+
+.header .profile img {
+  width: 30px;
+  height: 40px;
+  border-radius: 100%;
+  margin-right: 10px;
+}
+
+.dashboard .metrics {
+  display: flex;
+  justify-content: space-around;
+  margin: 20px;
+}
+
+.card {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 30%;
+}

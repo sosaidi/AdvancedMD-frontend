@@ -1,10 +1,28 @@
-import { Component } from '@angular/core'
+import { Component, OnInit } from '@angular/core';
+import { PatientService } from '../../../../services/patients.service';
+import { Patient } from './patients.model';
 
 @Component({
-  selector: 'app-patients',
-  standalone: true,
-  imports: [],
+  selector: 'app-patient',
   templateUrl: './patients.component.html',
-  styleUrl: './patients.component.css',
+  styleUrls: ['./patients.component.css'],
 })
-export class PatientsComponent {}
+export class PatientComponent implements OnInit {
+  patients: Patient[] = [];
+  isLoading: boolean = true;
+
+  constructor(private patientService: PatientService) {}
+
+  ngOnInit(): void {
+    this.fetchPatients();
+  }
+
+  fetchPatients(): void {
+    this.patientService.getPatients().subscribe({
+      next: (data) => {
+        this.patients = data;
+        this.isLoading = false;
+      },
+    });
+  }
+}

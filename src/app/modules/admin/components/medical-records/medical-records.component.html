@@ -1,0 +1,23 @@
+<div class="container">
+  <h2>Advanced Medical Data</h2>
+  <table class="styled-table">
+    <thead>
+      <tr>
+        <th>Staff ID</th>
+        <th>Diagnosis</th>
+        <th>Prescription</th>
+        <th>Report</th>
+        <th>Created At</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let record of medicalRecords">
+        <td>{{ record.staffId }}</td>
+        <td>{{ record.diagnosis }}</td>
+        <td>{{ record.prescription }}</td>
+        <td>{{ record.report }}</td>
+        <td>{{ record.createdAt | date: 'short' }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

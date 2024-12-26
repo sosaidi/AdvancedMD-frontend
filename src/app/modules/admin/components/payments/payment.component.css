@@ -1,0 +1,85 @@
+/* Payments Container */
+/* .payments-container {
+  margin: 30px auto;
+  padding: 20px;
+  background-color: #f9fafb;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  /* font-family: 'Arial', sans-serif; */
+/* } */
+
+.container {
+  margin: 20px auto;
+  padding: 10px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-size: larger;
+  padding-top: 10px;
+}
+
+h2 {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333333;
+  margin: 5px 10 5px 10;
+  text-transform: uppercase; 
+}
+
+
+.add-payment-btn {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+
+.add-payment-btn .btn-primary {
+  background-color: #2b6e6a;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.add-payment-btn .btn-primary:hover {
+  background-color: #22656b;
+}
+
+
+/* Align table text properly */
+table.payments-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left; 
+  font-size: 1.2rem;
+}
+
+table.payments-table th,
+table.payments-table td {
+  padding: 12px 15px; 
+  text-align: left; 
+}
+
+table.payments-table th {
+  background-color: #2d3e50;
+  color: #ffffff;
+  font-weight: bold;
+  /* text-transform: uppercase; */
+}
+
+table.payments-table tr:nth-child(even) {
+  background-color: #f1f1f1; /* Alternate row colors */
+}
+
+table.payments-table tr:hover {
+  background-color: #e6f7ff; /* Highlight row on hover */
+}
+
+table.payments-table td {
+  vertical-align: middle; /* Center content vertically */
+  border-bottom: 1px solid #dddddd; /* Add a border below rows */
+}

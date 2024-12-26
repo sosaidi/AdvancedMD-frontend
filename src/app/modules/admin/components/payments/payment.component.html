@@ -1,0 +1,30 @@
+<div class="payments-container">
+  <h2>Payments</h2>
+
+  <div class="add-payment-btn">
+    <button class="btn btn-primary">+ Add Payment</button>
+  </div>
+
+  <table class="payments-table">
+    <thead>
+      <tr>
+        <th>Payment ID</th>
+        <th>Patient Name</th>
+        <th>Amount</th>
+        <th>Payment Date</th>
+        <th>Method</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let payment of payments">
+        <td>{{ payment.payment_id }}</td>
+        <td>{{ payment.patientName }}</td>
+        <td>{{ payment.amount | currency }}</td>
+        <td>{{ payment.payment_date | date: 'short' }}</td>
+        <td>{{ payment.method }}</td>
+        <td>{{ payment.status }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
