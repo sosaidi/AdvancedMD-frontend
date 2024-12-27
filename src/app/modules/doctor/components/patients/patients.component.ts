@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import jsPDF from 'jspdf';
+import JsPDF from 'jspdf';
 import { NgClass, NgForOf, NgIf, NgOptimizedImage } from '@angular/common'
 
 @Component({
@@ -126,7 +126,7 @@ export class PatientsComponent {
   }
 
   async generateReport(patient: any): Promise<void> {
-    const doc = new jsPDF();
+    const doc = new JsPDF();
 
     // Add hospital logo
     const logoUrl = 'src/assets/logo.png';

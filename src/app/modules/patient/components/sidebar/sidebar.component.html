@@ -10,12 +10,12 @@
       [class.opacity-0]="collapsed"
       [class.opacity-100]="!collapsed"
     >
-    <span class="name text-lg font-semibold block">
-      {{ firstName }} {{ lastName }}
-    </span>
+      <span class="name text-lg font-semibold block">
+        {{ firstName }} {{ lastName }}
+      </span>
       <span class="role text-sm block mt-1">
-      Patient
-    </span>
+        Patient
+      </span>
     </div>
   </div>
 
@@ -65,7 +65,7 @@
           routerLinkActive="bg-green-100 text-green-600"
           class="flex items-center gap-4 px-4 py-3 rounded-md text-gray-700 hover:bg-green-50 transition-all"
         >
-          <i class="bi bi-clipboard-pulse"></i>
+          <i class="bi bi-clipboard-pulse text-xl"></i>
           <span
             class="transition-all duration-300"
             [class.opacity-0]="collapsed"
@@ -94,7 +94,25 @@
         </a>
       </li>
 
-      <!-- Payments -->
+      <!-- Prescriptions -->
+      <li>
+        <a
+          routerLink="/patient/prescriptions"
+          routerLinkActive="bg-green-100 text-green-600"
+          class="flex items-center gap-4 px-4 py-3 rounded-md text-gray-700 hover:bg-green-50 transition-all"
+        >
+          <i class="bi bi-prescription2 text-xl"></i>
+          <span
+            class="transition-all duration-300"
+            [class.opacity-0]="collapsed"
+            [class.opacity-100]="!collapsed"
+          >
+            Prescriptions
+          </span>
+        </a>
+      </li>
+
+      <!-- Billing -->
       <li>
         <a
           routerLink="/patient/billing"
@@ -107,7 +125,25 @@
             [class.opacity-0]="collapsed"
             [class.opacity-100]="!collapsed"
           >
-            Payments
+            Billing
+          </span>
+        </a>
+      </li>
+
+      <!-- Chat -->
+      <li>
+        <a
+          routerLink="/patient/chat"
+          routerLinkActive="bg-green-100 text-green-600"
+          class="flex items-center gap-4 px-4 py-3 rounded-md text-gray-700 hover:bg-green-50 transition-all"
+        >
+          <i class="bi bi-chat-dots text-xl"></i>
+          <span
+            class="transition-all duration-300"
+            [class.opacity-0]="collapsed"
+            [class.opacity-100]="!collapsed"
+          >
+            Chat
           </span>
         </a>
       </li>

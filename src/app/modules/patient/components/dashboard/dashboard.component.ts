@@ -4,12 +4,15 @@ import { NgClass, NgForOf, NgIf } from '@angular/common'
 import { FormsModule } from '@angular/forms'
 import { LabResultsService } from '../../services/lab-results.service'
 import { EmergencyContactsService } from '../../services/contact.service'
+import { LabResultsComponent } from '../lab-results/lab-results.component'
+import { MedicalInfoService } from '../../services/medical.service'
+import { HttpClientModule } from '@angular/common/http'
 
 @Component({
   selector: 'app-patient-dashboard',
   templateUrl: './dashboard.component.html',
   standalone: true,
-  imports: [NgIf, NgForOf, NgClass, FormsModule],
+  imports: [NgIf, NgForOf, NgClass, FormsModule, LabResultsComponent, HttpClientModule],
 })
 export class PatientDashboardComponent implements OnInit, AfterViewInit {
   loading: boolean = true;
@@ -26,10 +29,10 @@ export class PatientDashboardComponent implements OnInit, AfterViewInit {
   healthHistory: { date: string; detail: string }[] = [];
   familyHealth: { name: string; metric: string; value: string }[] = [];
 
-  waterIntake: number = 6;
+  waterIntake: number = 0;
   waterTarget: number = 8;
 
-  stepsProgress: number = 6500;
+  stepsProgress: number = 0;
   stepsTarget: number = 10000;
 
   reminders: { message: string; time: string; completed: boolean; timestamp: number }[] = [];
@@ -37,7 +40,13 @@ export class PatientDashboardComponent implements OnInit, AfterViewInit {
   completedReminders: any[] = [];
   newReminder = { message: '', time: '', timestamp: 0 };
 
-  constructor(public labResultsService: LabResultsService, public contactsService: EmergencyContactsService) {}
+  bloodPressureInfo: string | null = null;
+  showDetails = false;
+
+  private systolicLimit: number = 130;
+  private diastolicLimit: number = 80;
+
+  constructor(public labResultsService: LabResultsService, public contactsService: EmergencyContactsService, private medicalInfoService: MedicalInfoService) {}
 
   get emergencyContacts() {
     return this.contactsService.getContacts();
@@ -54,6 +63,8 @@ export class PatientDashboardComponent implements OnInit, AfterViewInit {
 
     this.loadReminders();
     this.autoDeleteReminders();
+    this.updateBloodPressureReadings();
+    this.fetchBloodPressureInfo();
   }
 
   private initializeMockData(): void {
@@ -178,26 +189,61 @@ export class PatientDashboardComponent implements OnInit, AfterViewInit {
     this.loadReminders();
   }
 
-  private updateBloodPressureReadings(): void {
-    const labResults = this.labResultsService.getLabResults();
-    this.bloodPressureReadings = labResults
-      .filter((result) => result.test.toLowerCase().includes('blood pressure'))
-      .map((result) => {
-        const [systolic, diastolic] = result.value.split('/').map(Number);
-        return {
-          date: result.date,
-          systolic,
-          diastolic,
-        };
-      });
+  // Check if blood pressure is above the defined limits
+  isBloodPressureAboveLimit(): boolean {
+    return this.bloodPressureReadings.some(
+      (reading) => reading.systolic > this.systolicLimit || reading.diastolic > this.diastolicLimit
+    );
+  }
 
-    // Refresh chart after updating data
-    this.initBloodPressureChart();
+  fetchBloodPressureInfo(): void {
+    this.medicalInfoService.getBloodPressureInfo().subscribe({
+      next: (response) => {
+        this.bloodPressureInfo = response;
+        console.log('Blood Pressure Info:', response);
+      },
+      error: (err) => {
+        console.error('Error fetching blood pressure info:', err);
+        this.bloodPressureInfo = 'Could not load information.';
+      },
+    });
+  }
+
+  toggleDetails(): void {
+    this.showDetails = !this.showDetails;
+  }
+
+  protected updateBloodPressureReadings(): void {
+    const bloodPressureReadings = this.labResultsService.getBloodPressureReadings();
+    console.log('Fetched blood pressure readings:', bloodPressureReadings); // Debugging log
+    if (bloodPressureReadings.length) {
+      this.bloodPressureReadings = bloodPressureReadings;
+      this.initBloodPressureChart();
+    } else {
+      this.bloodPressureReadings = [];
+      this.clearBloodPressureChart();
+    }
+  }
+
+  private clearBloodPressureChart(): void {
+    const ctx = document.getElementById('bloodPressureChart') as HTMLCanvasElement;
+    if (ctx) {
+      const chartInstance = Chart.getChart(ctx);
+      if (chartInstance) {
+        chartInstance.destroy();
+      }
+    }
   }
 
   private initBloodPressureChart(): void {
+    console.log('Initializing chart with data:', this.bloodPressureReadings); // Debugging log
     const ctx = document.getElementById('bloodPressureChart') as HTMLCanvasElement;
     if (ctx && this.bloodPressureReadings.length) {
+      const chartInstance = Chart.getChart(ctx);
+      if (chartInstance) {
+        chartInstance.destroy();
+      }
+
       new Chart(ctx, {
         type: 'line',
         data: {
@@ -206,15 +252,15 @@ export class PatientDashboardComponent implements OnInit, AfterViewInit {
             {
               label: 'Systolic Pressure',
               data: this.bloodPressureReadings.map((r) => r.systolic),
-              borderColor: '#FFB5E8',
-              backgroundColor: 'rgba(255, 181, 232, 0.5)',
+              borderColor: '#FF6F61',
+              backgroundColor: 'rgba(255, 111, 97, 0.2)',
               fill: true,
             },
             {
               label: 'Diastolic Pressure',
               data: this.bloodPressureReadings.map((r) => r.diastolic),
-              borderColor: '#85E3FF',
-              backgroundColor: 'rgba(133, 227, 255, 0.5)',
+              borderColor: '#4CAF50',
+              backgroundColor: 'rgba(76, 175, 80, 0.2)',
               fill: true,
             },
           ],
@@ -227,7 +273,7 @@ export class PatientDashboardComponent implements OnInit, AfterViewInit {
             },
             y: {
               beginAtZero: true,
-              grid: { color: '#F5F5F5' },
+              grid: { color: '#E0E0E0' },
             },
           },
         },

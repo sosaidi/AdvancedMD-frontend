@@ -6,8 +6,16 @@
   </div>
 
   <!-- Real-Time Health Banner -->
-  <div class="text-center text-red-600 text-sm font-semibold animate-pulse">
-    🚨 Blood pressure above normal limits! <a href="#" class="font-semibold underline">View Details</a>
+  <div *ngIf="isBloodPressureAboveLimit()" class="text-center text-red-600 text-sm font-semibold animate-pulse">
+    🚨 Blood pressure above normal limits!
+    <a href="#" (click)="toggleDetails()" class="font-semibold underline">View Details</a>
+  </div>
+
+  <!-- Display fetched API data -->
+  <div *ngIf="showDetails" class="mt-4 p-4 bg-gray-100 rounded-lg shadow-lg">
+    <h3 class="text-lg font-bold mb-2">Blood Pressure Information</h3>
+    <p *ngIf="bloodPressureInfo">{{ bloodPressureInfo }}</p>
+    <p *ngIf="!bloodPressureInfo">Loading...</p>
   </div>
 
   <!-- Health Overview -->
@@ -42,8 +50,12 @@
       <!-- Next Appointment -->
       <div class="p-8 bg-gradient-to-br from-green-50 to-green-100 text-green-800 rounded-lg shadow-md hover:scale-105 transition-transform">
         <h3 class="text-xl font-semibold">Next Appointment</h3>
-        <p class="text-lg mt-4">{{ appointments[0]?.date || 'No Appointment' }} at {{ appointments[0]?.time || '-' }}</p>
-        <p *ngIf="appointments[0]" class="text-sm mt-2">With {{ appointments[0].doctor }}</p>
+        <p *ngIf="appointments.length > 0">
+          {{ appointments[0].date }} at {{ appointments[0].time }} with {{ appointments[0].doctor }}
+        </p>
+        <p *ngIf="appointments.length === 0">
+          No Appointment
+        </p>
       </div>
     </div>
   </div>
@@ -147,14 +159,14 @@
             <span class="text-blue-500 font-bold">{{ waterTarget - waterIntake }}</span> more glasses of water today.
           </li>
           <li *ngIf="appointments.length" class="text-gray-700">
-            <strong>Next Appointment:</strong> {{ appointments[0]?.date }} at {{ appointments[0]?.time }}.
+            <strong>Next Appointment:</strong> {{ appointments[0].date }} at {{ appointments[0].time }}.
           </li>
         </ul>
       </div>
     </div>
   </div>
 
-  <!-- Blood Pressure Trends -->
+      <!-- Blood Pressure Trends -->
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
     <div class="bg-white rounded-lg shadow-lg p-6 lg:col-span-2">
       <h3 class="text-lg font-bold mb-4">Blood Pressure Trends</h3>

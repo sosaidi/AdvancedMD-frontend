@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import jsPDF from 'jspdf';
+import JsPDF from 'jspdf';
 import { FormsModule } from '@angular/forms';
 import { NgClass, NgIf, CurrencyPipe, NgForOf } from '@angular/common'
 
@@ -101,7 +101,7 @@ export class PaymentsComponent {
   }
 
   async generatePaymentReport(payment: any): Promise<void> {
-    const doc = new jsPDF();
+    const doc = new JsPDF();
 
     // Add hospital logo
     const logoUrl = '/assets/logo.png'; // Update with the correct path to your logo

@@ -1,48 +1,68 @@
-<div class="p-8 bg-gray-100 min-h-screen">
-  <!-- Billing Header -->
-  <div class="bg-white rounded-lg shadow-lg p-9 mb-6 w-[130vh] mx-auto">
-    <h2 class="text-3xl font-bold text-gray-800 mb-4">Billing Overview</h2>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="p-10 bg-gradient-to-br from-green-50 via-white to-gray-100 rounded-2xl shadow-xl max-w-15xl mx-auto">
+  <div class="bg-white rounded-2xl shadow-2xl p-9 max-w-9xl w-[143vh] mx-auto">
+
+    <!-- Billing Header -->
+    <h2 class="text-5xl font-bold mb-8 text-green-700 text-center">Billing Overview</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-10"> <!-- Increased gap from 6 to 10 -->
       <!-- Total Due -->
-      <div class="bg-red-100 text-red-700 rounded-lg p-4 shadow-md">
-        <h3 class="text-lg font-semibold">Total Due</h3>
-        <p class="text-4xl font-bold mt-2">{{ billingSummary.totalDue | currency }}</p>
+      <div class="bg-red-50 text-red-700 rounded-lg p-6 shadow-md hover:shadow-lg transition">
+        <h3 class="text-lg font-semibold flex items-center gap-2">
+          <i class="bi bi-cash-coin text-red-500"></i> Total Due
+        </h3>
+        <p class="text-4xl font-bold mt-2">{{ billingSummary.totalDue | currency:'EUR':'symbol':'1.2-2' }}</p>
       </div>
       <!-- Total Paid -->
-      <div class="bg-green-100 text-green-700 rounded-lg p-4 shadow-md">
-        <h3 class="text-lg font-semibold">Total Paid</h3>
-        <p class="text-4xl font-bold mt-2">{{ billingSummary.totalPaid | currency }}</p>
+      <div class="bg-green-50 text-green-700 rounded-lg p-6 shadow-md hover:shadow-lg transition">
+        <h3 class="text-lg font-semibold flex items-center gap-2">
+          <i class="bi bi-check-circle-fill text-green-500"></i> Total Paid
+        </h3>
+        <p class="text-4xl font-bold mt-2">{{ billingSummary.totalPaid | currency:'EUR':'symbol':'1.2-2' }}</p>
       </div>
       <!-- Pending Payments -->
-      <div class="bg-yellow-100 text-yellow-700 rounded-lg p-4 shadow-md">
-        <h3 class="text-lg font-semibold">Pending Payments</h3>
-        <p class="text-4xl font-bold mt-2">{{ billingSummary.pending | currency }}</p>
+      <div class="bg-yellow-50 text-yellow-700 rounded-lg p-6 shadow-md hover:shadow-lg transition">
+        <h3 class="text-lg font-semibold flex items-center gap-2">
+          <i class="bi bi-exclamation-circle-fill text-yellow-500"></i> Pending Payments
+        </h3>
+        <p class="text-4xl font-bold mt-2">{{ billingSummary.pending | currency:'EUR':'symbol':'1.2-2' }}</p>
       </div>
     </div>
   </div>
 
   <!-- Invoices Table -->
-  <div class="bg-white rounded-lg shadow-lg p-6">
-    <h3 class="text-2xl font-bold text-gray-800 mb-4">Invoices</h3>
+  <div class="bg-white rounded-lg shadow-lg p-6 mt-10"> <!-- Added mt-10 for spacing -->
+    <div class="flex justify-between items-center mb-6">
+      <h3 class="text-3xl font-bold text-gray-800">Invoices</h3>
+      <button
+        class="bg-gradient-to-r from-green-300 to-green-400 text-white px-5 py-2 rounded-lg shadow-md hover:from-green-400 hover:to-green-500 transition"
+      >
+        Add Invoice
+      </button>
+    </div>
+
     <div class="overflow-auto">
       <table class="min-w-full bg-white border border-gray-200">
-        <thead class="bg-gray-200">
+        <thead class="bg-gray-100">
         <tr>
-          <th class="px-6 py-3 text-left font-semibold">Invoice ID</th>
-          <th class="px-6 py-3 text-left font-semibold">Date</th>
-          <th class="px-6 py-3 text-left font-semibold">Amount</th>
-          <th class="px-6 py-3 text-left font-semibold">Status</th>
-          <th class="px-6 py-3 text-center font-semibold">Actions</th>
+          <th class="px-6 py-3 text-left font-semibold text-gray-600">Invoice ID</th>
+          <th class="px-6 py-3 text-left font-semibold text-gray-600">Date</th>
+          <th class="px-6 py-3 text-left font-semibold text-gray-600">Amount</th>
+          <th class="px-6 py-3 text-left font-semibold text-gray-600">Status</th>
+          <th class="px-6 py-3 text-center font-semibold text-gray-600">Actions</th>
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let invoice of invoices" class="hover:bg-gray-100">
-          <td class="px-6 py-4">{{ invoice.id }}</td>
-          <td class="px-6 py-4">{{ invoice.date }}</td>
-          <td class="px-6 py-4">{{ invoice.amount | currency }}</td>
+        <tr
+          *ngFor="let invoice of invoices"
+          class="hover:bg-gray-50 transition"
+        >
+          <td class="px-6 py-4 font-medium text-gray-800">{{ invoice.id }}</td>
+          <td class="px-6 py-4 text-gray-600">{{ invoice.date | date:'dd.MM.yyyy' }}</td>
+          <td class="px-6 py-4 text-gray-800">
+            {{ invoice.amount | currency:'EUR':'symbol':'1.2-2' }}
+          </td>
           <td class="px-6 py-4">
               <span
-                class="px-3 py-1 text-sm rounded-full"
+                class="px-3 py-1 text-sm rounded-full font-medium"
                 [ngClass]="{
                   'bg-green-100 text-green-600': invoice.status === 'Paid',
                   'bg-yellow-100 text-yellow-600': invoice.status === 'Pending',
@@ -52,20 +72,35 @@
                 {{ invoice.status }}
               </span>
           </td>
-          <td class="px-6 py-4 flex justify-center space-x-4">
-            <button (click)="downloadInvoice(invoice)" class="text-blue-500 hover:text-blue-700">
-              <i class="bi bi-file-earmark-arrow-down"></i>
+          <td class="px-6 py-4 flex justify-center space-x-3">
+            <button
+              (click)="downloadInvoice(invoice)"
+              class="text-blue-500 hover:text-blue-700 transition"
+            >
+              <i class="bi bi-download"></i>
             </button>
-            <button (click)="viewInvoice(invoice)" class="text-green-500 hover:text-green-700">
+            <button
+              (click)="viewInvoice(invoice)"
+              class="text-green-500 hover:text-green-700 transition"
+            >
               <i class="bi bi-eye"></i>
             </button>
-            <button (click)="deleteInvoice(invoice.id)" class="text-red-500 hover:text-red-700">
+            <button
+              (click)="deleteInvoice(invoice.id)"
+              class="text-red-500 hover:text-red-700 transition"
+            >
               <i class="bi bi-trash"></i>
             </button>
           </td>
         </tr>
         </tbody>
       </table>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="invoices.length === 0" class="text-center mt-8">
+      <i class="bi bi-file-earmark-excel text-gray-400 text-6xl"></i>
+      <p class="mt-4 text-gray-600 text-lg">No invoices available. Add one to get started!</p>
     </div>
   </div>
 </div>

@@ -1,8 +1,9 @@
-<div class="p-8 bg-gradient-to-br from-gray-100 via-white to-gray-200 min-h-screen">
-  <div class="bg-white rounded-2xl shadow-2xl p-9 max-w-7xl w-[130vh] mx-auto">
-    <!-- Header -->
+<div class="p-10 bg-gradient-to-br from-green-50 via-white to-gray-100 rounded-2xl shadow-xl max-w-15xl mx-auto">
+<div class="bg-white rounded-2xl shadow-2xl p-9 max-w-9xl w-[143vh] mx-auto">
+
+  <!-- Header -->
     <div class="flex justify-between items-center mb-8">
-      <h2 class="text-4xl font-bold text-gray-800">Settings</h2>
+      <h2 class="text-5xl font-bold mb-8 text-green-700 text-center">Settings</h2>
     </div>
 
     <!-- Navigation Tabs -->
@@ -10,35 +11,35 @@
       <button
         (click)="setActiveTab('profile')"
         class="text-lg font-semibold focus:outline-none px-4 py-2 rounded-t-lg transition"
-        [ngClass]="{ 'text-blue-500 border-b-4 border-blue-500': activeTab === 'profile', 'text-gray-500 hover:text-blue-500': activeTab !== 'profile' }"
+        [ngClass]="{ 'text-green-500 border-b-4 border-green-500': activeTab === 'profile', 'text-gray-500 hover:text-green-500': activeTab !== 'profile' }"
       >
         Profile Management
       </button>
       <button
         (click)="setActiveTab('password')"
         class="text-lg font-semibold focus:outline-none px-4 py-2 rounded-t-lg transition"
-        [ngClass]="{ 'text-blue-500 border-b-4 border-blue-500': activeTab === 'password', 'text-gray-500 hover:text-blue-500': activeTab !== 'password' }"
+        [ngClass]="{ 'text-green-500 border-b-4 border-green-500': activeTab === 'password', 'text-gray-500 hover:text-green-500': activeTab !== 'password' }"
       >
         Change Password
       </button>
       <button
         (click)="setActiveTab('notifications')"
         class="text-lg font-semibold focus:outline-none px-4 py-2 rounded-t-lg transition"
-        [ngClass]="{ 'text-blue-500 border-b-4 border-blue-500': activeTab === 'notifications', 'text-gray-500 hover:text-blue-500': activeTab !== 'notifications' }"
+        [ngClass]="{ 'text-green-500 border-b-4 border-green-500': activeTab === 'notifications', 'text-gray-500 hover:text-green-500': activeTab !== 'notifications' }"
       >
         Notifications
       </button>
       <button
         (click)="setActiveTab('contacts')"
         class="text-lg font-semibold focus:outline-none px-4 py-2 rounded-t-lg transition"
-        [ngClass]="{ 'text-blue-500 border-b-4 border-blue-500': activeTab === 'contacts', 'text-gray-500 hover:text-blue-500': activeTab !== 'contacts' }"
+        [ngClass]="{ 'text-green-500 border-b-4 border-green-500': activeTab === 'contacts', 'text-gray-500 hover:text-green-500': activeTab !== 'contacts' }"
       >
         Emergency Contacts
       </button>
       <button
         (click)="setActiveTab('theme')"
         class="text-lg font-semibold focus:outline-none px-4 py-2 rounded-t-lg transition"
-        [ngClass]="{ 'text-blue-500 border-b-4 border-blue-500': activeTab === 'theme', 'text-gray-500 hover:text-blue-500': activeTab !== 'theme' }"
+        [ngClass]="{ 'text-green-500 border-b-4 border-green-500': activeTab === 'theme', 'text-gray-500 hover:text-green-500': activeTab !== 'theme' }"
       >
         Theme Preferences
       </button>
@@ -55,7 +56,7 @@
               type="text"
               [(ngModel)]="profile.firstName"
               name="firstName"
-              class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none"
             />
           </div>
           <div>
@@ -64,7 +65,7 @@
               type="text"
               [(ngModel)]="profile.lastName"
               name="lastName"
-              class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none"
             />
           </div>
         </div>
@@ -74,7 +75,7 @@
             type="email"
             [(ngModel)]="profile.email"
             name="email"
-            class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none"
           />
         </div>
         <div>
@@ -83,12 +84,12 @@
             type="text"
             [(ngModel)]="profile.phone"
             name="phone"
-            class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none"
           />
         </div>
         <button
           type="submit"
-          class="px-6 py-3 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 transition"
+          class="px-6 py-3 bg-green-500 text-white rounded-lg shadow-md hover:bg-green-600 transition"
         >
           Save Profile
         </button>
@@ -105,7 +106,7 @@
             type="password"
             [(ngModel)]="password.current"
             name="currentPassword"
-            class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none"
           />
         </div>
         <div>
@@ -114,7 +115,7 @@
             type="password"
             [(ngModel)]="password.new"
             name="newPassword"
-            class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none"
           />
         </div>
         <div>
@@ -123,12 +124,12 @@
             type="password"
             [(ngModel)]="password.confirm"
             name="confirmPassword"
-            class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none"
           />
         </div>
         <button
           type="submit"
-          class="px-6 py-3 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 transition"
+          class="px-6 py-3 bg-green-500 text-white rounded-lg shadow-md hover:bg-green-600 transition"
         >
           Update Password
         </button>
@@ -144,7 +145,7 @@
             type="checkbox"
             [(ngModel)]="notifications.email"
             name="emailNotifications"
-            class="h-5 w-5 text-blue-500 focus:ring-2 focus:ring-blue-500"
+            class="h-5 w-5 text-green-500 focus:ring-2 focus:ring-green-500"
           />
           <span class="ml-3 text-gray-700 font-medium">Email Notifications</span>
         </label>
@@ -153,7 +154,7 @@
             type="checkbox"
             [(ngModel)]="notifications.sms"
             name="smsNotifications"
-            class="h-5 w-5 text-blue-500 focus:ring-2 focus:ring-blue-500"
+            class="h-5 w-5 text-green-500 focus:ring-2 focus:ring-green-500"
           />
           <span class="ml-3 text-gray-700 font-medium">SMS Notifications</span>
         </label>
@@ -168,23 +169,23 @@
           type="text"
           [(ngModel)]="contact.name"
           placeholder="Contact Name"
-          class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+          class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500"
         />
         <input
           type="text"
           [(ngModel)]="contact.phone"
           placeholder="Phone Number"
-          class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+          class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500"
         />
         <input
           type="text"
           [(ngModel)]="contact.relation"
           placeholder="Relation"
-          class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+          class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500"
         />
         <select
           [(ngModel)]="contact.familyMember"
-          class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+          class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500"
         >
           <option value="Yes">Yes</option>
           <option value="No">No</option>

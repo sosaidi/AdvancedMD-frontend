@@ -1,24 +1,24 @@
 import { Component } from '@angular/core'
 import autoTable from 'jspdf-autotable'
-import jsPDF from 'jspdf'
-import { CurrencyPipe, NgClass, NgForOf } from '@angular/common'
+import JsPDF from 'jspdf'
+import { CurrencyPipe, DatePipe, NgClass, NgForOf, NgIf } from '@angular/common'
 
 @Component({
   selector: 'app-billing',
   standalone: true,
-  imports: [
-    CurrencyPipe,
-    NgClass,
-    NgForOf,
-  ],
+  imports: [CurrencyPipe, NgClass, NgForOf, DatePipe, NgIf],
+  providers: [DatePipe],
   templateUrl: './billing.component.html',
 })
 export class BillingComponent {
+  // Summary of billing
   billingSummary = {
     totalDue: 450.0,
     totalPaid: 1250.0,
     pending: 200.0,
   };
+
+  constructor(private datePipe: DatePipe) {}
 
   // List of invoices
   invoices = [
@@ -28,9 +28,10 @@ export class BillingComponent {
     { id: 'INV-004', date: '2024-12-15', amount: 350, status: 'Paid' },
   ];
 
-  // Generate PDF for an invoice
+  // Generate a PDF for a specific invoice
   downloadInvoice(invoice: any): void {
-    const doc = new jsPDF();
+    const doc = new JsPDF();
+    const formattedDate = this.datePipe.transform(invoice.date, 'dd.MM.yyyy');
 
     doc.setFontSize(18);
     doc.text('Invoice Details', 105, 20, { align: 'center' });
@@ -40,8 +41,8 @@ export class BillingComponent {
       head: [['Field', 'Details']],
       body: [
         ['Invoice ID', invoice.id],
-        ['Date', invoice.date],
-        ['Amount', `$${invoice.amount}`],
+        ['Date', formattedDate],
+        ['Amount', invoice.amount.toLocaleString('de-AT', { style: 'currency', currency: 'EUR' })],
         ['Status', invoice.status],
       ],
       styles: { fontSize: 12 },
@@ -51,12 +52,12 @@ export class BillingComponent {
     doc.save(`${invoice.id}.pdf`);
   }
 
-  // View Invoice (Placeholder logic)
+  // View an invoice (placeholder logic)
   viewInvoice(invoice: any): void {
     alert(`Viewing Invoice ID: ${invoice.id}`);
   }
 
-  // Delete Invoice
+  // Delete an invoice by ID
   deleteInvoice(id: string): void {
     this.invoices = this.invoices.filter((invoice) => invoice.id !== id);
     alert(`Invoice ${id} deleted.`);

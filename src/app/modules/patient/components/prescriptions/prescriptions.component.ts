@@ -1,6 +1,6 @@
 import { Component } from '@angular/core'
 import { DatePipe, NgClass, NgForOf, NgIf } from '@angular/common'
-import jsPDF from 'jspdf'
+import JsPDF from 'jspdf'
 import autoTable from 'jspdf-autotable';
 
 @Component({
@@ -31,7 +31,7 @@ export class PrescriptionsComponent {
   activeTab: string = 'active';
 
   generatePDF(prescription: any): void {
-    const doc = new jsPDF();
+    const doc = new JsPDF();
 
     // Title
     doc.setFontSize(20);
