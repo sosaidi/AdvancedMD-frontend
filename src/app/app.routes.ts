@@ -2,11 +2,11 @@ import { Routes } from '@angular/router'
 
 export const routes: Routes = [
   {
-    path: 'admin',
+   /* path: 'admin',
     loadChildren: () =>
       import('./modules/admin/admin-routing.module').then(
         (m) => m.AdminRoutingModule
-      ),
+      ),*/
   },
   {
     /*  path: 'doctor',
