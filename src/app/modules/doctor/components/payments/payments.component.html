@@ -1,0 +1,178 @@
+<div class="p-8 bg-gradient-to-br from-gray-100 via-white to-gray-200 min-h-screen">
+  <!-- Header -->
+  <div class="bg-gradient-to-r from-green-200 to-green-300 text-white rounded-lg shadow-lg p-8 mb-10 flex justify-between items-center">
+    <h1 class="text-5xl font-bold">Payments</h1>
+    <button
+      (click)="openForm()"
+      class="px-6 py-3 bg-white text-green-600 rounded-lg shadow-md hover:bg-gray-100 transition duration-300"
+    >
+      + Add Payment
+    </button>
+  </div>
+
+  <!-- Filters and Search -->
+  <div class="bg-white rounded-lg shadow-lg p-6 mb-8 flex flex-col lg:flex-row items-center lg:justify-between space-y-4 lg:space-y-0">
+    <input
+      type="text"
+      [(ngModel)]="searchQuery"
+      placeholder="Search by Patient Name or Payment ID"
+      class="w-full lg:w-2/3 px-6 py-3 rounded-full border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+    />
+    <select
+      [(ngModel)]="filterStatus"
+      class="w-full lg:w-1/3 px-6 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    >
+      <option value="">All Statuses</option>
+      <option value="Paid">Paid</option>
+      <option value="Pending">Pending</option>
+      <option value="Overdue">Overdue</option>
+    </select>
+  </div>
+
+  <!-- Payments Table -->
+  <div *ngIf="filteredPayments.length > 0; else noPayments" class="bg-white rounded-lg shadow-lg p-8 overflow-auto">
+    <table class="w-full text-left border-collapse">
+      <thead>
+      <tr class="bg-gray-100">
+        <th class="border-b py-4 px-6 text-gray-600 font-semibold">Payment ID</th>
+        <th class="border-b py-4 px-6 text-gray-600 font-semibold">Patient Name</th>
+        <th class="border-b py-4 px-6 text-gray-600 font-semibold">Date</th>
+        <th class="border-b py-4 px-6 text-gray-600 font-semibold">Amount</th>
+        <th class="border-b py-4 px-6 text-gray-600 font-semibold">Status</th>
+        <th class="border-b py-4 px-6 text-gray-600 font-semibold">Method</th>
+        <th class="border-b py-4 px-6 text-gray-600 font-semibold">Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr
+        *ngFor="let payment of filteredPayments"
+        class="hover:bg-blue-50 transition-colors"
+      >
+        <td class="py-4 px-6 text-gray-800">{{ payment.id }}</td>
+        <td class="py-4 px-6 text-gray-800">{{ payment.patientName }}</td>
+        <td class="py-4 px-6 text-gray-800">{{ payment.date }}</td>
+        <td class="py-4 px-6 text-gray-800">{{ payment.amount | currency }}</td>
+        <td
+          class="py-4 px-6"
+          [ngClass]="{
+              'text-green-500 font-bold': payment.status === 'Paid',
+              'text-yellow-500 font-bold': payment.status === 'Pending',
+              'text-red-500 font-bold': payment.status === 'Overdue'
+            }"
+        >
+          {{ payment.status }}
+        </td>
+        <td class="py-4 px-6 text-gray-800">{{ payment.method }}</td>
+        <td class="py-4 px-6">
+          <button
+            class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
+            (click)="generatePaymentReport(payment)"
+          >
+            Generate PDF
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- No Payments Message -->
+  <ng-template #noPayments>
+    <div class="text-center py-20">
+      <img ngSrc="https://via.placeholder.com/150" alt="No Payments" class="w-40 mx-auto mb-6" fill>
+      <h2 class="text-3xl font-bold text-gray-700">No payments found!</h2>
+      <p class="text-gray-500 mt-2">Add a new payment to see it listed here.</p>
+    </div>
+  </ng-template>
+
+  <!-- Add Payment Form Modal -->
+  <div *ngIf="showForm" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-lg shadow-lg p-8 max-w-lg w-full relative">
+      <!-- Close Button -->
+      <button
+        (click)="closeForm()"
+        class="absolute top-4 right-4 text-gray-400 hover:text-red-500 transition"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+
+      <h2 class="text-2xl font-bold mb-6 text-gray-800 border-b pb-4">Add Payment</h2>
+
+      <form (ngSubmit)="addPayment()">
+        <div class="mb-4">
+          <label for="patientName" class="block text-sm font-medium text-gray-700">Patient Name</label>
+          <input
+            id="patientName"
+            [(ngModel)]="newPayment.patientName"
+            name="patientName"
+            type="text"
+            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+        </div>
+        <div class="mb-4">
+          <label for="amount" class="block text-sm font-medium text-gray-700">Amount</label>
+          <input
+            id="amount"
+            [(ngModel)]="newPayment.amount"
+            name="amount"
+            type="number"
+            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+        </div>
+        <div class="mb-4">
+          <label for="date" class="block text-sm font-medium text-gray-700">Date</label>
+          <input
+            id="date"
+            [(ngModel)]="newPayment.date"
+            name="date"
+            type="date"
+            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+        </div>
+        <div class="mb-4">
+          <label for="method" class="block text-sm font-medium text-gray-700">Payment Method</label>
+          <select
+            id="method"
+            [(ngModel)]="newPayment.method"
+            name="method"
+            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          >
+            <option value="Credit Card">Credit Card</option>
+            <option value="Cash">Cash</option>
+            <option value="Insurance">Insurance</option>
+          </select>
+        </div>
+        <div class="mb-4">
+          <label for="notes" class="block text-sm font-medium text-gray-700">Notes</label>
+          <textarea
+            id="notes"
+            [(ngModel)]="newPayment.notes"
+            name="notes"
+            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          ></textarea>
+        </div>
+        <div class="flex justify-end mt-6">
+          <button
+            type="button"
+            (click)="closeForm()"
+            class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition mr-2"
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
+          >
+            Save Payment
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
