@@ -9,7 +9,7 @@ export const routes: Routes = [
       ),
   },
   {
-  /*  path: 'doctor',
+    /*  path: 'doctor',
     loadChildren: () =>
       import('./modules/doctor/doctor-routing.module').then(
         (m) => m.DoctorRoutingModule
