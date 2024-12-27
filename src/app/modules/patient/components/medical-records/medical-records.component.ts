@@ -4,16 +4,19 @@ import { NgClass, NgForOf, NgIf } from '@angular/common'
 @Component({
   selector: 'app-medical-records',
   standalone: true,
-  imports: [
-    NgClass,
-    NgForOf,
-    NgIf,
-  ],
+  imports: [NgClass, NgForOf, NgIf],
   templateUrl: './medical-records.component.html',
 })
 export class MedicalRecordsComponent {
   records = [
-    { date: '25/12/2017', time: 'Now', title: 'No Activity', description: '', type: 'inactive', attachments: 0 },
+    {
+      date: '25/12/2017',
+      time: 'Now',
+      title: 'No Activity',
+      description: '',
+      type: 'inactive',
+      attachments: 0,
+    },
     {
       date: '16/12/2024',
       time: '03:45 AM',
@@ -49,5 +52,5 @@ export class MedicalRecordsComponent {
       type: 'operation',
       attachments: 0,
     },
-  ];
+  ]
 }

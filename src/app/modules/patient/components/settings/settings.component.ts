@@ -7,12 +7,7 @@ import { NameService } from '../../services/name.service'
 @Component({
   selector: 'app-settings',
   standalone: true,
-  imports: [
-    FormsModule,
-    NgForOf,
-    NgIf,
-    NgClass,
-  ],
+  imports: [FormsModule, NgForOf, NgIf, NgClass],
   templateUrl: './settings.component.html',
 })
 export class SettingsComponent {
@@ -21,87 +16,97 @@ export class SettingsComponent {
     lastName: 'Doe',
     email: 'john.doe@example.com',
     phone: '123-456-7890',
-  };
+  }
 
   password = {
     current: '',
     new: '',
     confirm: '',
-  };
+  }
 
   notifications = {
     email: true,
     sms: false,
-  };
+  }
 
-  theme: 'light' | 'dark' = 'light';
-  familyHealthNotes: string = '';
-  labTests: File[] = [];
-  activeTab: string = 'profile';
+  theme: 'light' | 'dark' = 'light'
+  familyHealthNotes: string = ''
+  labTests: File[] = []
+  activeTab: string = 'profile'
 
-  constructor(public contactsService: EmergencyContactsService, private nameService: NameService) {}
+  constructor(
+    public contactsService: EmergencyContactsService,
+    private nameService: NameService
+  ) {}
 
   get emergencyContacts() {
-    return this.contactsService.getContacts();
+    return this.contactsService.getContacts()
   }
 
   ngOnInit(): void {
-    this.loadTheme();
+    this.loadTheme()
     this.nameService.profile$.subscribe((profile) => {
-      this.profile = profile;
-    });
+      this.profile = profile
+    })
   }
 
   saveProfile() {
     this.nameService.updateProfile({
       firstName: this.profile.firstName,
       lastName: this.profile.lastName,
-    });
-    alert('Profile updated successfully!');
+    })
+    alert('Profile updated successfully!')
   }
 
   updatePassword() {
     if (this.password.new !== this.password.confirm) {
-      alert('New password and confirm password do not match!');
-      return;
+      alert('New password and confirm password do not match!')
+      return
     }
-    alert('Password updated successfully!');
-    this.password = { current: '', new: '', confirm: '' };
+    alert('Password updated successfully!')
+    this.password = { current: '', new: '', confirm: '' }
   }
 
   toggleTheme() {
-    this.theme = this.theme === 'light' ? 'dark' : 'light';
-    document.body.classList.toggle('dark', this.theme === 'dark');
-    localStorage.setItem('theme', this.theme);
-    alert(`Switched to ${this.theme.charAt(0).toUpperCase() + this.theme.slice(1)} Mode.`);
+    this.theme = this.theme === 'light' ? 'dark' : 'light'
+    document.body.classList.toggle('dark', this.theme === 'dark')
+    localStorage.setItem('theme', this.theme)
+    alert(
+      `Switched to ${this.theme.charAt(0).toUpperCase() + this.theme.slice(1)} Mode.`
+    )
   }
 
   loadTheme() {
-    const savedTheme = localStorage.getItem('theme') as 'light' | 'dark';
-    this.theme = savedTheme || 'light';
-    document.body.classList.toggle('dark', this.theme === 'dark');
+    const savedTheme = localStorage.getItem('theme') as 'light' | 'dark'
+    this.theme = savedTheme || 'light'
+    document.body.classList.toggle('dark', this.theme === 'dark')
   }
 
   addEmergencyContact() {
-    this.contactsService.addContact({ name: '', relation: '', phone: '', familyMember: 'No' });
+    this.contactsService.addContact({
+      name: '',
+      relation: '',
+      phone: '',
+      familyMember: 'No',
+    })
   }
 
   removeEmergencyContact(index: number) {
-    this.emergencyContacts.splice(index, 1);
+    this.emergencyContacts.splice(index, 1)
   }
 
   setActiveTab(tab: string): void {
-    this.activeTab = tab;
+    this.activeTab = tab
   }
 
   uploadLabTest(event: Event) {
-    const input = event.target as HTMLInputElement;
+    const input = event.target as HTMLInputElement
     if (input.files?.length) {
-      this.labTests.push(input.files[0]);
+      this.labTests.push(input.files[0])
     }
   }
 
   removeLabTest(file: File) {
-    this.labTests = this.labTests.filter((f) => f !== file);
+    this.labTests = this.labTests.filter((f) => f !== file)
   }
 }

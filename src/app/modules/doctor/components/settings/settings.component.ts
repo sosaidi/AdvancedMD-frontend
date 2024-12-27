@@ -1,25 +1,21 @@
-import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { NgClass, NgIf } from '@angular/common';
+import { Component } from '@angular/core'
+import { FormsModule } from '@angular/forms'
+import { NgClass, NgIf } from '@angular/common'
 
 @Component({
   selector: 'app-settings',
   standalone: true,
-  imports: [
-    FormsModule,
-    NgIf,
-    NgClass,
-  ],
+  imports: [FormsModule, NgIf, NgClass],
   templateUrl: './settings.component.html',
 })
 export class SettingsComponent {
-  currentTab: string = 'profile';
+  currentTab: string = 'profile'
 
   profile = {
     name: '',
     email: '',
     contact: '',
-  };
+  }
 
   preferences = {
     theme: 'light',
@@ -28,19 +24,19 @@ export class SettingsComponent {
       email: true,
       app: true,
     },
-  };
+  }
 
   security = {
     newPassword: '',
     enableTwoFA: false,
-  };
+  }
 
   hospital = {
     name: '',
     contact: '',
     address: '',
     website: '',
-  };
+  }
 
   // Language options for translations
   translations: any = {
@@ -88,59 +84,59 @@ export class SettingsComponent {
       saveChanges: 'Änderungen speichern',
       enableTwoFA: 'Zwei-Faktor-Authentifizierung aktivieren',
     },
-  };
+  }
 
   // Change language dynamically
   changeLanguage(): void {
-    const selectedLanguage = this.preferences.language;
+    const selectedLanguage = this.preferences.language
 
     document.querySelectorAll('[data-translate-key]').forEach((element) => {
-      const key = element.getAttribute('data-translate-key');
+      const key = element.getAttribute('data-translate-key')
       if (key && this.translations[selectedLanguage][key]) {
-        element.textContent = this.translations[selectedLanguage][key];
+        element.textContent = this.translations[selectedLanguage][key]
       }
-    });
+    })
 
-    console.log(`Language switched to ${selectedLanguage}`);
+    console.log(`Language switched to ${selectedLanguage}`)
   }
 
   backupData(): void {
-    console.log('Data backup initiated...');
-    alert('Backup successful!');
+    console.log('Data backup initiated...')
+    alert('Backup successful!')
   }
 
   restoreData(): void {
-    console.log('Data restoration initiated...');
-    alert('Data restored!');
+    console.log('Data restoration initiated...')
+    alert('Data restored!')
   }
 
   exportData(): void {
-    console.log('Data export initiated...');
-    alert('Data exported as a file!');
+    console.log('Data export initiated...')
+    alert('Data exported as a file!')
   }
 
   uploadProfilePicture(event: any): void {
-    const file = event.target.files[0];
-    console.log('Uploaded file:', file);
+    const file = event.target.files[0]
+    console.log('Uploaded file:', file)
   }
 
   saveProfile(): void {
-    console.log('Profile saved:', this.profile);
-    alert('Profile settings saved!');
+    console.log('Profile saved:', this.profile)
+    alert('Profile settings saved!')
   }
 
   savePreferences(): void {
-    console.log('Preferences saved:', this.preferences);
-    alert('Preferences updated!');
+    console.log('Preferences saved:', this.preferences)
+    alert('Preferences updated!')
   }
 
   saveSecuritySettings(): void {
-    console.log('Security settings updated:', this.security);
-    alert('Security settings saved!');
+    console.log('Security settings updated:', this.security)
+    alert('Security settings saved!')
   }
 
   saveHospitalInfo(): void {
-    console.log('Hospital information updated:', this.hospital);
-    alert('Hospital information saved!');
+    console.log('Hospital information updated:', this.hospital)
+    alert('Hospital information saved!')
   }
 }

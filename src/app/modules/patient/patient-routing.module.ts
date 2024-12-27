@@ -27,7 +27,7 @@ const routes: Routes = [
     ],
   },
   { path: '**', redirectTo: 'dashboard' },
-];
+]
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core'
+import { CommonModule } from '@angular/common'
 import { BillingComponent } from './components/billing/billing.component'
 import { PatientDashboardComponent } from './components/dashboard/dashboard.component'
 import { MedicalRecordsComponent } from './components/medical-records/medical-records.component'
@@ -21,7 +21,7 @@ import { HttpClientModule } from '@angular/common/http'
     SidebarComponent,
     TopbarComponent,
     LayoutComponent,
-    HttpClientModule
+    HttpClientModule,
   ],
 })
 export class DoctorModule {}

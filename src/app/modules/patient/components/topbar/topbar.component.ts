@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core'
 
 @Component({
   selector: 'app-topbar',
@@ -9,8 +9,7 @@ import { Component } from '@angular/core';
 export class TopbarComponent {
   logout() {
     // logout logic
-    console.log('User logged out');
+    console.log('User logged out')
     // redirect to the login page
   }
 }
-

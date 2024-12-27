@@ -1,7 +1,7 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { DatePipe, NgClass, NgForOf, NgIf } from '@angular/common';
-import { LabResultsService } from '../../services/lab-results.service';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core'
+import { FormsModule } from '@angular/forms'
+import { DatePipe, NgClass, NgForOf, NgIf } from '@angular/common'
+import { LabResultsService } from '../../services/lab-results.service'
 
 @Component({
   selector: 'app-lab-results',
@@ -10,16 +10,16 @@ import { LabResultsService } from '../../services/lab-results.service';
   imports: [FormsModule, NgIf, NgForOf, NgClass, DatePipe],
 })
 export class LabResultsComponent implements OnInit {
-  @Output() labResultsUpdated = new EventEmitter<void>();
+  @Output() labResultsUpdated = new EventEmitter<void>()
 
   // Initialize newLabResult with required properties
   newLabResult: {
-    test: string;
-    value: string;
-    unit: string;
-    systolic: string;
-    diastolic: string;
-    date: string;
+    test: string
+    value: string
+    unit: string
+    systolic: string
+    diastolic: string
+    date: string
   } = {
     test: '',
     value: '',
@@ -27,7 +27,7 @@ export class LabResultsComponent implements OnInit {
     systolic: '',
     diastolic: '',
     date: '',
-  };
+  }
 
   constructor(public labResultsService: LabResultsService) {}
 
@@ -39,11 +39,12 @@ export class LabResultsComponent implements OnInit {
       this.newLabResult.test &&
       this.newLabResult.unit &&
       this.newLabResult.date &&
-      (this.newLabResult.value || (this.newLabResult.systolic && this.newLabResult.diastolic))
+      (this.newLabResult.value ||
+        (this.newLabResult.systolic && this.newLabResult.diastolic))
     ) {
-      this.labResultsService.addLabResult({ ...this.newLabResult });
-      console.log('Lab result added:', this.newLabResult); // Debugging log
-      this.labResultsUpdated.emit(); // Notify parent component
+      this.labResultsService.addLabResult({ ...this.newLabResult })
+      console.log('Lab result added:', this.newLabResult) // Debugging log
+      this.labResultsUpdated.emit() // Notify parent component
       this.newLabResult = {
         test: '',
         value: '',
@@ -51,19 +52,19 @@ export class LabResultsComponent implements OnInit {
         systolic: '',
         diastolic: '',
         date: '',
-      }; // Reset the form
+      } // Reset the form
     } else {
-      alert('Please fill in all required fields');
+      alert('Please fill in all required fields')
     }
   }
 
   // Delete a lab result
   deleteLabResult(index: number): void {
-    this.labResultsService.deleteLabResult(index);
+    this.labResultsService.deleteLabResult(index)
   }
 
   // Access lab results directly from the service
   get labResults() {
-    return this.labResultsService.getLabResults();
+    return this.labResultsService.getLabResults()
   }
 }
