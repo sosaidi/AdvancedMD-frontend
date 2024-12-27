@@ -1,1 +1,194 @@
-<p>appointments works!</p>
+<div class="p-10 bg-gradient-to-br from-green-50 via-white to-gray-100 rounded-2xl shadow-xl max-w-15xl mx-auto">
+  <div class="bg-white rounded-2xl shadow-2xl p-9 max-w-9xl w-[143vh] mx-auto">
+
+  <!-- Tabs -->
+    <div class="flex justify-between items-center border-b-2 pb-4">
+      <div class="text-center w-[130vh] mx-auto">
+        <h1 class="text-5xl font-bold mb-8 text-green-700 text-center">Appointments</h1>
+        <p class="text-lg text-gray-500 mt-2">Manage your bookings seamlessly</p>
+      </div>
+    </div>
+    <div class="flex justify-center space-x-8 mt-9">
+      <button
+        (click)="setActiveTab('book')"
+        [class.bg-green-500]="activeTab === 'book'"
+        [class.text-white]="activeTab === 'book'"
+        class="px-6 py-3 rounded-lg font-semibold text-gray-700 hover:bg-green-500 hover:text-white transition duration-300 shadow-md"
+      >
+        Book Appointment
+      </button>
+      <button
+        (click)="setActiveTab('upcoming')"
+        [class.bg-orange-500]="activeTab === 'upcoming'"
+        [class.text-white]="activeTab === 'upcoming'"
+        class="px-6 py-3 rounded-lg font-semibold text-gray-700 hover:bg-orange-500 hover:text-white transition duration-300 shadow-md"
+      >
+        Upcoming
+      </button>
+      <button
+        (click)="setActiveTab('history')"
+        [class.bg-gray-500]="activeTab === 'history'"
+        [class.text-white]="activeTab === 'history'"
+        class="px-6 py-3 rounded-lg font-semibold text-gray-700 hover:bg-gray-500 hover:text-white transition duration-300 shadow-md"
+      >
+        Past Appointments
+      </button>
+    </div>
+  </div>
+
+  <!-- Book Appointment -->
+  <div *ngIf="activeTab === 'book'" class="bg-gradient-to-b from-white via-gray-50 to-gray-200 rounded-xl shadow-lg p-8 mt-8">
+    <h2 class="text-3xl font-bold text-green-600 mb-6">Book an Appointment</h2>
+    <form (submit)="bookAppointment($event)" class="space-y-6">
+      <!-- Patient Information -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label for="firstName" class="block text-sm font-medium text-gray-700">First Name*</label>
+          <input
+            type="text"
+            id="firstName"
+            [(ngModel)]="newAppointment.firstName"
+            name="firstName"
+            class="mt-2 block w-full px-4 py-3 bg-gray-50 border rounded-lg shadow-inner focus:ring-4 focus:ring-green-300"
+            required
+          />
+        </div>
+        <div>
+          <label for="lastName" class="block text-sm font-medium text-gray-700">Last Name*</label>
+          <input
+            type="text"
+            id="lastName"
+            [(ngModel)]="newAppointment.lastName"
+            name="lastName"
+            class="mt-2 block w-full px-4 py-3 bg-gray-50 border rounded-lg shadow-inner focus:ring-4 focus:ring-green-300"
+            required
+          />
+        </div>
+      </div>
+
+      <!-- Contact Information -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label for="email" class="block text-sm font-medium text-gray-700">Email*</label>
+          <input
+            type="email"
+            id="email"
+            [(ngModel)]="newAppointment.email"
+            name="email"
+            class="mt-2 block w-full px-4 py-3 bg-gray-50 border rounded-lg shadow-inner focus:ring-4 focus:ring-green-300"
+            required
+          />
+        </div>
+        <div>
+          <label for="phone" class="block text-sm font-medium text-gray-700">Phone*</label>
+          <input
+            type="text"
+            id="phone"
+            [(ngModel)]="newAppointment.phone"
+            name="phone"
+            class="mt-2 block w-full px-4 py-3 bg-gray-50 border rounded-lg shadow-inner focus:ring-4 focus:ring-green-300"
+            required
+          />
+        </div>
+      </div>
+
+      <!-- Appointment Details -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label for="date" class="block text-sm font-medium text-gray-700">Date*</label>
+          <input
+            type="date"
+            id="date"
+            [(ngModel)]="newAppointment.date"
+            name="date"
+            class="mt-2 block w-full px-4 py-3 bg-gray-50 border rounded-lg shadow-inner focus:ring-4 focus:ring-green-300"
+            required
+          />
+        </div>
+        <div>
+          <label for="time" class="block text-sm font-medium text-gray-700">Time*</label>
+          <input
+            type="time"
+            id="time"
+            [(ngModel)]="newAppointment.time"
+            name="time"
+            class="mt-2 block w-full px-4 py-3 bg-gray-50 border rounded-lg shadow-inner focus:ring-4 focus:ring-green-300"
+            required
+          />
+        </div>
+      </div>
+
+      <div>
+        <label for="reason" class="block text-sm font-medium text-gray-700">Reason*</label>
+        <textarea
+          id="reason"
+          [(ngModel)]="newAppointment.reason"
+          name="reason"
+          rows="4"
+          class="mt-2 block w-full px-4 py-3 bg-gray-50 border rounded-lg shadow-inner focus:ring-4 focus:ring-green-300"
+          required
+        ></textarea>
+      </div>
+
+      <div class="flex justify-end space-x-4">
+        <button
+          type="button"
+          class="px-6 py-3 bg-red-500 text-white rounded-lg shadow-md hover:bg-red-600 transition"
+          (click)="clearForm()"
+        >
+          Clear
+        </button>
+        <button
+          type="submit"
+          class="px-6 py-3 bg-green-500 text-white rounded-lg shadow-md hover:bg-green-600 transition"
+        >
+          Book Appointment
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Upcoming Appointments -->
+  <div *ngIf="activeTab === 'upcoming'" class="bg-gradient-to-b from-white via-gray-50 to-gray-200 rounded-xl shadow-lg p-8 mt-8">
+    <h2 class="text-3xl font-bold text-green-600 mb-6">Upcoming Appointments</h2>
+    <ul class="space-y-6">
+      <li
+        *ngFor="let appointment of upcomingAppointments"
+        class="p-6 bg-gradient-to-r from-green-100 via-white to-gray-50 rounded-lg shadow-md flex justify-between items-center"
+      >
+        <div>
+          <p class="font-bold text-gray-800">Date: {{ appointment.date }}</p>
+          <p class="text-sm text-gray-600">Time: {{ appointment.time }}</p>
+          <p class="text-sm text-gray-600">Reason: {{ appointment.reason }}</p>
+        </div>
+        <button
+          (click)="cancelAppointment(appointment)"
+          class="px-6 py-3 bg-red-500 text-white rounded-lg shadow-md hover:bg-red-600 transition"
+        >
+          Cancel
+        </button>
+      </li>
+    </ul>
+    <p *ngIf="upcomingAppointments.length === 0" class="text-center text-sm text-gray-500 mt-6">
+      No upcoming appointments.
+    </p>
+  </div>
+
+  <!-- Past Appointments -->
+  <div *ngIf="activeTab === 'history'" class="bg-gradient-to-b from-gray-50 via-white to-gray-100 rounded-xl shadow-lg p-8 mt-8">
+    <h2 class="text-3xl font-bold text-gray-600 mb-6">Past Appointments</h2>
+    <ul class="space-y-6">
+      <li
+        *ngFor="let appointment of pastAppointments"
+        class="p-6 bg-gray-50 rounded-lg shadow-md"
+      >
+        <p class="font-bold text-gray-800">Date: {{ appointment.date }}</p>
+        <p class="text-sm text-gray-600">Time: {{ appointment.time }}</p>
+        <p class="text-sm text-gray-600">Reason: {{ appointment.reason }}</p>
+      </li>
+    </ul>
+    <p *ngIf="pastAppointments.length === 0" class="text-center text-sm text-gray-500 mt-6">
+      No past appointments.
+    </p>
+  </div>
+</div>

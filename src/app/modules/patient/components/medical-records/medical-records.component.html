@@ -1,1 +1,55 @@
-<p>medical-records works!</p>
+<div class="p-10 bg-gradient-to-br from-green-50 via-white to-gray-100 rounded-2xl shadow-xl max-w-15xl mx-auto">
+  <div class="bg-white rounded-2xl shadow-2xl p-9 max-w-9xl w-[143vh] mx-auto">
+  <!-- Header -->
+    <div class="flex justify-between items-center mb-8 w-[130vh] mx-auto">
+      <h2 class="text-5xl font-bold mb-8 text-green-700 text-center">Medical Records</h2>
+      <button
+        class="px-6 py-3 bg-green-500 text-white rounded-lg shadow-lg hover:bg-blue-600 transition"
+      >
+        Add New Record
+      </button>
+    </div>
+
+    <!-- Timeline -->
+    <div class="relative border-l-4 border-gray-200 pl-10">
+      <!-- Loop over records -->
+      <div *ngFor="let record of records" class="mb-12 relative">
+        <!-- Professional Icon -->
+        <div
+          class="absolute -left-8 top-2 w-10 h-10 rounded-full flex items-center justify-center bg-white shadow-md"
+        >
+          <i
+            [ngClass]="{
+              'bi bi-file-earmark-medical text-blue-500': record.type === 'xray',
+              'bi bi-person-check text-green-500': record.type === 'consultation',
+              'bi bi-prescription text-purple-500': record.type === 'prescription',
+              'bi bi-scissors text-orange-500': record.type === 'operation',
+              'bi bi-file-earmark text-gray-400': record.type === 'inactive'
+            }"
+            class="text-2xl"
+          ></i>
+        </div>
+
+        <!-- Record Content -->
+        <div class="bg-gray-50 rounded-lg p-6 shadow-md">
+          <p class="text-sm font-medium text-gray-500">
+            {{ record.date }} | {{ record.time }}
+          </p>
+          <h3 class="text-xl font-semibold text-gray-800 mt-2">{{ record.title }}</h3>
+          <p class="text-gray-600 mt-2">{{ record.description }}</p>
+
+          <!-- Attachments -->
+          <div *ngIf="record.attachments" class="mt-4 flex items-center space-x-2">
+            <i class="bi bi-paperclip text-gray-500"></i>
+            <span class="text-sm text-gray-500">
+              {{ record.attachments }} attachment(s)
+            </span>
+            <a href="#" class="text-blue-500 underline hover:text-blue-600">
+              Download all
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

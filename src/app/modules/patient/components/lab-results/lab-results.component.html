@@ -1,0 +1,157 @@
+<div class="p-10 bg-gradient-to-br from-green-50 via-white to-gray-100 rounded-2xl shadow-xl max-w-15xl mx-auto">
+  <div class="bg-white rounded-2xl shadow-2xl p-9 max-w-9xl w-[143vh] mx-auto">
+  <h2 class="text-5xl font-bold mb-8 text-green-700 text-center">Add Lab Results</h2>
+
+  <!-- Add Lab Result Form -->
+  <form (submit)="addLabResult()" class="space-y-8 bg-white p-6 rounded-xl shadow-lg">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Test Name -->
+      <div>
+        <label for="test" class="block text-base font-medium text-gray-700">Test Name</label>
+        <div class="relative">
+          <i class="bi bi-clipboard text-gray-400 absolute left-3 top-3"></i>
+          <input
+            id="test"
+            [(ngModel)]="newLabResult.test"
+            name="test"
+            type="text"
+            class="w-full pl-10 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition"
+            placeholder="e.g., Blood Glucose or Blood Pressure"
+            required
+          />
+        </div>
+      </div>
+
+      <!-- Value -->
+      <div>
+        <label for="value" class="block text-base font-medium text-gray-700">Value (Optional)</label>
+        <div class="relative">
+          <i class="bi bi-bar-chart-fill text-gray-400 absolute left-3 top-3"></i>
+          <input
+            id="value"
+            [(ngModel)]="newLabResult.value"
+            name="value"
+            type="text"
+            class="w-full pl-10 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition"
+            placeholder="e.g., 110"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Systolic Blood Pressure -->
+      <div>
+        <label for="systolic" class="block text-base font-medium text-gray-700">Systolic (Optional)</label>
+        <div class="relative">
+          <i class="bi bi-heart-pulse text-gray-400 absolute left-3 top-3"></i>
+          <input
+            id="systolic"
+            [(ngModel)]="newLabResult.systolic"
+            name="systolic"
+            type="text"
+            class="w-full pl-10 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition"
+            placeholder="e.g., 120"
+          />
+        </div>
+      </div>
+
+      <!-- Diastolic Blood Pressure -->
+      <div>
+        <label for="diastolic" class="block text-base font-medium text-gray-700">Diastolic (Optional)</label>
+        <div class="relative">
+          <i class="bi bi-heart text-gray-400 absolute left-3 top-3"></i>
+          <input
+            id="diastolic"
+            [(ngModel)]="newLabResult.diastolic"
+            name="diastolic"
+            type="text"
+            class="w-full pl-10 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition"
+            placeholder="e.g., 80"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Unit -->
+      <div>
+        <label for="unit" class="block text-base font-medium text-gray-700">Unit</label>
+        <div class="relative">
+          <i class="bi bi-rulers text-gray-400 absolute left-3 top-3"></i>
+          <input
+            id="unit"
+            [(ngModel)]="newLabResult.unit"
+            name="unit"
+            type="text"
+            class="w-full pl-10 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition"
+            placeholder="e.g., mg/dL"
+          />
+        </div>
+      </div>
+
+      <!-- Date -->
+      <div>
+        <label for="date" class="block text-base font-medium text-gray-700">Date</label>
+        <div class="relative">
+          <i class="bi bi-calendar2-date-fill text-gray-400 absolute left-3 top-3"></i>
+          <input
+            id="date"
+            [(ngModel)]="newLabResult.date"
+            name="date"
+            type="date"
+            class="w-full pl-10 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition"
+            required
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Submit Button -->
+    <button
+      type="submit"
+      class="w-full px-6 py-3 bg-green-500 text-white text-lg font-semibold rounded-lg shadow-md hover:bg-green-600 hover:scale-105 transition-transform"
+    >
+      Add Lab Result
+    </button>
+  </form>
+
+  <!-- Display Lab Results -->
+  <div *ngIf="labResults.length > 0" class="mt-10 bg-white p-6 rounded-xl shadow-lg">
+    <h3 class="text-2xl font-bold mb-4 text-green-700">Lab Results</h3>
+    <ul class="space-y-6">
+      <li
+        *ngFor="let result of labResults; let i = index"
+        class="flex justify-between items-center bg-gradient-to-r from-green-100 via-white to-green-50 rounded-lg p-4 shadow-md hover:shadow-lg transition"
+      >
+        <!-- Result Details -->
+        <div class="flex items-center gap-4">
+          <i class="bi bi-beaker-fill text-green-500 text-2xl"></i>
+          <div>
+            <p class="text-lg font-semibold text-gray-800">{{ result.test }}</p>
+            <p class="text-sm text-gray-600">
+              <span *ngIf="result.value">{{ result.value }} {{ result.unit }}</span>
+              <span *ngIf="result.systolic && result.diastolic">Systolic: {{ result.systolic }}, Diastolic: {{ result.diastolic }}</span>
+              <span class="text-gray-500">({{ result.date | date:'dd.MM.yyyy' }})</span>
+            </p>
+          </div>
+        </div>
+
+        <!-- Delete Button -->
+        <button
+          (click)="deleteLabResult(i)"
+          class="px-4 py-2 bg-red-500 text-white text-sm font-semibold rounded-lg hover:bg-red-600 hover:scale-105 transition-transform"
+        >
+          Delete
+        </button>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="labResults.length === 0" class="mt-10 text-center">
+    <i class="bi bi-clipboard-x text-gray-400 text-5xl"></i>
+    <p class="mt-4 text-gray-600 text-lg italic">No lab results added yet. Start by adding one!</p>
+  </div>
+</div>
+</div>

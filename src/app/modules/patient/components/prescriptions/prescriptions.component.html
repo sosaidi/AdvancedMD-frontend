@@ -1,1 +1,179 @@
-<p>prescriptions works!</p>
+<div class="p-10 bg-gradient-to-br from-green-50 via-white to-gray-100 rounded-2xl shadow-xl max-w-15xl mx-auto">
+  <div class="bg-white rounded-2xl shadow-2xl p-9 max-w-9xl w-[143vh] mx-auto">
+
+  <!-- Header and Tabs -->
+    <div class="flex justify-between items-center mb-6">
+      <h2 class="text-5xl font-bold mb-8 text-green-700 text-center">Prescriptions</h2>
+      <div class="flex items-center space-x-4">
+        <button
+          class="px-6 py-3 bg-blue-500 text-white rounded-lg shadow-lg hover:bg-blue-600 transition"
+          (click)="addPrescription()"
+        >
+          + Add Prescription
+        </button>
+        <label class="flex items-center px-6 py-3 bg-green-500 text-white rounded-lg shadow-lg hover:bg-green-600 transition cursor-pointer">
+          <i class="bi bi-upload mr-2"></i>
+          Import
+          <input
+            type="file"
+            accept=".json"
+            (change)="importPrescriptions($event)"
+            class="hidden"
+          />
+        </label>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="flex border-b border-gray-200">
+      <button
+        (click)="setActiveTab('active')"
+        [class.border-b-2]="activeTab === 'active'"
+        [class.border-blue-500]="activeTab === 'active'"
+        [class.text-blue-600]="activeTab === 'active'"
+        class="py-2 px-6 text-gray-600 hover:text-blue-500 hover:border-blue-500 transition font-semibold"
+      >
+        Active Prescriptions
+      </button>
+      <button
+        (click)="setActiveTab('deleted')"
+        [class.border-b-2]="activeTab === 'deleted'"
+        [class.border-red-500]="activeTab === 'deleted'"
+        [class.text-red-600]="activeTab === 'deleted'"
+        class="py-2 px-6 text-gray-600 hover:text-red-500 hover:border-red-500 transition font-semibold"
+      >
+        Deleted Prescriptions ({{ deletedPrescriptions.length }})
+      </button>
+    </div>
+  </div>
+
+  <div class="flex space-x-4 mb-4">
+    <button
+      (click)="setView('list')"
+      [class.bg-blue-500]="activeView === 'list'"
+      class="px-4 py-2 rounded bg-gray-200 hover:bg-blue-500 hover:text-white"
+    >
+      List View
+    </button>
+    <button
+      (click)="setView('grid')"
+      [class.bg-blue-500]="activeView === 'grid'"
+      class="px-4 py-2 rounded bg-gray-200 hover:bg-blue-500 hover:text-white"
+    >
+      Grid View
+    </button>
+  </div>
+
+  <div *ngIf="activeView === 'list'">
+    <!-- List View Content -->
+    <div *ngFor="let prescription of prescriptions" class="mb-4 p-4 border">
+      {{ prescription.title }} - {{ prescription.doctor }}
+    </div>
+  </div>
+
+  <div *ngIf="activeView === 'grid'" class="grid grid-cols-2 gap-4">
+    <!-- Grid View Content -->
+    <div *ngFor="let prescription of prescriptions" class="p-4 border">
+      {{ prescription.title }} - {{ prescription.doctor }}
+    </div>
+  </div>
+
+  <!-- Active Prescriptions Tab -->
+  <div *ngIf="activeTab === 'active'" class="mt-6 bg-white rounded-lg shadow-lg p-6">
+    <h3 class="text-2xl font-bold text-gray-800 mb-4">Active Prescriptions</h3>
+    <div class="overflow-auto rounded-lg border border-gray-200 shadow">
+      <table class="min-w-full bg-white">
+        <thead class="bg-gray-200 text-gray-700">
+        <tr>
+          <th class="px-6 py-4 text-left font-semibold">#</th>
+          <th class="px-6 py-4 text-left font-semibold">Title</th>
+          <th class="px-6 py-4 text-left font-semibold">Created By</th>
+          <th class="px-6 py-4 text-left font-semibold">Date</th>
+          <th class="px-6 py-4 text-left font-semibold">Disease</th>
+          <th class="px-6 py-4 text-center font-semibold">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr
+          *ngFor="let prescription of prescriptions; let i = index"
+          class="border-b hover:bg-gray-100 transition"
+        >
+          <td class="px-6 py-4">{{ prescription.id }}</td>
+          <td class="px-6 py-4">{{ prescription.title }}</td>
+          <td class="px-6 py-4 text-blue-600 font-medium">{{ prescription.doctor }}</td>
+          <td class="px-6 py-4">{{ prescription.date }}</td>
+          <td class="px-6 py-4">
+              <span
+                class="inline-block px-3 py-1 text-sm font-medium rounded-full"
+                [ngClass]="{
+                  'bg-red-100 text-red-600': prescription.disease === 'Fever',
+                  'bg-green-100 text-green-600': prescription.disease === 'Cholera',
+                  'bg-purple-100 text-purple-600': prescription.disease === 'Jaundice',
+                  'bg-orange-100 text-orange-600': prescription.disease === 'Malaria',
+                  'bg-blue-100 text-blue-600': prescription.disease === 'Infection'
+                }"
+              >
+                {{ prescription.disease }}
+              </span>
+          </td>
+          <td class="px-6 py-4 flex justify-center space-x-4">
+            <button
+              class="text-blue-500 hover:text-blue-700"
+              (click)="generatePDF(prescription)"
+            >
+              <i class="bi bi-file-earmark-arrow-down"></i>
+            </button>
+            <button
+              class="text-green-500 hover:text-green-700"
+              (click)="viewPrescription(prescription)"
+            >
+              <i class="bi bi-eye"></i>
+            </button>
+            <button
+              class="text-red-500 hover:text-red-700"
+              (click)="deletePrescription(i)"
+            >
+              <i class="bi bi-trash"></i>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Deleted Prescriptions Tab -->
+  <div *ngIf="activeTab === 'deleted'" class="mt-6 bg-white rounded-lg shadow-lg p-6">
+    <h3 class="text-2xl font-bold text-gray-800 mb-4">Deleted Prescriptions</h3>
+    <div class="overflow-auto rounded-lg border border-gray-200 shadow">
+      <table class="min-w-full bg-white">
+        <thead class="bg-red-200 text-red-700">
+        <tr>
+          <th class="px-6 py-4 text-left font-semibold">#</th>
+          <th class="px-6 py-4 text-left font-semibold">Title</th>
+          <th class="px-6 py-4 text-left font-semibold">Deleted At</th>
+          <th class="px-6 py-4 text-center font-semibold">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let prescription of deletedPrescriptions; let i = index">
+          <td class="px-6 py-4">{{ prescription.id }}</td>
+          <td class="px-6 py-4">{{ prescription.title }}</td>
+          <td class="px-6 py-4">{{ prescription.deletedAt | date: 'short' }}</td>
+          <td class="px-6 py-4 text-center">
+            <button
+              (click)="restorePrescription(i)"
+              class="text-green-500 hover:text-green-700"
+            >
+              <i class="bi bi-arrow-counterclockwise"></i>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <p *ngIf="deletedPrescriptions.length === 0" class="text-center text-gray-500 mt-4">
+      No deleted prescriptions.
+    </p>
+  </div>
+</div>
