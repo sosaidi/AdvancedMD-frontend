@@ -1,4 +1,4 @@
-import { Component } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
 import { NgForOf, NgIf } from '@angular/common'
 import { FormsModule } from '@angular/forms'
 import { AppointmentsService } from '../../services/appointment.service'
@@ -10,8 +10,8 @@ import { NameService } from '../../services/name.service'
   imports: [NgIf, NgForOf, FormsModule],
   templateUrl: './appointments.component.html',
 })
-export class AppointmentsComponent {
-  activeTab: string = 'book' // Default tab
+export class AppointmentsComponent implements OnInit {
+  activeTab = 'book' // Default tab
   newAppointment: {
     date: string
     time: string

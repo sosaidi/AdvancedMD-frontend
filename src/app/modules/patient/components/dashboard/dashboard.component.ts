@@ -22,7 +22,7 @@ import { HttpClientModule } from '@angular/common/http'
   ],
 })
 export class PatientDashboardComponent implements OnInit, AfterViewInit {
-  loading: boolean = true
+  loading = true
   bloodPressureReadings: {
     date: string
     systolic: number
@@ -31,8 +31,8 @@ export class PatientDashboardComponent implements OnInit, AfterViewInit {
   prescriptions: { name: string; status: string }[] = []
 
   appointments: { date: string; time: string; doctor: string }[] = []
-  wellnessTip: string = ''
-  heartRate: number = 72
+  wellnessTip = ''
+  heartRate = 72
   healthGoals: { goal: string; progress: number; target: number }[] = []
 
   labTests: { test: string; status: string; date: string }[] = []
@@ -40,11 +40,11 @@ export class PatientDashboardComponent implements OnInit, AfterViewInit {
   healthHistory: { date: string; detail: string }[] = []
   familyHealth: { name: string; metric: string; value: string }[] = []
 
-  waterIntake: number = 0
-  waterTarget: number = 8
+  waterIntake = 0
+  waterTarget = 8
 
-  stepsProgress: number = 0
-  stepsTarget: number = 10000
+  stepsProgress = 0
+  stepsTarget = 10000
 
   reminders: {
     message: string
@@ -53,14 +53,13 @@ export class PatientDashboardComponent implements OnInit, AfterViewInit {
     timestamp: number
   }[] = []
   activeReminders: any[] = []
-  completedReminders: any[] = []
   newReminder = { message: '', time: '', timestamp: 0 }
 
   bloodPressureInfo: string | null = null
   showDetails = false
 
-  private systolicLimit: number = 130
-  private diastolicLimit: number = 80
+  private systolicLimit = 130
+  private diastolicLimit = 80
 
   constructor(
     public labResultsService: LabResultsService,

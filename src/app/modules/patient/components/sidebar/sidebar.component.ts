@@ -1,4 +1,4 @@
-import { Component } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
 import { RouterLink, RouterLinkActive } from '@angular/router'
 import { NgIf, NgOptimizedImage } from '@angular/common'
 import { NameService } from '../../services/name.service'
@@ -9,7 +9,7 @@ import { NameService } from '../../services/name.service'
   imports: [RouterLink, NgIf, RouterLinkActive, NgOptimizedImage],
   templateUrl: './sidebar.component.html',
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnInit{
   collapsed = false
   firstName = 'John'
   lastName = 'Doe'

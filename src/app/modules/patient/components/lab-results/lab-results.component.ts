@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core'
+import { Component, Output, EventEmitter } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { DatePipe, NgClass, NgForOf, NgIf } from '@angular/common'
 import { LabResultsService } from '../../services/lab-results.service'
@@ -9,7 +9,7 @@ import { LabResultsService } from '../../services/lab-results.service'
   standalone: true,
   imports: [FormsModule, NgIf, NgForOf, NgClass, DatePipe],
 })
-export class LabResultsComponent implements OnInit {
+export class LabResultsComponent {
   @Output() labResultsUpdated = new EventEmitter<void>()
 
   // Initialize newLabResult with required properties
@@ -30,8 +30,6 @@ export class LabResultsComponent implements OnInit {
   }
 
   constructor(public labResultsService: LabResultsService) {}
-
-  ngOnInit(): void {}
 
   // Add a new lab result and emit the update event
   addLabResult(): void {

@@ -9,10 +9,10 @@ import { NgClass, NgForOf, NgIf } from '@angular/common'
   imports: [NgIf, NgForOf, NgClass],
 })
 export class DoctorDashboardComponent implements OnInit, AfterViewInit {
-  loading: boolean = true
+  loading = true
   dailySchedule: { time: string; task: string }[] = []
   healthMetrics: { metric: string; value: string }[] = []
-  motivationalQuote: string = ''
+  motivationalQuote = ''
   todos: { task: string; priority: string }[] = []
 
   ngOnInit(): void {

@@ -31,12 +31,12 @@ export class AppointmentsComponent implements OnInit {
     status: string
     details: string
   }[] = []
-  searchQuery: string = ''
-  currentPage: number = 1
-  pageSize: number = 5
-  sortColumn: string = 'date'
-  sortDirection: boolean = true // true = ascending, false = descending
-  selectedAppointment: any = null
+  searchQuery = ''
+  currentPage = 1
+  pageSize = 5
+  sortColumn = 'date'
+  sortDirection = true // true = ascending, false = descending
+  selectedAppointment = null
 
   ngOnInit(): void {
     // Mock Data

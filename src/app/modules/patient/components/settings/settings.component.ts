@@ -1,4 +1,4 @@
-import { Component } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { NgClass, NgForOf, NgIf } from '@angular/common'
 import { EmergencyContactsService } from '../../services/contact.service'
@@ -10,7 +10,7 @@ import { NameService } from '../../services/name.service'
   imports: [FormsModule, NgForOf, NgIf, NgClass],
   templateUrl: './settings.component.html',
 })
-export class SettingsComponent {
+export class SettingsComponent implements OnInit{
   profile = {
     firstName: 'John',
     lastName: 'Doe',
@@ -30,9 +30,8 @@ export class SettingsComponent {
   }
 
   theme: 'light' | 'dark' = 'light'
-  familyHealthNotes: string = ''
   labTests: File[] = []
-  activeTab: string = 'profile'
+  activeTab = 'profile'
 
   constructor(
     public contactsService: EmergencyContactsService,

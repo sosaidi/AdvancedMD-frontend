@@ -16,7 +16,7 @@ export class TodoListComponent {
     dueDate?: string
   }[] = []
   newTodo = { task: '', priority: 'Low', completed: false, dueDate: '' }
-  completedCount: number = 0
+  completedCount = 0
 
   // Add a new task
   addTodo(): void {
