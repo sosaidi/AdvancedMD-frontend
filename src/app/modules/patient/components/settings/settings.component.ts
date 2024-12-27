@@ -6,11 +6,11 @@ import { NameService } from '../../services/name.service'
 
 @Component({
   selector: 'app-settings',
-  standalone: true,
   imports: [FormsModule, NgForOf, NgIf, NgClass],
+  standalone: true,
   templateUrl: './settings.component.html',
 })
-export class SettingsComponent implements OnInit{
+export class SettingsComponent implements OnInit {
   profile = {
     firstName: 'John',
     lastName: 'Doe',

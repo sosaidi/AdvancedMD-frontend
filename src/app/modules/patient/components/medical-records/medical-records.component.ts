@@ -3,8 +3,8 @@ import { NgClass, NgForOf, NgIf } from '@angular/common'
 
 @Component({
   selector: 'app-medical-records',
-  standalone: true,
   imports: [NgClass, NgForOf, NgIf],
+  standalone: true,
   templateUrl: './medical-records.component.html',
 })
 export class MedicalRecordsComponent {

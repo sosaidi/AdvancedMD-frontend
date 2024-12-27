@@ -5,14 +5,10 @@ import { RouterOutlet } from '@angular/router'
 
 @Component({
   selector: 'app-layout',
-  standalone: true,
   imports: [TopbarComponent, SidebarComponent, RouterOutlet],
+  standalone: true,
   templateUrl: './layout.component.html',
 })
 export class LayoutComponent {
-  collapsed = false // Manage the sidebar's state
-
-  toggleSidebar() {
-    this.collapsed = !this.collapsed // Toggle the collapsed state
-  }
+  collapsed = false
 }

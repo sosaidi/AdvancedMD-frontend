@@ -1,11 +1,11 @@
 import { Component } from '@angular/core'
-import { NgClass, NgForOf, NgIf } from '@angular/common'
+import { NgClass, NgForOf, NgIf, NgOptimizedImage } from '@angular/common'
 import { FormsModule } from '@angular/forms'
 
 @Component({
   selector: 'app-doctors',
+  imports: [NgClass, FormsModule, NgForOf, NgIf, NgOptimizedImage],
   standalone: true,
-  imports: [NgClass, FormsModule, NgForOf, NgIf],
   templateUrl: './doctors.component.html',
 })
 export class DoctorsComponent {
@@ -109,5 +109,9 @@ export class DoctorsComponent {
       }
       reader.readAsText(file)
     }
+  }
+
+  onModalClick(event: Event): void {
+    event.stopPropagation() // Prevent closing the modal when clicking inside it
   }
 }

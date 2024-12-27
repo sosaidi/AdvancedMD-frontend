@@ -5,7 +5,6 @@ import { NgClass, NgForOf, NgIf } from '@angular/common'
 @Component({
   selector: 'app-doctor-dashboard',
   templateUrl: './dashboard.component.html',
-  standalone: true,
   imports: [NgIf, NgForOf, NgClass],
 })
 export class DoctorDashboardComponent implements OnInit, AfterViewInit {

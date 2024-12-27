@@ -13,7 +13,6 @@ interface Appointment {
 @Component({
   selector: 'app-appointments',
   templateUrl: './appointments.component.html',
-  standalone: true,
   imports: [FormsModule, NgClass, NgIf, NgForOf],
 })
 export class AppointmentsComponent implements OnInit {

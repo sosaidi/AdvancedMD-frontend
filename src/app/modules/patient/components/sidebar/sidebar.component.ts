@@ -5,11 +5,11 @@ import { NameService } from '../../services/name.service'
 
 @Component({
   selector: 'app-sidebar',
-  standalone: true,
   imports: [RouterLink, NgIf, RouterLinkActive, NgOptimizedImage],
+  standalone: true,
   templateUrl: './sidebar.component.html',
 })
-export class SidebarComponent implements OnInit{
+export class SidebarComponent implements OnInit {
   collapsed = false
   firstName = 'John'
   lastName = 'Doe'

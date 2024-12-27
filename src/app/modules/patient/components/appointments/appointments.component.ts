@@ -6,8 +6,8 @@ import { NameService } from '../../services/name.service'
 
 @Component({
   selector: 'app-appointments',
-  standalone: true,
   imports: [NgIf, NgForOf, FormsModule],
+  standalone: true,
   templateUrl: './appointments.component.html',
 })
 export class AppointmentsComponent implements OnInit {

@@ -4,7 +4,6 @@ import { DatePipe, NgClass, NgForOf, NgIf } from '@angular/common'
 
 @Component({
   selector: 'app-todo-list',
-  standalone: true,
   imports: [FormsModule, NgForOf, NgClass, NgIf, DatePipe],
   templateUrl: './todo-list.component.html',
 })

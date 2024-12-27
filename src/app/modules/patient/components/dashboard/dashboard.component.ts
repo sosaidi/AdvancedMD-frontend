@@ -6,20 +6,12 @@ import { LabResultsService } from '../../services/lab-results.service'
 import { EmergencyContactsService } from '../../services/contact.service'
 import { LabResultsComponent } from '../lab-results/lab-results.component'
 import { MedicalInfoService } from '../../services/medical.service'
-import { HttpClientModule } from '@angular/common/http'
 
 @Component({
   selector: 'app-patient-dashboard',
   templateUrl: './dashboard.component.html',
   standalone: true,
-  imports: [
-    NgIf,
-    NgForOf,
-    NgClass,
-    FormsModule,
-    LabResultsComponent,
-    HttpClientModule,
-  ],
+  imports: [NgIf, NgForOf, NgClass, FormsModule, LabResultsComponent],
 })
 export class PatientDashboardComponent implements OnInit, AfterViewInit {
   loading = true

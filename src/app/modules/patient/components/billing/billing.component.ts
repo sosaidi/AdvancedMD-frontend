@@ -5,9 +5,9 @@ import { CurrencyPipe, DatePipe, NgClass, NgForOf, NgIf } from '@angular/common'
 
 @Component({
   selector: 'app-billing',
-  standalone: true,
   imports: [CurrencyPipe, NgClass, NgForOf, DatePipe, NgIf],
   providers: [DatePipe],
+  standalone: true,
   templateUrl: './billing.component.html',
 })
 export class BillingComponent {

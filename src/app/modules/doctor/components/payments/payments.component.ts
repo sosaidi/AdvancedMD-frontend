@@ -5,7 +5,6 @@ import { NgClass, NgIf, CurrencyPipe, NgForOf } from '@angular/common'
 
 @Component({
   selector: 'app-payments',
-  standalone: true,
   imports: [
     FormsModule,
     NgIf,

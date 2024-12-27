@@ -1,7 +1,7 @@
 <div class="p-8 bg-gradient-to-br from-gray-100 via-white to-gray-200 min-h-screen">
   <!-- Header -->
   <div class="bg-white rounded-lg shadow-lg p-6 flex justify-between items-center mb-8">
-    <h1 class="text-4xl font-extrabold text-gray-800" data-translate-key="settings">Settings</h1>
+    <h1 class="text-4xl font-bold text-gray-800" data-translate-key="settings">Settings</h1>
   </div>
 
   <!-- Tab Navigation -->
@@ -151,7 +151,12 @@
         </select>
       </div>
       <div>
-        <label class="block text-sm font-medium text-gray-700">Notifications</label>
+        <label for="notifications" class="block text-sm font-medium text-gray-700">Notifications</label>
+        <input
+          id="notifications"
+          type="checkbox"
+          class="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
+        />
         <div class="flex items-center space-x-4">
           <label>
             <input

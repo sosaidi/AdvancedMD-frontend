@@ -4,7 +4,6 @@ import { NgIf, NgOptimizedImage } from '@angular/common'
 
 @Component({
   selector: 'app-sidebar',
-  standalone: true,
   imports: [RouterLink, NgIf, RouterLinkActive, NgOptimizedImage],
   templateUrl: './sidebar.component.html',
 })

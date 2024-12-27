@@ -4,7 +4,6 @@ import { NgClass, NgIf } from '@angular/common'
 
 @Component({
   selector: 'app-settings',
-  standalone: true,
   imports: [FormsModule, NgIf, NgClass],
   templateUrl: './settings.component.html',
 })

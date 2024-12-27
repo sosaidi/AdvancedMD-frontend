@@ -44,14 +44,18 @@
       <!-- Left Section: Completion and Task Info -->
       <div class="flex items-center gap-2">
         <span
+          role="button"
+          tabindex="0"
           (click)="toggleComplete(todo)"
+          (keydown.enter)="toggleComplete(todo)"
+          (keydown.space)="toggleComplete(todo)"
           class="w-5 h-5 border-2 rounded-full flex-shrink-0 cursor-pointer"
           [ngClass]="{
             'bg-green-500 border-green-500': todo.completed,
             'border-gray-300': !todo.completed
           }"
         ></span>
-        <div>
+      <div>
           <span
             [class.line-through]="todo.completed"
             [class.text-gray-400]="todo.completed"

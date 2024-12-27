@@ -5,7 +5,6 @@ import { NgClass, NgForOf, NgIf, NgOptimizedImage } from '@angular/common'
 
 @Component({
   selector: 'app-patients',
-  standalone: true,
   imports: [FormsModule, NgClass, NgForOf, NgIf, NgOptimizedImage],
   templateUrl: './patients.component.html',
 })

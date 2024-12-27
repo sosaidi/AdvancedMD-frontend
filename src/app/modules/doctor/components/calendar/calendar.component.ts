@@ -8,7 +8,6 @@ import { DatePipe, NgIf } from '@angular/common'
 
 @Component({
   selector: 'app-calendar',
-  standalone: true,
   imports: [FullCalendarModule, FormsModule, DatePipe, NgIf],
   providers: [DatePipe], // Provide DatePipe here
   templateUrl: './calendar.component.html',

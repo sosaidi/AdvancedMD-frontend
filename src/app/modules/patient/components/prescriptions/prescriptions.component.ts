@@ -5,8 +5,8 @@ import autoTable from 'jspdf-autotable'
 
 @Component({
   selector: 'app-prescriptions',
-  standalone: true,
   imports: [NgForOf, NgClass, NgIf, DatePipe],
+  standalone: true,
   templateUrl: './prescriptions.component.html',
 })
 export class PrescriptionsComponent {
@@ -174,25 +174,25 @@ export class PrescriptionsComponent {
   }
 
   importPrescriptions(event: any): void {
-    const file = event.target.files[0];
-    const reader = new FileReader();
+    const file = event.target.files[0]
+    const reader = new FileReader()
 
     reader.onload = () => {
       try {
-        const result = JSON.parse(reader.result as string);
+        const result = JSON.parse(reader.result as string)
         if (Array.isArray(result)) {
-          this.prescriptions = [...this.prescriptions, ...result];
-          alert('Prescriptions imported successfully!');
+          this.prescriptions = [...this.prescriptions, ...result]
+          alert('Prescriptions imported successfully!')
         } else {
-          alert('Invalid file format! Please upload a valid JSON array.');
+          alert('Invalid file format! Please upload a valid JSON array.')
         }
       } catch (error: any) {
-        console.error('Error reading file:', error); // Log the error for debugging
-        alert('Error reading file! Please upload a valid JSON file.');
+        console.error('Error reading file:', error) // Log the error for debugging
+        alert('Error reading file! Please upload a valid JSON file.')
       }
-    };
+    }
 
-    reader.readAsText(file);
+    reader.readAsText(file)
   }
 
   // Switch Views
