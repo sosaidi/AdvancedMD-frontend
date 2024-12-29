@@ -97,7 +97,7 @@ export class CalendarComponent {
     this.updateViewTitle()
   }
 
-  onModalClick(event: MouseEvent): void {
+  onModalClick(event: Event): void {
     event.stopPropagation()
   }
 
