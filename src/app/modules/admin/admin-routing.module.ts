@@ -1,24 +1,30 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { PatientComponent } from './components/patients/patients.component';
+import { LayoutComponent } from './components/layout/layout.component';
+import { AdminDashboardComponent } from './components/dashboard/dashboard.component';
+import { PatientsComponent } from './components/patients/patients.component';
 import { StaffComponent } from './components/staff/staff.component';
-import { RoomComponent } from './components/rooms/room.component';
-import { PaymentComponent } from './components/payments/payment.component';
+import { RoomsComponent } from './components/rooms/room.component';
+import { PaymentsComponent } from './components/payments/payment.component';
 import { AppointmentsComponent } from './components/appointments/appointment.component';
-import { MedicalRecordsComponent } from './components/medical-records/medical-records.component';
-
+import { NotificationsComponent } from './components/notifications/notifications.component';
 
 const routes: Routes = [
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'patients', component: PatientComponent },
-  { path: 'staff', component: StaffComponent },
-  { path: 'rooms', component: RoomComponent },
-  { path: 'payments', component: PaymentComponent },
-  { path: 'appointments', component: AppointmentsComponent },
-  { path: 'medical-records', component: MedicalRecordsComponent},
-  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-
+  {
+    path: '',
+    component: LayoutComponent,
+    children: [
+      { path: 'dashboard', component: AdminDashboardComponent },
+      { path: 'patients', component: PatientsComponent },
+      { path: 'staff', component: StaffComponent },
+      { path: 'rooms', component: RoomsComponent },
+      { path: 'payments', component: PaymentsComponent },
+      { path: 'appointments', component: AppointmentsComponent },
+      { path: 'notifications', component: NotificationsComponent},
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+    ],
+  },
+  { path: '**', redirectTo: 'dashboard' },
 ];
 
 @NgModule({
