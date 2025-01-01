@@ -1,0 +1,11 @@
+.topbar {
+    height: 5rem; 
+    position:fixed;
+    top: 0;
+    left: 0;
+    width: 100%; 
+    z-index: 10; 
+    background-color: rgb(237, 240, 236);
+    box-shadow: 0 2px 4px rgba(122, 239, 167, 0.1);
+  }
+  

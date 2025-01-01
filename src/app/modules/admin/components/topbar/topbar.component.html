@@ -1,0 +1,85 @@
+<div class="topbar fixed top-0 left-0 w-full bg-gray-50 shadow-md backdrop-blur-lg z-50">
+  <div class="flex items-center justify-between px-8 py-3">
+    <!-- Logo Section -->
+    <div class="flex items-center space-x-4">
+      <img
+        src="assets/Swiss_pharmacy_logo.png"
+        alt="Logo"
+        class="w-12 h-12 square-full border-2 border-green-500 hover:scale-110 transition-transform duration-300 shadow-md"
+      />
+      <h1 class="text-2xl font-bold text-green-600 tracking-wider drop-shadow-md">
+        Advanced Medical Data
+      </h1>
+    </div>
+
+    <!-- Actions -->
+    <div class="flex items-center space-x-6">
+      
+      <div class="relative">
+        <button
+          (click)="toggleNotifications()"
+          class="relative text-gray-600 hover:text-green-600 focus:outline-none"
+        >
+          <!-- Heroicon: Bell -->
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-6 h-6"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M14.25 17.25v.75a2.25 2.25 0 01-4.5 0v-.75M21 13.5a8.25 8.25 0 10-16.5 0c0 3.75-1.125 5.625-2.25 6h21c-1.125-.375-2.25-2.25-2.25-6z"
+            />
+          </svg>
+          <span
+            class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full px-2"
+            *ngIf="notifications.length > 0"
+          >
+            {{ notifications.length }}
+          </span>
+        </button>
+        <!-- Notifications Dropdown -->
+        <div
+          *ngIf="showNotifications"
+          class="absolute right-0 mt-2 w-72 bg-white shadow-lg rounded-lg overflow-hidden z-10"
+        >
+          <div class="p-4 border-b">
+            <h2 class="font-semibold text-gray-700">Notifications</h2>
+          </div>
+          <div *ngFor="let notification of notifications" class="p-4 border-b last:border-b-0">
+            <p class="font-medium text-gray-800">{{ notification.message }}</p>
+            <span class="text-sm text-gray-500">{{ notification.time }}</span>
+          </div>
+          <div class="text-center py-2">
+            <button
+              (click)="markAllAsRead()"
+              class="text-sm text-blue-500 hover:underline focus:outline-none"
+            >
+              Mark all as read
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-center space-x-2">
+        <img
+          src="../../../../assets/admin_image.jpg"
+          alt="Avatar"
+          class="h-12 w-12 rounded-full object-cover"
+        />
+        <span class="text-gray-700 font-medium">My Profile</span>
+      </div>
+
+      <!-- Logout -->
+      <button
+        class="flex items-center px-5 py-2 bg-green-500 text-white hover:bg-green-600 rounded-full shadow-lg transition-all duration-300"
+      >
+        Logout
+      </button>
+    </div>
+  </div>
+</div>
