@@ -1,68 +1,10 @@
-/* Sidebar Container */
-.sidebar {
-  width: 250px;
-  background-color: #1b2e4b;
-  color: white;
-  height: 100vh;
-  padding: 25px;
-  position: fixed;
-  overflow-y: auto;
-  /* cursor: pointer; */
+.dashboard-container {
+  margin-left: 1rem; 
+  padding: 2rem;
 }
 
-.sidebar-header {
-  font-size: 16px;
+.dashboard-title {
+  font-size: 1.5rem;
   font-weight: bold;
-  text-transform: uppercase;
-  margin-bottom: 20px;
-}
-
-.sidebar-menu {
-  list-style: none;
-  padding: 0;
-}
-
-.sidebar-menu li {
-  padding: 50px;
-  border-radius: 20px;
-  margin-bottom: 25px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  font-size: 20px;
-  transition: background-color 0.3s;
-}
-
-.sidebar-menu li:hover {
-  background-color: #2c3e50;
-}
-
-.sidebar-menu li.active {
-  background-color: #25656e;
-  color: white;
-  cursor: pointer;
-}
-
-.sidebar-menu i {
-  margin-right: 10px;
-}
-
-.dashboard-content {
-  margin-left: 60px;
-  padding: 30px;
-  cursor: pointer;
-}
-
-.metrics {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 20px;
-}
-
-.card {
-  background: #f8f9fa;
-  padding: 30px;
-  border-radius: 8px;
-  text-align: center;
-  box-shadow: 0 10px 10px rgba(28, 76, 81, 0.1);
+  margin-bottom: 1rem;
 }

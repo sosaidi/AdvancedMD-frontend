@@ -1,33 +1,28 @@
 import { Component, OnInit } from '@angular/core';
-import { DashboardService } from '../../../../services/dashboard.service';
-import { DashboardData } from './dashboard.model';
 
 @Component({
-  selector: 'app-dashboard',
+  selector: 'app-admin-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
 })
-export class DashboardComponent implements OnInit {
-  dashboardData: DashboardData ={
-    totalPatients: 20,
-    totalStaff: 30,
-    totalRooms: 25,
-    totalAppointments: 10,
-    activeRooms: 15,
-    activeAppointments: 8,
-    availableRooms: 10,
+export class AdminDashboardComponent implements OnInit {
+  patientsCount = 0;
+  staffCount = 0;
+  roomsAvailable = 0;
+  paymentsPending = 0;
 
-  };
-  constructor(private dashboardService: DashboardService) {}
+  constructor() {}
 
   ngOnInit(): void {
-    this.loadDashboardData();
+    // Initialize data here
+    this.fetchDashboardData();
   }
 
-
-  loadDashboardData(): void {
-    this.dashboardService.getDashboardData().subscribe((data) => {
-      this.dashboardData = data;
-    });
+  fetchDashboardData() {
+    // Replace with actual logic to fetch data
+    this.patientsCount = 10; 
+    this.staffCount = 5; 
+    this.roomsAvailable = 8; 
+    this.paymentsPending = 3; 
   }
 }

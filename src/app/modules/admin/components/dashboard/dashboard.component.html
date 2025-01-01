@@ -1,25 +1,21 @@
-<div class="dashboard-content">
-  <h2>Admin Dashboard</h2>
-  <div class="metrics">
-    <div class="card">
-      <h3>Total Patients</h3>
-      <p>{{ dashboardData.totalPatients }}</p>
+<div class="main-content">
+  <h1 class="text-2xl font-bold">Admin Dashboard</h1>
+  <div class="grid grid-cols-4 gap-7 mt-4">
+    <div class="bg-blue-200 p-4 rounded shadow">
+      <h2 class="text-xl font-semibold">Patients Count</h2>
+      <p class="text-3xl">{{ patientsCount }}</p>
     </div>
-    <div class="card">
-      <h3>Total Staff</h3>
-      <p>{{ dashboardData.totalStaff }}</p>
+    <div class="bg-green-100 p-4 rounded shadow">
+      <h2 class="text-xl font-semibold">Staff Count</h2>
+      <p class="text-3xl">{{ staffCount }}</p>
     </div>
-    <div class="card">
-      <h3>Total Rooms</h3>
-      <p>{{ dashboardData.totalRooms }}</p>
+    <div class="bg-yellow-100 p-4 rounded shadow">
+      <h2 class="text-xl font-semibold">Rooms Available</h2>
+      <p class="text-3xl">{{ roomsAvailable }}</p>
     </div>
-    <div class="card">
-      <h3>Active Appointments</h3>
-      <p>{{ dashboardData.activeAppointments }}</p>
-    </div>
-    <div class="card">
-      <h3>Available Rooms</h3>
-      <p>{{ dashboardData.availableRooms }}</p>
+    <div class="bg-red-100 p-4 rounded shadow">
+      <h2 class="text-xl font-semibold">Payments Pending</h2>
+      <p class="text-3xl">{{ paymentsPending }}</p>
     </div>
   </div>
 </div>
