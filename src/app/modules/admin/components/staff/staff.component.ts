@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { StaffService } from '../../../../services/staff.service'; 
-import { Staff } from './staff.model'; 
+import { StaffService, Staff } from '../../../../services/staff.service';
 
 @Component({
   selector: 'app-staff',
@@ -8,25 +7,13 @@ import { Staff } from './staff.model';
   styleUrls: ['./staff.component.css'],
 })
 export class StaffComponent implements OnInit {
-  staffList: Staff[] = [];
-  isLoading: boolean = true;
+  staff: Staff[] = [];
 
   constructor(private staffService: StaffService) {}
 
   ngOnInit(): void {
-    this.fetchStaffList();
-  }
-
-  fetchStaffList(): void {
-    this.staffService.getStaff().subscribe({
-      next: (data) => {
-        this.staffList = data;
-        this.isLoading = false;
-      },
-      error: (error) => {
-        console.error('Error fetching staff list:', error);
-        this.isLoading = false;
-      },
+    this.staffService.getStaff().subscribe((data) => {
+      this.staff = data;
     });
   }
 }

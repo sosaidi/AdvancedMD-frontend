@@ -1,25 +1,35 @@
-<div class="staff-container">
-  <h2>Staff</h2>
-  <table class="staff-table">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Role</th>
-        <th>Phone</th>
-        <th>Email</th>
-        <th>Specialization</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let staff of staffList">
-        <td>{{ staff.user_id }}</td>
-        <td>{{ staff.name }}</td>
-        <td>{{ staff.role }}</td>
-        <td>{{ staff.phone_number }}</td>
-        <td>{{ staff.email }}</td>
-        <td>{{ staff.specialization }}</td>
-      </tr>
-    </tbody>
-  </table>
+<div class="flex flex-col bg-gray-50 min-h-screen p-6">
+  <!-- Heading -->
+  <div class="flex justify-between items-center mb-6">
+    <h2 class="text-2xl font-bold text-gray-700">Staff</h2>
+  </div>
+
+  <!-- Table Container -->
+  <div class="flex-grow">
+    <div class="overflow-auto bg-white border border-gray-200 rounded-lg shadow">
+      <table class="w-full border-collapse">
+        <thead class="bg-gray-100">
+          <tr>
+            <th class="px-6 py-4 text-left text-sm font-medium text-gray-600 lowercase">user_id</th>
+            <th class="px-6 py-4 text-left text-sm font-medium text-gray-600 lowercase">name</th>
+            <th class="px-6 py-4 text-left text-sm font-medium text-gray-600 lowercase">specialization</th>
+            <th class="px-6 py-4 text-left text-sm font-medium text-gray-600 lowercase">phone_number</th>
+            <th class="px-6 py-4 text-left text-sm font-medium text-gray-600 lowercase">status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let person of staff"
+            class="border-t hover:bg-gray-50 transition"
+          >
+            <td class="px-6 py-4 text-sm text-gray-700">{{ person.user_id }}</td>
+            <td class="px-6 py-4 text-sm text-gray-700">{{ person.name }}</td>
+            <td class="px-6 py-4 text-sm text-gray-700">{{ person.specialization }}</td>
+            <td class="px-6 py-4 text-sm text-gray-700">{{ person.phone_number }}</td>
+            <td class="px-6 py-4 text-sm text-gray-700">{{ person.status }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
