@@ -1,28 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { RoomService } from '../../../../services/room.service';
-import { Room } from './room.model';
+import { RoomsService, Room } from '../../../../services/room.service';
 
 @Component({
-  selector: 'app-room',
+  selector: 'app-rooms',
   templateUrl: './room.component.html',
   styleUrls: ['./room.component.css'],
 })
-export class RoomComponent implements OnInit {
-  roomList: Room[] = [];
-  isLoading: boolean = true;
+export class RoomsComponent implements OnInit {
+  rooms: Room[] = [];
 
-  constructor(private roomService: RoomService) {}
+  constructor(private roomsService: RoomsService) {}
 
   ngOnInit(): void {
-    this.fetchRooms();
-  }
-
-  fetchRooms(): void {
-    this.roomService.getRooms().subscribe({
-      next: (data) => {
-        this.roomList = data;
-        this.isLoading = false;
-      },
+    this.roomsService.getRooms().subscribe((data) => {
+      this.rooms = data;
     });
   }
 }

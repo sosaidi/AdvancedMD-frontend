@@ -1,70 +1,45 @@
-.rooms-container {
-    background-color: #ffffff;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    margin: 20px auto;
-    max-width: 90%;
-  }
-  
-  .rooms-container h2 {
-    font-size: 24px;
-    font-weight: bold;
-    color: #225e64;
-    text-align: left;
-    margin-bottom: 20px;
-    border-bottom: 2px solid #f1f1f1;
-    padding-bottom: 10px;
-  }
-  
-  .rooms-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    font-size: 1.2rem;
-  }
-  
-  .rooms-table thead {
-    background-color: #235e66;
-    color: white;
-  }
-  
-  .rooms-table thead th {
-    padding: 12px;
-    text-align: left;
-  }
-  
-  .rooms-table tbody tr {
-    background-color: #f9f9f9;
-    border-bottom: 1px solid #e0e0e0;
-  }
-  
-  .rooms-table tbody tr:nth-child(even) {
-    background-color: #f1f1f1;
-  }
-  
-  .rooms-table tbody td {
-    padding: 12px;
-    text-align: left;
-    color: #333333;
-  }
-  
-  .rooms-table tbody tr:hover {
-    background-color: #dfe4ea;
-    cursor: pointer;
-  }
-  
-  .rooms-table tbody tr:last-child td {
-    border-bottom: none;
-  }
-  
-  .rooms-table tbody td:first-child,
-  .rooms-table thead th:first-child {
-    border-radius: 8px 0 0 8px;
-  }
-  
-  .rooms-table tbody td:last-child,
-  .rooms-table thead th:last-child {
-    border-radius: 0 8px 8px 0;
-  }
-  
+.center-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 5rem); /* Adjust for topbar height */
+  padding: 2rem;
+  background-color: #f9fafb; /* Light background for better contrast */
+}
+
+.table-container {
+  width: 90%; /* Increased width */
+  max-width: 1400px; /* Increased max width for larger screens */
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow-x: auto;
+}
+
+.table-title {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  background-color: #e5e7eb; 
+}
+
+th, td {
+  padding: 1rem; 
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+tr:hover {
+  background-color: #f1f5f9; 
+}

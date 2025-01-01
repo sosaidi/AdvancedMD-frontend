@@ -1,21 +1,42 @@
-<div class="rooms-container">
-  <h2>Rooms</h2>
-  <table class="rooms-table">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Room Number</th>
-        <th>Type</th>
-        <th>Status</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let room of roomList">
-        <td>{{ room.room_id }}</td>
-        <td>{{ room.room_num }}</td>
-        <td>{{ room.room_type }}</td>
-        <td>{{ room.status }}</td>
-      </tr>
-    </tbody>
-  </table>
+<div class="flex flex-col min-h-screen p-6 bg-gray-50">
+  <!-- Heading -->
+  <div class="mb-6">
+    <h2 class="text-2xl font-bold text-gray-700">Rooms</h2>
+  </div>
+
+  <!-- Table Container -->
+  <div class="flex-grow">
+    <div class="overflow-auto bg-white border border-gray-200 rounded-lg shadow">
+      <table class="w-full border-collapse">
+        <thead class="bg-gray-100">
+          <tr>
+            <th class="px-6 py-3 text-left text-sm font-medium text-gray-600">room_id</th>
+            <th class="px-6 py-3 text-left text-sm font-medium text-gray-600">room_num</th>
+            <th class="px-6 py-3 text-left text-sm font-medium text-gray-600">room_type</th>
+            <th class="px-6 py-3 text-left text-sm font-medium text-gray-600">status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="border-t hover:bg-gray-50 transition">
+            <td class="px-6 py-4 text-sm text-gray-700">1</td>
+            <td class="px-6 py-4 text-sm text-gray-700">101</td>
+            <td class="px-6 py-4 text-sm text-gray-700">Private</td>
+            <td class="px-6 py-4 text-sm text-gray-700">Occupied</td>
+          </tr>
+          <tr class="border-t hover:bg-gray-50 transition">
+            <td class="px-6 py-4 text-sm text-gray-700">2</td>
+            <td class="px-6 py-4 text-sm text-gray-700">102</td>
+            <td class="px-6 py-4 text-sm text-gray-700">Semi-private</td>
+            <td class="px-6 py-4 text-sm text-gray-700">Available</td>
+          </tr>
+          <tr class="border-t hover:bg-gray-50 transition">
+            <td class="px-6 py-4 text-sm text-gray-700">3</td>
+            <td class="px-6 py-4 text-sm text-gray-700">103</td>
+            <td class="px-6 py-4 text-sm text-gray-700">ICU</td>
+            <td class="px-6 py-4 text-sm text-gray-700">Occupied</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
