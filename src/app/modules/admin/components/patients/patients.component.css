@@ -1,29 +1,38 @@
+/* Container Styling */
 .container {
-  margin:20px;
+  margin: 20px auto; /* Center container */
   padding: 20px;
+  max-width: 100%; /* Ensures no horizontal overflow */
   background-color: #f9f9f9;
   border-radius: 10px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  overflow-x: hidden; /* Prevents horizontal scrolling */
 }
 
+/* Heading Styling */
 h2 {
-  /* font-family: 'Arial', sans-serif; */
   font-size: 24px;
   font-weight: bold;
   color: #333;
   margin-bottom: 20px;
+  text-align: center; /* Centers the heading */
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
+/* Styled Table */
 .styled-table {
-  width: 100%;
+  width: 100%; 
   border-collapse: collapse;
   margin: 20px 0;
-  font-size: 18px;
-  /* font-family: 'Arial', sans-serif; */
+  font-size: 16px;
   text-align: left;
+  overflow-x: auto;
 }
 
-.styled-table th, .styled-table td {
+.styled-table th,
+.styled-table td {
   padding: 12px 15px;
   border: 1px solid #ddd;
 }
@@ -31,6 +40,8 @@ h2 {
 .styled-table th {
   background-color: #286a6a;
   color: white;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .styled-table tr:nth-child(even) {
@@ -38,21 +49,40 @@ h2 {
 }
 
 .styled-table tr:hover {
-  background-color: #ddd;
+  background-color: #e6e6e6;
 }
 
+/* Button Styling */
 .add-button {
   display: inline-block;
   padding: 10px 20px;
   margin-bottom: 20px;
-  font-size: 14px;
+  font-size: 16px;
   color: white;
   background-color: #1e727f;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .add-button:hover {
   background-color: #219150;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    padding: 10px; 
+  }
+
+  .styled-table th,
+  .styled-table td {
+    font-size: 14px; 
+  }
+
+  .add-button {
+    padding: 8px 16px; 
+    font-size: 14px;
+  }
 }
