@@ -1,28 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { PaymentService } from '../../../../services/payment.service';
-import { Payment } from './payment.model';
+import { PaymentsService, Payment } from '../../../../services/payments.service';
 
 @Component({
-  selector: 'app-payment',
+  selector: 'app-payments',
   templateUrl: './payment.component.html',
   styleUrls: ['./payment.component.css'],
 })
-export class PaymentComponent implements OnInit {
+export class PaymentsComponent implements OnInit {
   payments: Payment[] = [];
-  isLoading: boolean = true;
 
-  constructor(private paymentService: PaymentService) {}
+  constructor(private paymentsService: PaymentsService) {}
 
   ngOnInit(): void {
-    this.fetchPayments();
-  }
-
-  fetchPayments(): void {
-    this.paymentService.getPayments().subscribe({
-      next: (data) => {
-        this.payments = data;
-        this.isLoading = false;
-      },
+    this.paymentsService.getPayments().subscribe((data) => {
+      this.payments = data;
     });
   }
 }
