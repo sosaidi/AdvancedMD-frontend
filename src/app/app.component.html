@@ -1,35 +1,3 @@
-<div class="layout-container">
-  <!-- Sidebar -->
-  <aside class="sidebar">
-    <div class="logo">
-      <img src="./assets/images/Swiss_pharmacy_logo.png" alt="Logo" />
-    </div>
-    <nav class="menu">
-      <ul>
-        <li><a routerLink="/dashboard" routerLinkActive="active"><i class="icon"></i> Dashboard</a></li>
-        <li><a routerLink="/appointments" routerLinkActive="active"><i class="icon"></i> Appointments</a></li>
-        <li><a routerLink="/doctors" routerLinkActive="active"><i class="icon"></i> Doctors</a></li>
-        <li><a routerLink="/staff" routerLinkActive="active"><i class="icon"></i> Staff</a></li>
-        <li><a routerLink="/patients" routerLinkActive="active"><i class="icon"></i> Patients</a></li>
-        <li><a routerLink="/medical-records" routerLinkActive="active"><i class="icon"></i> Medical-Records</a></li>
-        <li><a routerLink="/payments" routerLinkActive="active"><i class="icon"></i> Payments</a></li>
-        <li><a routerLink="/rooms" routerLinkActive="active"><i class="icon"></i> Rooms</a></li>
-
-      </ul>
-    </nav>
-  </aside>
-
-  <!-- Main Content -->
-  <div class="main-content">
-    <header class="header">
-      <h1>Advanced Medical Data</h1>
-      <div class="profile">
-        <img src="assets/images/user_icon.png">
-        <span>Admin</span>
-      </div>
-    </header>
-    <main>
-      <router-outlet></router-outlet>
-    </main>
-  </div>
+<div class="main-container">
+  <router-outlet></router-outlet>
 </div>
