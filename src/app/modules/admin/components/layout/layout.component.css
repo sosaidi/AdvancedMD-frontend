@@ -1,0 +1,53 @@
+.flex {
+  display: flex;
+}
+
+.h-screen {
+  height: 100vh;
+  overflow: hidden; 
+}
+
+.bg-gray-100 {
+  background-color: hwb(166 90% 5%);
+}
+
+.p-6 {
+  padding: 1.6rem;
+}
+
+.flex-1 {
+  flex-grow: 2;
+}
+
+app-sidebar {
+  width: 16rem; 
+  height: 100%; 
+  position: fixed; 
+  top: 0;
+  left: 0;
+  background-color: #75d78a;
+  color: white;
+  z-index: 20;
+}
+
+app-topbar {
+  width: calc(100% - 16rem); 
+  height: 4rem; 
+  position: fixed;
+  top: 0;
+  left: 2rem; 
+  background-color: white; 
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  padding: 10 10rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+main {
+  margin-left: 24rem; 
+  margin-top: 4rem;
+  padding: 1.5rem;
+  overflow-y:hidden;
+  height: calc(100vh - 4rem); 
+}
