@@ -1,31 +1,32 @@
-<div class="appointments-container">
-  <div class="header">
-    <h2>Appointments</h2>
-    <button class="add-btn">
-      <i class="fa fa-plus"></i>+ Add Appointment
-    </button>
+<div class="container mx-auto bg-gray-50 min-h-screen p-6 rounded-lg shadow-lg">
+  <!-- Heading -->
+  <div class="flex justify-between items-center mb-6">
+    <h2 class="text-2xl font-bold text-gray-700">Appointments</h2>
   </div>
 
-  <table class="appointments-table">
-    <thead>
-      <tr>
-        <th>Appointment ID</th>
-        <th>Patient ID</th>
-        <th>Staff ID</th>
-        <th>Room ID</th>
-        <th>Appointment Date</th>
-        <th>Status</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let appointment of appointments">
-        <td>{{ appointment.app_id }}</td>
-        <td>{{ appointment.patient_id }}</td>
-        <td>{{ appointment.staff_id }}</td>
-        <td>{{ appointment.room_id || 'N/A' }}</td>
-        <td>{{ appointment.app_date }}</td>
-        <td>{{ appointment.status }}</td>
-      </tr>
-    </tbody>
-  </table>
+  <!-- Table -->
+  <div class="overflow-x-auto">
+    <table class="min-w-full bg-white border border-gray-200 rounded-lg shadow">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="px-6 py-3 text-left text-sm font-medium text-gray-600">app_id</th>
+          <th class="px-6 py-3 text-left text-sm font-medium text-gray-600">patient_id</th>
+          <th class="px-6 py-3 text-left text-sm font-medium text-gray-600">staff_id</th>
+          <th class="px-6 py-3 text-left text-sm font-medium text-gray-600">room_id</th>
+          <th class="px-6 py-3 text-left text-sm font-medium text-gray-600">app_date</th>
+          <th class="px-6 py-3 text-left text-sm font-medium text-gray-600">status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let appointment of appointments" class="border-t hover:bg-gray-50 transition">
+          <td class="px-6 py-4 text-sm text-gray-700">{{ appointment.app_id }}</td>
+          <td class="px-6 py-4 text-sm text-gray-700">{{ appointment.patient_id }}</td>
+          <td class="px-6 py-4 text-sm text-gray-700">{{ appointment.staff_id }}</td>
+          <td class="px-6 py-4 text-sm text-gray-700">{{ appointment.room_id }}</td>
+          <td class="px-6 py-4 text-sm text-gray-700">{{ appointment.app_date }}</td>
+          <td class="px-6 py-4 text-sm text-gray-700">{{ appointment.status }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
