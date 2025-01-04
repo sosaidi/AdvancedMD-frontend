@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { PaymentsService, Payment } from '../../../../services/payments.service';
+import { PaymentService } from '../../../../services/payments.service';
+import { Payment } from './payments.model';
 
 @Component({
   selector: 'app-payments',
@@ -9,7 +10,7 @@ import { PaymentsService, Payment } from '../../../../services/payments.service'
 export class PaymentsComponent implements OnInit {
   payments: Payment[] = [];
 
-  constructor(private paymentsService: PaymentsService) {}
+  constructor(private paymentsService: PaymentService) {}
 
   ngOnInit(): void {
     this.paymentsService.getPayments().subscribe((data) => {
