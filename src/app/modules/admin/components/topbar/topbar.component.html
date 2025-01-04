@@ -1,26 +1,25 @@
-<div class="topbar fixed top-0 left-0 w-full bg-gray-50 shadow-md backdrop-blur-lg z-50">
+<div class="topbar fixed top-0 left-0 w-full bg-gray-50 shadow-md z-50">
   <div class="flex items-center justify-between px-8 py-3">
     <!-- Logo Section -->
     <div class="flex items-center space-x-4">
       <img
-        src="assets/Swiss_pharmacy_logo.png"
+        src="assets/images/"
         alt="Logo"
-        class="w-12 h-12 square-full border-2 border-green-500 hover:scale-110 transition-transform duration-300 shadow-md"
+        class="w-12 h-12 border-2 border-green-500 hover:scale-110 transition-transform duration-300"
       />
-      <h1 class="text-2xl font-bold text-green-600 tracking-wider drop-shadow-md">
+      <h1 class="text-2xl font-bold text-green-600 tracking-wide">
         Advanced Medical Data
       </h1>
     </div>
 
     <!-- Actions -->
     <div class="flex items-center space-x-6">
-      
+      <!-- Notifications -->
       <div class="relative">
         <button
           (click)="toggleNotifications()"
-          class="relative text-gray-600 hover:text-green-600 focus:outline-none"
+          class="relative text-gray-600 hover:text-green-600"
         >
-          <!-- Heroicon: Bell -->
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -36,47 +35,60 @@
             />
           </svg>
           <span
-            class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full px-2"
             *ngIf="notifications.length > 0"
+            class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full px-2"
           >
             {{ notifications.length }}
           </span>
         </button>
+
         <!-- Notifications Dropdown -->
         <div
           *ngIf="showNotifications"
-          class="absolute right-0 mt-2 w-72 bg-white shadow-lg rounded-lg overflow-hidden z-10"
+          class="absolute right-0 mt-2 w-72 bg-white shadow-lg rounded-lg"
         >
           <div class="p-4 border-b">
             <h2 class="font-semibold text-gray-700">Notifications</h2>
           </div>
-          <div *ngFor="let notification of notifications" class="p-4 border-b last:border-b-0">
-            <p class="font-medium text-gray-800">{{ notification.message }}</p>
-            <span class="text-sm text-gray-500">{{ notification.time }}</span>
-          </div>
-          <div class="text-center py-2">
-            <button
-              (click)="markAllAsRead()"
-              class="text-sm text-blue-500 hover:underline focus:outline-none"
+          <div *ngIf="notifications.length > 0; else noNotifications">
+            <div
+              *ngFor="let notification of notifications"
+              class="p-4 border-b last:border-b-0"
             >
-              Mark all as read
-            </button>
+              <p class="font-medium text-gray-800">{{ notification.message }}</p>
+              <span class="text-sm text-gray-500">{{ notification.time }}</span>
+            </div>
+            <div class="text-center py-2">
+              <button
+                (click)="markAllAsRead()"
+                class="text-sm text-blue-500 hover:underline"
+              >
+                Mark all as read
+              </button>
+            </div>
           </div>
+          <ng-template #noNotifications>
+            <div class="text-center p-4 text-gray-500">
+              No new notifications
+            </div>
+          </ng-template>
         </div>
       </div>
 
+      <!-- Profile Section -->
       <div class="flex items-center space-x-2">
         <img
           src="../../../../assets/admin_image.jpg"
-          alt="Avatar"
-          class="h-12 w-12 rounded-full object-cover"
+          alt="Admin Avatar"
+          class="h-12 w-12 rounded-full"
         />
         <span class="text-gray-700 font-medium">My Profile</span>
       </div>
 
       <!-- Logout -->
       <button
-        class="flex items-center px-5 py-2 bg-green-500 text-white hover:bg-green-600 rounded-full shadow-lg transition-all duration-300"
+        (click)="logout()"
+        class="flex items-center px-5 py-2 bg-green-500 text-white hover:bg-green-600 rounded-full transition-all duration-300"
       >
         Logout
       </button>

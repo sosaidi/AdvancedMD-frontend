@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-topbar',
@@ -6,16 +7,15 @@ import { Component } from '@angular/core';
   styleUrls: ['./topbar.component.css'],
 })
 export class TopbarComponent {
-  // Mock notifications data
   notifications = [
     { id: 1, message: 'New patient added', time: '5 mins ago' },
     { id: 2, message: 'Appointment scheduled', time: '10 mins ago' },
     { id: 3, message: 'Payment processed', time: '15 mins ago' },
   ];
 
-  // control dropdown visibility
   showNotifications = false;
 
+  constructor(private router: Router) {}
 
   toggleNotifications(): void {
     this.showNotifications = !this.showNotifications;
@@ -24,5 +24,11 @@ export class TopbarComponent {
   markAllAsRead(): void {
     this.notifications = [];
     this.showNotifications = false;
+  }
+
+  logout(): void {
+    localStorage.removeItem('token'); // Remove JWT token
+    localStorage.clear(); // Clear all stored data
+    this.router.navigate(['/login']); // Redirect to login page
   }
 }
