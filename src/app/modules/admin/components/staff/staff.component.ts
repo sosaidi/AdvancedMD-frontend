@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { StaffService, Staff } from '../../../../services/staff.service';
+import { StaffService } from '../../../../services/staff.service';
+import { Staff } from './staff.model';
 
 @Component({
   selector: 'app-staff',
