@@ -1,23 +1,30 @@
-<div class="container">
-  <h2>Advanced Medical Data</h2>
-  <table class="styled-table">
-    <thead>
-      <tr>
-        <th>Staff ID</th>
-        <th>Diagnosis</th>
-        <th>Prescription</th>
-        <th>Report</th>
-        <th>Created At</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let record of medicalRecords">
-        <td>{{ record.staffId }}</td>
-        <td>{{ record.diagnosis }}</td>
-        <td>{{ record.prescription }}</td>
-        <td>{{ record.report }}</td>
-        <td>{{ record.createdAt | date: 'short' }}</td>
-      </tr>
-    </tbody>
-  </table>
+<div class="p-6 bg-gray-50 min-h-screen">
+  <h2 class="text-3xl font-bold text-gray-800 mb-6 text-left w-full">Medical-Records</h2>
+  <div class="overflow-x-auto">
+    <table class="min-w-full table-auto bg-white border border-gray-200 rounded-lg shadow-lg">
+      <thead class="bg-green-500 text-white">
+        <tr>
+          <th class="px-6 py-4 text-left font-medium">Staff ID</th>
+          <th class="px-6 py-4 text-left font-medium">Diagnosis</th>
+          <th class="px-6 py-4 text-left font-medium">Prescription</th>
+          <th class="px-6 py-4 text-left font-medium">Report</th>
+          <th class="px-6 py-4 text-left font-medium">Created At</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let record of medicalRecords"
+          class="odd:bg-gray-50 even:bg-gray-100 hover:bg-green-100 transition-colors"
+        >
+          <td class="px-6 py-4 border-b border-gray-200">{{ record.staffId }}</td>
+          <td class="px-6 py-4 border-b border-gray-200">{{ record.diagnosis }}</td>
+          <td class="px-6 py-4 border-b border-gray-200">{{ record.prescription }}</td>
+          <td class="px-6 py-4 border-b border-gray-200">{{ record.report }}</td>
+          <td class="px-6 py-4 border-b border-gray-200">
+            {{ record.createdAt | date: 'short' }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
