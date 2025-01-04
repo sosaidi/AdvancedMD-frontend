@@ -8,7 +8,8 @@ import { RoomsComponent } from './components/rooms/room.component';
 import { PaymentsComponent } from './components/payments/payment.component';
 import { AppointmentsComponent } from './components/appointments/appointment.component';
 import { NotificationsComponent } from './components/notifications/notifications.component';
-
+import { MedicalRecordsComponent } from './components/medical-records/medical-records.component';
+import { LoginComponent } from './components/login/login.component';
 const routes: Routes = [
   {
     path: '',
@@ -20,11 +21,13 @@ const routes: Routes = [
       { path: 'rooms', component: RoomsComponent },
       { path: 'payments', component: PaymentsComponent },
       { path: 'appointments', component: AppointmentsComponent },
-      { path: 'notifications', component: NotificationsComponent},
-      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: 'notifications', component: NotificationsComponent },
+      { path: 'medical-records', component: MedicalRecordsComponent },
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' }, // Default route
     ],
   },
-  { path: '**', redirectTo: 'dashboard' },
+  { path: 'login', component: LoginComponent }, 
+  { path: '**', redirectTo: 'login' }, // Wildcard route redirects to login
 ];
 
 @NgModule({

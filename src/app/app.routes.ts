@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { LoginComponent } from './modules/admin/components/login/login.component';
 
 export const routes: Routes = [
   {
@@ -6,6 +7,17 @@ export const routes: Routes = [
     loadChildren: () =>
       import('./modules/admin/admin.module').then((m) => m.AdminModule),
   },
-  { path: '', redirectTo: '/admin', pathMatch: 'full' },
-  { path: '**', redirectTo: '/admin' },
+  {
+    path: 'login',
+    component: LoginComponent,
+  },
+  {
+    path: '',
+    redirectTo: '/login',
+    pathMatch: 'full',
+  },
+  {
+    path: '**',
+    redirectTo: '/login',
+  },
 ];
