@@ -61,6 +61,13 @@
           </p>
         </div>
 
+        <div class="form-group">
+          <div *ngIf="isLoginFailed" class="text-sm text-red-500 mt-1" role="alert">
+            {{ errorMessage }} 
+          </div>
+        </div>
+        
+
         <!-- Submit Button -->
         <div>
           <button

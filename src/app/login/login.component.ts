@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
         this.reloadPage();
       },
       error: err => {
-        this.errorMessage = err.error.message;
+        this.errorMessage = "Login failed, pls try other credentails";
         this.isLoginFailed = true;
       }
     });
