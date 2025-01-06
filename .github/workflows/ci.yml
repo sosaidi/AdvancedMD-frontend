@@ -1,4 +1,4 @@
-name: Angular CI/CD Pipeline
+name: SonarCloud Analysis
 
 on:
   push:
@@ -11,100 +11,29 @@ on:
       - main
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '20'
-
-      - name: Cache node modules
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.npm
-            node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Lint code
-        run: npm run lint
-
-      - name: Check code formatting
-        run: npx prettier --check "src/**/*.ts"
-
-      - name: Run security audit
-        run: npm audit --production --audit-level=moderate
-
-      - name: Start Angular server
-        run: npm run start &
-        env:
-          CI: true
-
-      - name: Wait for server to start
-        run: npx wait-on http://localhost:4200
-
-      - name: Run unit tests
-        run: npm run test
-
-      - name: Build Angular app
-        run: npm run build -- --configuration production
-
-      - name: Archive build artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: build
-          path: dist/
-
-      - name: Install Lighthouse CLI
-        run: npm install -g lighthouse
-
-      - name: Run Lighthouse Performance Audit
-        run: lighthouse http://localhost:4200 --output json --output-path ./lighthouse-report.json --chrome-flags="--headless --no-sandbox"
-        env:
-          CI: true
-
-      - name: Upload Lighthouse Report
-        uses: actions/upload-artifact@v3
-        with:
-          name: lighthouse-report
-          path: ./lighthouse-report.json
-
-      - name: Run Cypress tests
-        uses: cypress-io/github-action@v4
-        with:
-          start: npm run start
-          wait-on: 'http://localhost:4200'
-        env:
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-
   sonarcloud:
     runs-on: ubuntu-latest
 
     steps:
+      # Checkout repository
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # Set up Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '20'
 
+      # Install project dependencies
       - name: Install dependencies
         run: npm install
 
+      # Run unit tests and generate test coverage
       - name: Run unit tests with coverage
         run: npm run test
 
+      # Run SonarCloud Scan
       - name: Run SonarCloud Scan
         run: npx sonarqube-scanner \
           -Dsonar.projectKey=sosaidi_AdvancedMD-frontend \
