@@ -58,7 +58,7 @@ jobs:
 
       # Run unit tests using ChromeHeadless browser
       - name: Run unit tests
-        run: npm run test -- --watch=false --browsers=ChromeHeadless
+        run: npm run test
 
       # Build the project for production
       - name: Build Angular app
@@ -99,7 +99,8 @@ jobs:
       - name: Run Cypress tests
         uses: cypress-io/github-action@v4
         with:
-          build: npm run build
+          build: npm run start
+          wait-on: 'http://localhost:4200'
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
 

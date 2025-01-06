@@ -31,7 +31,7 @@ jobs:
 
       # Run unit tests and generate test coverage
       - name: Run unit tests with coverage
-        run: npm run test -- --watch=false --code-coverage --browsers=ChromeHeadless
+        run: npm run test
 
       # Run SonarCloud Scan
       - name: Run SonarCloud Scan
