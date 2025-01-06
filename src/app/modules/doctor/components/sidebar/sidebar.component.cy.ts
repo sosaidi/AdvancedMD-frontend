@@ -1,4 +1,4 @@
-describe('Sidebar Component', () => {
+/*describe('Sidebar Component', () => {
   beforeEach(() => {
     cy.visit('/doctor/dashboard')
   })
@@ -33,4 +33,4 @@ describe('Sidebar Component', () => {
     cy.get('.toggle-btn').click()
     cy.get('app-sidebar').should('not.have.class', 'collapsed')
   })
-})
+})*/

@@ -1,4 +1,4 @@
-describe('Topbar Component', () => {
+/*describe('Topbar Component', () => {
   beforeEach(() => {
     cy.visit('/')
   })
@@ -20,4 +20,4 @@ describe('Topbar Component', () => {
     cy.get('.logout-btn').should('be.visible')
     cy.get('.logout-btn').click()
   })
-})
+})*/

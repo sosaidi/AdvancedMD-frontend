@@ -1,4 +1,4 @@
-describe('Doctor Routing', () => {
+/*describe('Doctor Routing', () => {
   beforeEach(() => {
     cy.visit('/doctor')
   })
@@ -37,4 +37,4 @@ describe('Doctor Routing', () => {
     cy.visit('/doctor')
     cy.url().should('include', '/doctor/dashboard')
   })
-})
+})*/

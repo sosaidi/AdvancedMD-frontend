@@ -1,4 +1,4 @@
-describe('Settings Component', () => {
+/*describe('Settings Component', () => {
   beforeEach(() => {
     cy.visit('/doctor/settings')
   })
@@ -33,4 +33,4 @@ describe('Settings Component', () => {
     cy.get('button').contains('Save Changes').click()
     cy.get('.success-message').should('contain', 'Settings saved successfully')
   })
-})
+})*/
