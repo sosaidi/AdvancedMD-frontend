@@ -15,25 +15,30 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout repository
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Set up Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '20'
 
-      # Install project dependencies
       - name: Install dependencies
         run: npm install
 
-      # Run unit tests and generate test coverage
-      - name: Run unit tests with coverage
-        run: npm run test -- --watch=false --code-coverage --browsers=ChromeHeadless
+      #Start Angular server for SonarCloud
+      - name: Start Angular server
+        run: npm run start &
+        env:
+          CI: true
 
-      # Run SonarCloud Scan
+      #Wait for server (Short timeout)
+      - name: Wait for server
+        run: npx wait-on http://localhost:4200 --timeout 30000
+
+      - name: Run unit tests with coverage
+        run: npm run test
+
       - name: Run SonarCloud Scan
         run: npx sonarqube-scanner \
           -Dsonar.projectKey=sosaidi_AdvancedMD-frontend \

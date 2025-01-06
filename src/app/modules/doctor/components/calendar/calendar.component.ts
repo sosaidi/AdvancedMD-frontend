@@ -97,8 +97,14 @@ export class CalendarComponent {
     this.updateViewTitle()
   }
 
-  onModalClick(event: MouseEvent): void {
+  onModalClick(event: Event): void {
     event.stopPropagation()
+
+    if (event instanceof MouseEvent) {
+      console.log('Mouse Click Detected:', event)
+    } else if (event instanceof KeyboardEvent) {
+      console.log('Keyboard Event Detected:', event)
+    }
   }
 
   updateViewTitle(): void {
