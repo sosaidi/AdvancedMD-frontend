@@ -6,7 +6,7 @@
     "lint": "ng lint",
     "start": "ng serve",
     "build": "ng build --configuration production",
-    "test": "npx cypress run",
+    "test": "npx cypress run --browser firefox --headless",
     "prettier": "prettier --write \"src/**/*.ts\"",
     "sonar": "sonarqube-scanner",
     "cy:run": "cypress run",
