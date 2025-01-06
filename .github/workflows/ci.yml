@@ -50,8 +50,8 @@ jobs:
         env:
           CI: true
 
-      - name: Wait for server
-        run: npx wait-on http://localhost:4200
+      - name: Wait for Angular server
+        run: npx wait-on http://localhost:4200 --timeout 3000
 
       - name: Run unit tests
         run: npm run test
