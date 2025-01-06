@@ -26,14 +26,15 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # ✅ Start Angular server for SonarCloud
+      #Start Angular server for SonarCloud
       - name: Start Angular server
         run: npm run start &
         env:
           CI: true
 
+      #Wait for server (Short timeout)
       - name: Wait for server
-        run: npx wait-on http://localhost:4200 --timeout 3000
+        run: npx wait-on http://localhost:4200 --timeout 30000
 
       - name: Run unit tests with coverage
         run: npm run test
