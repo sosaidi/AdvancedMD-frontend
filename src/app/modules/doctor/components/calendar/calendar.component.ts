@@ -98,12 +98,12 @@ export class CalendarComponent {
   }
 
   onModalClick(event: Event): void {
-    event.stopPropagation();
+    event.stopPropagation()
 
     if (event instanceof MouseEvent) {
-      console.log('Mouse Click Detected:', event);
+      console.log('Mouse Click Detected:', event)
     } else if (event instanceof KeyboardEvent) {
-      console.log('Keyboard Event Detected:', event);
+      console.log('Keyboard Event Detected:', event)
     }
   }
 

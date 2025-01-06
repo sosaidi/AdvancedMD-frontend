@@ -32,12 +32,12 @@ export class AppointmentsComponent implements OnInit {
     status: string
     details: string
   }[] = []
-  searchQuery = '';
+  searchQuery = ''
   currentPage = 1
   pageSize = 5
   sortColumn = 'date'
   sortDirection = true // true = ascending, false = descending
-  selectedAppointment: Appointment | null = null;
+  selectedAppointment: Appointment | null = null
 
   totalAppointments = 0
   upcomingAppointments = 0
@@ -237,13 +237,13 @@ export class AppointmentsComponent implements OnInit {
   }
 
   updateAppointmentStatus({
-                            appointment,
-                            newStatus,
-                          }: {
-    appointment: Appointment;
-    newStatus: string;
+    appointment,
+    newStatus,
+  }: {
+    appointment: Appointment
+    newStatus: string
   }): void {
-    this.appointmentService.updateAppointmentStatus(appointment, newStatus);
-    this.loadAppointments();
+    this.appointmentService.updateAppointmentStatus(appointment, newStatus)
+    this.loadAppointments()
   }
 }
