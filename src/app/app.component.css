@@ -1,4 +1,124 @@
-.main-container {
-  display: flex;
-  height: 100vh;
-}
+/* General styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f4f4f4;
+  }
+  
+  /* Navbar Styles */
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #28a745; /* Green color */
+    padding: 15px 30px;
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 999;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-bottom-left-radius: 25px; /* Rounded bottom left corner */
+    border-bottom-right-radius: 25px; /* Rounded bottom right corner */
+  }
+  
+  /* Navbar Brand (Logo) */
+  .navbar-brand a {
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+  }
+  
+  .navbar-brand i {
+    margin-right: 8px;
+  }
+  
+  /* Navbar Menu */
+  .navbar-menu {
+    display: flex;
+    align-items: center;
+  }
+  
+  .navbar-nav {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+  }
+  
+  .nav-item {
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+  }
+  
+  .nav-item a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .nav-item a i {
+    margin-right: 8px; /* Space between icon and text */
+  }
+  
+  .nav-item a:hover {
+    background-color: #218838; /* Darker green on hover */
+    color: #fff;
+  }
+  
+  /* Navbar Right Section (Login/Sign Up) */
+  .navbar-nav.right {
+    margin-left: auto;
+  }
+  
+  .navbar-nav .nav-item a {
+    color: #fff;
+  }
+  
+  .navbar-nav .nav-item a:hover {
+    color: #218838;
+  }
+  
+  /* Active state for nav links */
+  .navbar-nav .nav-item a.active {
+    background-color: #218838;
+    color: white;
+  }
+  
+  /* Mobile Responsive Styles */
+  @media (max-width: 768px) {
+    .navbar-menu {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .navbar-nav {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .nav-item {
+      margin-bottom: 10px;
+    }
+    .first-letter {
+        font-weight: bold;
+        font-size: xx-large;
+      }
+      
+      
+      
+  }
+  
