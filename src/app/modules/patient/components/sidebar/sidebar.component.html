@@ -1,0 +1,178 @@
+<div
+  class="sidebar bg-gradient-to-t from-green-200 via-white to-gray-50 shadow-lg fixed top-0 left-0 h-screen overflow-y-auto transition-all duration-300 flex flex-col"
+  [class.w-64]="!collapsed"
+  [class.w-20]="collapsed"
+>
+  <!-- Profile Section -->
+  <div class="profile-section flex flex-col items-center py-8 mt-16 border-b border-gray-200">
+    <div
+      class="profile-details text-center transition-all duration-300"
+      [class.opacity-0]="collapsed"
+      [class.opacity-100]="!collapsed"
+    >
+      <span class="name text-lg font-semibold block">
+        {{ firstName }} {{ lastName }}
+      </span>
+      <span class="role text-sm block mt-1">
+        Patient
+      </span>
+    </div>
+  </div>
+
+  <!-- Navigation Links -->
+  <nav class="flex-grow mt-6 px-2">
+    <ul class="space-y-3">
+      <!-- Dashboard -->
+      <li>
+        <a
+          routerLink="/patient/dashboard"
+          routerLinkActive="bg-green-100 text-green-600"
+          class="flex items-center gap-4 px-4 py-3 rounded-md text-gray-700 hover:bg-green-50 transition-all"
+        >
+          <i class="bi bi-speedometer2 text-xl"></i>
+          <span
+            class="transition-all duration-300"
+            [class.opacity-0]="collapsed"
+            [class.opacity-100]="!collapsed"
+          >
+            Dashboard
+          </span>
+        </a>
+      </li>
+
+      <!-- Appointments -->
+      <li>
+        <a
+          routerLink="/patient/appointments"
+          routerLinkActive="bg-green-100 text-green-600"
+          class="flex items-center gap-4 px-4 py-3 rounded-md text-gray-700 hover:bg-green-50 transition-all"
+        >
+          <i class="bi bi-calendar-check text-xl"></i>
+          <span
+            class="transition-all duration-300"
+            [class.opacity-0]="collapsed"
+            [class.opacity-100]="!collapsed"
+          >
+            Appointments
+          </span>
+        </a>
+      </li>
+
+      <!-- Lab Results -->
+      <li>
+        <a
+          routerLink="/patient/lab-results"
+          routerLinkActive="bg-green-100 text-green-600"
+          class="flex items-center gap-4 px-4 py-3 rounded-md text-gray-700 hover:bg-green-50 transition-all"
+        >
+          <i class="bi bi-clipboard-pulse text-xl"></i>
+          <span
+            class="transition-all duration-300"
+            [class.opacity-0]="collapsed"
+            [class.opacity-100]="!collapsed"
+          >
+            Lab Results
+          </span>
+        </a>
+      </li>
+
+      <!-- Medical Records -->
+      <li>
+        <a
+          routerLink="/patient/medical-records"
+          routerLinkActive="bg-green-100 text-green-600"
+          class="flex items-center gap-4 px-4 py-3 rounded-md text-gray-700 hover:bg-green-50 transition-all"
+        >
+          <i class="bi bi-folder2 text-xl"></i>
+          <span
+            class="transition-all duration-300"
+            [class.opacity-0]="collapsed"
+            [class.opacity-100]="!collapsed"
+          >
+            Medical Records
+          </span>
+        </a>
+      </li>
+
+      <!-- Prescriptions -->
+      <li>
+        <a
+          routerLink="/patient/prescriptions"
+          routerLinkActive="bg-green-100 text-green-600"
+          class="flex items-center gap-4 px-4 py-3 rounded-md text-gray-700 hover:bg-green-50 transition-all"
+        >
+          <i class="bi bi-prescription2 text-xl"></i>
+          <span
+            class="transition-all duration-300"
+            [class.opacity-0]="collapsed"
+            [class.opacity-100]="!collapsed"
+          >
+            Prescriptions
+          </span>
+        </a>
+      </li>
+
+      <!-- Billing -->
+      <li>
+        <a
+          routerLink="/patient/billing"
+          routerLinkActive="bg-green-100 text-green-600"
+          class="flex items-center gap-4 px-4 py-3 rounded-md text-gray-700 hover:bg-green-50 transition-all"
+        >
+          <i class="bi bi-credit-card text-xl"></i>
+          <span
+            class="transition-all duration-300"
+            [class.opacity-0]="collapsed"
+            [class.opacity-100]="!collapsed"
+          >
+            Billing
+          </span>
+        </a>
+      </li>
+
+      <!-- Chat -->
+      <li>
+        <a
+          routerLink="/patient/chat"
+          routerLinkActive="bg-green-100 text-green-600"
+          class="flex items-center gap-4 px-4 py-3 rounded-md text-gray-700 hover:bg-green-50 transition-all"
+        >
+          <i class="bi bi-chat-dots text-xl"></i>
+          <span
+            class="transition-all duration-300"
+            [class.opacity-0]="collapsed"
+            [class.opacity-100]="!collapsed"
+          >
+            Chat
+          </span>
+        </a>
+      </li>
+
+      <!-- Settings -->
+      <li>
+        <a
+          routerLink="/patient/settings"
+          routerLinkActive="bg-green-100 text-green-600"
+          class="flex items-center gap-4 px-4 py-3 rounded-md text-gray-700 hover:bg-green-50 transition-all"
+        >
+          <i class="bi bi-gear text-xl"></i>
+          <span
+            class="transition-all duration-300"
+            [class.opacity-0]="collapsed"
+            [class.opacity-100]="!collapsed"
+          >
+            Settings
+          </span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Toggle Button -->
+  <button
+    class="toggle-btn mx-auto mb-6 w-12 h-12 bg-green-500 text-white rounded-full flex items-center justify-center shadow-lg hover:bg-green-600 hover:scale-110 transition-transform duration-300"
+    (click)="toggleSidebar()"
+  >
+    <i [class]="collapsed ? 'bi bi-chevron-double-right' : 'bi bi-chevron-double-left'"></i>
+  </button>
+</div>
