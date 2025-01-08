@@ -33,6 +33,7 @@
     "chart.js": "^4.4.7",
     "cors": "^2.8.5",
     "express": "^4.21.2",
+    "hospital-management": "file:",
     "jasmine-core": "^5.2.0",
     "jspdf": "^2.5.2",
     "jspdf-autotable": "^3.8.4",
@@ -42,6 +43,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^19.0.6",
+    "@angular-eslint/schematics": "^19.0.2",
     "@angular/cli": "^19.0.6",
     "@angular/compiler-cli": "^19.0.5",
     "@types/cypress": "^0.1.6",
