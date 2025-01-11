@@ -1,0 +1,230 @@
+<div class="p-8 bg-gradient-to-br from-gray-100 via-white to-gray-200 min-h-screen w-[130vh] mx-auto">
+  <!-- Header -->
+  <div class="bg-gradient-to-r from-green-200 to-green-300 text-white rounded-lg shadow-lg p-8 mb-10 flex justify-between items-center">
+    <h1 class="text-5xl font-bold">Settings</h1>
+  </div>
+
+  <!-- Tab Navigation -->
+  <div class="bg-white rounded-lg shadow-lg p-4 mb-6">
+    <div class="flex justify-around border-b">
+      <button
+        (click)="setActiveTab('profile')"
+        [ngClass]="{
+          'border-green-500 text-green-500': currentTab === 'profile',
+          'text-gray-600': currentTab !== 'profile'
+        }"
+        class="py-2 px-4 border-b-2 font-semibold transition"
+      >
+        Profile Settings
+      </button>
+      <button
+        (click)="setActiveTab('hospital')"
+        [ngClass]="{
+          'border-green-500 text-green-500': currentTab === 'hospital',
+          'text-gray-600': currentTab !== 'hospital'
+        }"
+        class="py-2 px-4 border-b-2 font-semibold transition"
+      >
+        Hospital Information
+      </button>
+      <button
+        (click)="setActiveTab('notifications')"
+        [ngClass]="{
+          'border-green-500 text-green-500': currentTab === 'notifications',
+          'text-gray-600': currentTab !== 'notifications'
+        }"
+        class="py-2 px-4 border-b-2 font-semibold transition"
+      >
+        Notification Settings
+      </button>
+      <button
+        (click)="setActiveTab('security')"
+        [ngClass]="{
+          'border-green-500 text-green-500': currentTab === 'security',
+          'text-gray-600': currentTab !== 'security'
+        }"
+        class="py-2 px-4 border-b-2 font-semibold transition"
+      >
+        Security Settings
+      </button>
+    </div>
+  </div>
+
+  <!-- Profile Settings -->
+  <div *ngIf="currentTab === 'profile'" class="bg-white rounded-lg shadow-lg p-6">
+    <h2 class="text-2xl font-bold text-gray-800 mb-4">Profile Settings</h2>
+    <form class="space-y-4" (ngSubmit)="saveProfile()">
+      <div>
+        <label for="adminName" class="block text-sm font-medium text-gray-700">Name</label>
+        <input
+          id="adminName"
+          [(ngModel)]="profile.name"
+          name="name"
+          type="text"
+          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+        />
+      </div>
+      <div>
+        <label for="adminEmail" class="block text-sm font-medium text-gray-700">Email</label>
+        <input
+          id="adminEmail"
+          [(ngModel)]="profile.email"
+          name="email"
+          type="email"
+          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+        />
+      </div>
+      <div>
+        <label for="adminContact" class="block text-sm font-medium text-gray-700">Contact</label>
+        <input
+          [(ngModel)]="profile.contact"
+          name="contact"
+          type="text"
+          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+        />
+      </div>
+      <div>
+        <label for="adminPicture" class="block text-sm font-medium text-gray-700">Profile Picture</label>
+        <input
+          id="adminPicture"
+          type="file"
+          (change)="uploadProfilePicture($event)"
+          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+        />
+      </div>
+      <div class="flex justify-end">
+        <button
+          type="submit"
+          class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition"
+        >
+          Save Changes
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Hospital Information -->
+  <div *ngIf="currentTab === 'hospital'" class="bg-white rounded-lg shadow-lg p-6">
+    <h2 class="text-2xl font-bold text-gray-800 mb-4">Hospital Information</h2>
+    <form class="space-y-4" (ngSubmit)="saveHospitalInfo()">
+      <div>
+        <label for="hospitalName" class="block text-sm font-medium text-gray-700">Hospital Name</label>
+        <input
+          id="hospitalName"
+          [(ngModel)]="hospitalInfo.name"
+          name="hospitalName"
+          type="text"
+          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+        />
+      </div>
+      <div>
+        <label for="hospitalContact" class="block text-sm font-medium text-gray-700">Contact</label>
+        <input
+          id="hospitalContact"
+          [(ngModel)]="hospitalInfo.contact"
+          name="hospitalContact"
+          type="text"
+          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+        />
+      </div>
+      <div>
+        <label for="hospitalAddress" class="block text-sm font-medium text-gray-700">Address</label>
+        <input
+          id="hospitalAddress"
+          [(ngModel)]="hospitalInfo.address"
+          name="hospitalAddress"
+          type="text"
+          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+        />
+      </div>
+      <div>
+        <label for="hospitalWebsite" class="block text-sm font-medium text-gray-700">Website</label>
+        <input
+          id="hospitalWebsite"
+          [(ngModel)]="hospitalInfo.website"
+          name="hospitalWebsite"
+          type="url"
+          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+        />
+      </div>
+      <div class="flex justify-end">
+        <button
+          type="submit"
+          class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition"
+        >
+          Save Information
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Notification Settings -->
+  <div *ngIf="currentTab === 'notifications'" class="bg-white rounded-lg shadow-lg p-6">
+    <h2 class="text-2xl font-bold text-gray-800 mb-4">Notification Settings</h2>
+    <form class="space-y-4" (ngSubmit)="saveNotifications()">
+      <div class="flex items-center">
+        <input
+          id="emailNotifications"
+          type="checkbox"
+          [(ngModel)]="notificationSettings.email"
+          name="email"
+          class="mr-2"
+        />
+        <label for="emailNotifications" class="text-sm font-medium text-gray-700">Email Notifications</label>
+      </div>
+      <div class="flex items-center">
+        <input
+          id="smsNotifications"
+          type="checkbox"
+          [(ngModel)]="notificationSettings.sms"
+          name="sms"
+          class="mr-2"
+        />
+        <label for="smsNotifications" class="text-sm font-medium text-gray-700">SMS Notifications</label>
+      </div>
+      <div class="flex justify-end">
+        <button
+          type="submit"
+          class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition"
+        >
+          Save Preferences
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Security Settings -->
+  <div *ngIf="currentTab === 'security'" class="bg-white rounded-lg shadow-lg p-6">
+    <h2 class="text-2xl font-bold text-gray-800 mb-4">Security Settings</h2>
+    <form class="space-y-4" (ngSubmit)="saveSecuritySettings()">
+      <div>
+        <label for="newPassword" class="block text-sm font-medium text-gray-700">New Password</label>
+        <input
+          id="newPassword"
+          [(ngModel)]="securitySettings.newPassword"
+          name="newPassword"
+          type="password"
+          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+        />
+      </div>
+      <div class="flex items-center">
+        <input
+          id="enableTwoFA"
+          type="checkbox"
+          [(ngModel)]="securitySettings.enableTwoFA"
+          name="enableTwoFA"
+          class="mr-2"
+        />
+        <label for="enableTwoFA" class="text-sm font-medium text-gray-700">Enable Two-Factor Authentication</label>
+      </div>
+      <div class="flex justify-end">
+        <button
+          type="submit"
+          class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition"
+        >
+          Save Security Settings
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
