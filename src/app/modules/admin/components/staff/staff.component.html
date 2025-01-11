@@ -1,1 +1,97 @@
-<p>staff works!</p>
+<div class="p-8 bg-gradient-to-br from-gray-100 via-white to-gray-200 min-h-screen w-[130vh] mx-auto">
+    <!-- Header -->
+    <div class="bg-gradient-to-r from-green-200 to-green-300 text-white rounded-lg shadow-lg p-8 mb-10 flex justify-between items-center">
+      <h1 class="text-5xl font-bold">Staff</h1>
+      <button (click)="openForm()" class="px-6 py-3 bg-white text-green-600 rounded-lg shadow-md hover:bg-gray-100 transition duration-300">
+        + Add New Staff
+      </button>
+    </div>
+  
+    <!-- Staff List -->
+    <div *ngIf="staffMembers.length > 0; else noStaff" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+      <div *ngFor="let staff of staffMembers" class="bg-white rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
+        <div class="p-6">
+          <h2 class="text-xl font-bold text-gray-800">{{ staff.name }}</h2>
+          <p class="text-sm text-gray-600">Staff ID: {{ staff.staffId }}</p>
+          <p class="text-sm text-gray-600">Role: {{ staff.role }}</p>
+          
+          <!-- Priority Badge -->
+          <div class="mt-2">
+            <span class="px-3 py-1 rounded-full text-white text-sm"
+              [ngClass]="{
+                'bg-red-500': staff.priority === 'High',
+                'bg-yellow-500': staff.priority === 'Medium',
+                'bg-green-500': staff.priority === 'Low'
+              }">
+              Priority: {{ staff.priority }}
+            </span>
+          </div>
+  
+          <!-- Actions -->
+          <div class="mt-4 flex justify-between items-center">
+            <button (click)="editStaff(staff.staffId)"
+              class="flex items-center px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition">
+              Edit
+            </button>
+            <button (click)="deleteStaff(staff.staffId)"
+              class="flex items-center px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition">
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- No Staff Message -->
+    <ng-template #noStaff>
+      <div class="text-center py-20">
+        <img ngSrc="https://via.placeholder.com/150" alt="No Staff" class="w-40 mx-auto mb-6" fill>
+        <h2 class="text-3xl font-bold text-gray-700">No staff found!</h2>
+        <p class="text-gray-500 mt-2">Add new staff to see them listed here.</p>
+      </div>
+    </ng-template>
+  
+    <!-- Add Staff Form Model -->
+    <div *ngIf="showForm" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div class="bg-white rounded-lg shadow-lg p-8 max-w-2xl w-full relative">
+        <!-- Close Button -->
+        <button (click)="closeForm()" class="absolute top-4 right-4 text-gray-400 hover:text-red-500 transition">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+  
+        <h2 class="text-2xl font-bold mb-6 text-gray-800 border-b pb-4">Add New Staff</h2>
+  
+        <!-- Form -->
+        <form (ngSubmit)="addStaff()">
+          <div class="mb-4">
+            <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+            <input id="name" [(ngModel)]="newStaff.name" name="name" type="text" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required />
+          </div>
+          <div class="mb-4">
+            <label for="role" class="block text-sm font-medium text-gray-700">Role</label>
+            <input id="role" [(ngModel)]="newStaff.role" name="role" type="text" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required />
+          </div>
+          <div class="mb-4">
+            <label for="priority" class="block text-sm font-medium text-gray-700">Priority</label>
+            <select id="priority" [(ngModel)]="newStaff.priority" name="priority" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+              <option value="High">High</option>
+              <option value="Medium">Medium</option>
+              <option value="Low">Low</option>
+            </select>
+          </div>
+  
+          <div class="flex justify-end mt-6">
+            <button type="button" (click)="closeForm()" class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition mr-2">
+              Cancel
+            </button>
+            <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition">
+              Save Staff
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
