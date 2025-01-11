@@ -1,1 +1,71 @@
-<p>dashboard works!</p>
+<div class="p-8 bg-gradient-to-br from-blue-50 via-white to-blue-100 min-h-screen">
+  <!-- Dashboard Header -->
+  <div class="bg-white rounded-xl shadow-lg p-8 mb-8 text-center">
+    <h1 class="text-4xl font-bold text-gray-800">Welcome, Admin!</h1>
+    <p class="text-gray-600 mt-2">Your personalized dashboard for managing the system.</p>
+  </div>
+
+  <!-- Admin Metrics -->
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
+    <div class="p-6 bg-gradient-to-r from-purple-100 to-purple-200 text-purple-800 rounded-lg shadow-md hover:shadow-lg transition">
+      <h2 class="text-lg font-semibold">Total Patients</h2>
+      <p class="text-3xl font-bold mt-2">{{ totalPatients }}</p>
+    </div>
+    <div class="p-6 bg-gradient-to-r from-orange-100 to-orange-200 text-orange-800 rounded-lg shadow-md hover:shadow-lg transition">
+      <h2 class="text-lg font-semibold">Total Staff</h2>
+      <p class="text-3xl font-bold mt-2">{{ totalStaff }}</p>
+    </div>
+    <div class="p-6 bg-gradient-to-r from-green-100 to-green-200 text-green-800 rounded-lg shadow-md hover:shadow-lg transition">
+      <h2 class="text-lg font-semibold">Pending Payments</h2>
+      <p class="text-3xl font-bold mt-2">{{ pendingPayments }}</p>
+    </div>
+  </div>
+
+  <!-- Dashboard Content -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <!-- Patients Section -->
+    <div class="bg-white rounded-lg shadow-lg p-6">
+      <h3 class="text-lg font-bold mb-4">Patients Overview</h3>
+      <ul class="space-y-4">
+        <li *ngFor="let patient of patients" class="flex justify-between items-center">
+          <span class="text-gray-800 font-semibold">{{ patient.name }}</span>
+          <span class="text-gray-600">{{ patient.condition }}</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Appointments Section -->
+    <div class="bg-white rounded-lg shadow-lg p-6">
+      <h3 class="text-lg font-bold mb-4">Upcoming Appointments</h3>
+      <ul>
+        <li *ngFor="let appointment of appointments" class="flex justify-between items-center p-4 border rounded-lg hover:bg-gray-50 transition">
+          <span class="text-gray-700">{{ appointment.date }} at {{ appointment.time }}</span>
+          <span class="text-gray-600">{{ appointment.patient }}</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Staff Management Section -->
+    <div class="bg-white rounded-lg shadow-lg p-6">
+      <h3 class="text-lg font-bold mb-4">Staff Overview</h3>
+      <ul>
+        <li *ngFor="let staff of staffMembers" class="flex justify-between items-center p-4 border rounded-lg hover:bg-gray-50 transition">
+          <span class="text-gray-700">{{ staff.name }}</span>
+          <span class="text-gray-600">{{ staff.role }}</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Chart Section -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8">
+    <div class="bg-white rounded-lg shadow-lg p-6">
+      <h3 class="text-lg font-bold mb-4">Patients Overview</h3>
+      <canvas id="patientsChart" class="w-full"></canvas>
+    </div>
+    <div class="bg-white rounded-lg shadow-lg p-6">
+      <h3 class="text-lg font-bold mb-4">Appointments</h3>
+      <canvas id="appointmentsChart" class="w-full"></canvas>
+    </div>
+  </div>
+</div>
