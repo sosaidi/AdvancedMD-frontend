@@ -1,11 +1,23 @@
 import { Component } from '@angular/core';
+import { RouterLink, RouterLinkActive } from '@angular/router';
+import { NgIf, NgOptimizedImage } from '@angular/common';
 
 @Component({
   selector: 'app-sidebar',
-  imports: [],
+  standalone: true,
+  imports: [RouterLink, NgIf, RouterLinkActive, NgOptimizedImage],
   templateUrl: './sidebar.component.html',
-  styleUrl: './sidebar.component.css'
 })
-export class SidebarComponent {
+export class AdminSidebarComponent {
+  // Sidebar collapsed state
+  collapsed = false;
 
+  // Static profile information
+  firstName = 'Admin';
+  lastName = 'User';
+
+  // Method to toggle sidebar collapse
+  toggleSidebar() {
+    this.collapsed = !this.collapsed;
+  }
 }
