@@ -1,63 +1,49 @@
-<div class="p-8 bg-gradient-to-br from-gray-100 via-white to-gray-200 min-h-screen w-[130vh] mx-auto">
+<div class="p-10 bg-gradient-to-br from-green-50 via-white to-gray-100 rounded-2xl shadow-xl max-w-15xl mx-auto">
+
   <!-- Header -->
-  <div class="bg-gradient-to-r from-green-200 to-green-300 text-white rounded-lg shadow-lg p-8 mb-10 flex justify-between items-center">
-    <h1 class="text-5xl font-bold">Settings</h1>
+  <div class="flex justify-between items-center mb-8">
+    <h2 class="text-5xl font-bold mb-8 text-green-700 text-center">Settings</h2>
   </div>
 
   <!-- Tab Navigation -->
-  <div class="bg-white rounded-lg shadow-lg p-4 mb-6">
-    <div class="flex justify-around border-b">
+  <div class="flex space-x-4 border-b pb-4 mb-6">
       <button
         (click)="currentTab = 'profile'"
-        [ngClass]="{
-          'border-green-500 text-green-500': currentTab === 'profile',
-          'text-gray-600': currentTab !== 'profile'
-        }"
-        class="py-2 px-4 border-b-2 font-semibold transition"
+        [ngClass]="{ 'text-green-500 border-b-4 border-green-500': currentTab === 'profile', 'text-gray-500 hover:text-green-500': currentTab !== 'profile' }"
+        class="text-lg font-semibold focus:outline-none px-4 py-2 rounded-t-lg transition"
         data-translate-key="profileSettings"
       >
         Profile Settings
       </button>
       <button
         (click)="currentTab = 'preferences'"
-        [ngClass]="{
-          'border-green-500 text-green-500': currentTab === 'preferences',
-          'text-gray-600': currentTab !== 'preferences'
-        }"
-        class="py-2 px-4 border-b-2 font-semibold transition"
+        [ngClass]="{ 'text-green-500 border-b-4 border-green-500': currentTab === 'password', 'text-gray-500 hover:text-green-500': currentTab !== 'password' }"
+        class="text-lg font-semibold focus:outline-none px-4 py-2 rounded-t-lg transition"
         data-translate-key="appPreferences"
       >
         Application Preferences
       </button>
       <button
         (click)="currentTab = 'data'"
-        [ngClass]="{
-          'border-green-500 text-green-500': currentTab === 'data',
-          'text-gray-600': currentTab !== 'data'
-        }"
-        class="py-2 px-4 border-b-2 font-semibold transition"
+        [ngClass]="{ 'text-green-500 border-b-4 border-green-500': currentTab === 'notifications', 'text-gray-500 hover:text-green-500': currentTab !== 'notifications' }"
+        class="text-lg font-semibold focus:outline-none px-4 py-2 rounded-t-lg transition"
         data-translate-key="dataManagement"
       >
         Data Management
       </button>
       <button
         (click)="currentTab = 'security'"
-        [ngClass]="{
-          'border-green-500 text-green-500': currentTab === 'security',
-          'text-gray-600': currentTab !== 'security'
-        }"
-        class="py-2 px-4 border-b-2 font-semibold transition"
+        [ngClass]="{ 'text-green-500 border-b-4 border-green-500': currentTab === 'contacts', 'text-gray-500 hover:text-green-500': currentTab !== 'contacts' }"
+
+        class="text-lg font-semibold focus:outline-none px-4 py-2 rounded-t-lg transition"
         data-translate-key="securitySettings"
       >
         Security Settings
       </button>
       <button
         (click)="currentTab = 'hospital'"
-        [ngClass]="{
-          'border-green-500 text-green-500': currentTab === 'hospital',
-          'text-gray-600': currentTab !== 'hospital'
-        }"
-        class="py-2 px-4 border-b-2 font-semibold transition"
+        [ngClass]="{ 'text-green-500 border-b-4 border-green-500': currentTab === 'theme', 'text-gray-500 hover:text-green-500': currentTab !== 'theme' }"
+        class="text-lg font-semibold focus:outline-none px-4 py-2 rounded-t-lg transition"
         data-translate-key="hospitalInfo"
       >
         Hospital Information
@@ -306,4 +292,3 @@
       </div>
     </form>
   </div>
-</div>

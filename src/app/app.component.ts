@@ -3,11 +3,13 @@ import { Subscription } from 'rxjs';
 import { StorageService } from './core/services/storage.service';
 import { AuthService } from './core/services/auth.service';
 import { EventBusService } from './shared/event-bus.service';
+import { RouterModule } from '@angular/router'
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  standalone: true,
+  imports: [RouterModule],
 })
 export class AppComponent {
   private roles: string[] = [];

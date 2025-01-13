@@ -15,6 +15,7 @@ import { BoardUserComponent } from './features/board-user/board-user.component';
 
 import { httpInterceptorProviders } from './core/interceptors/http.interceptor';
 import { NgOptimizedImage } from '@angular/common'
+import { RouterModule } from '@angular/router'
 
 @NgModule({
   declarations: [
@@ -33,8 +34,8 @@ import { NgOptimizedImage } from '@angular/common'
     FormsModule,
     HttpClientModule,
     NgOptimizedImage,
+    RouterModule
   ],
   providers: [httpInterceptorProviders],
-  bootstrap: [AppComponent]
 })
 export class AppModule { }

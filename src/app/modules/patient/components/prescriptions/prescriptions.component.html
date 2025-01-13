@@ -1,5 +1,4 @@
 <div class="p-10 bg-gradient-to-br from-green-50 via-white to-gray-100 rounded-2xl shadow-xl max-w-15xl mx-auto">
-  <div class="bg-white rounded-2xl shadow-2xl p-9 max-w-9xl w-[143vh] mx-auto">
 
   <!-- Header and Tabs -->
     <div class="flex justify-between items-center mb-6">
@@ -47,36 +46,36 @@
     </div>
   </div>
 
-  <div class="flex space-x-4 mb-4">
-    <button
-      (click)="setView('list')"
-      [class.bg-blue-500]="activeView === 'list'"
-      class="px-4 py-2 rounded bg-gray-200 hover:bg-blue-500 hover:text-white"
-    >
-      List View
-    </button>
-    <button
-      (click)="setView('grid')"
-      [class.bg-blue-500]="activeView === 'grid'"
-      class="px-4 py-2 rounded bg-gray-200 hover:bg-blue-500 hover:text-white"
-    >
-      Grid View
-    </button>
-  </div>
+<!-- List and Grid view (might be enhanced later on)
+ TODO
+ <div class="flex space-x-4 mb-4">
+   <button
+     (click)="setView('list')"
+     [class.bg-blue-500]="activeView === 'list'"
+     class="px-4 py-2 rounded bg-gray-200 hover:bg-blue-500 hover:text-white"
+   >
+     List View
+   </button>
+   <button
+     (click)="setView('grid')"
+     [class.bg-blue-500]="activeView === 'grid'"
+     class="px-4 py-2 rounded bg-gray-200 hover:bg-blue-500 hover:text-white"
+   >
+     Grid View
+   </button>
+ </div>
 
-  <div *ngIf="activeView === 'list'">
-    <!-- List View Content -->
-    <div *ngFor="let prescription of prescriptions" class="mb-4 p-4 border">
-      {{ prescription.title }} - {{ prescription.doctor }}
-    </div>
-  </div>
+ <div *ngIf="activeView === 'list'">
+   <div *ngFor="let prescription of prescriptions" class="mb-4 p-4 border">
+     {{ prescription.title }} - {{ prescription.doctor }}
+   </div>
+ </div>
 
-  <div *ngIf="activeView === 'grid'" class="grid grid-cols-2 gap-4">
-    <!-- Grid View Content -->
-    <div *ngFor="let prescription of prescriptions" class="p-4 border">
-      {{ prescription.title }} - {{ prescription.doctor }}
-    </div>
-  </div>
+ <div *ngIf="activeView === 'grid'" class="grid grid-cols-2 gap-4">
+   <div *ngFor="let prescription of prescriptions" class="p-4 border">
+     {{ prescription.title }} - {{ prescription.doctor }}
+   </div>
+ </div> -->
 
   <!-- Active Prescriptions Tab -->
   <div *ngIf="activeTab === 'active'" class="mt-6 bg-white rounded-lg shadow-lg p-6">
@@ -176,4 +175,3 @@
       No deleted prescriptions.
     </p>
   </div>
-</div>
