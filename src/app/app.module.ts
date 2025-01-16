@@ -5,16 +5,17 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
-import { HomeComponent } from './home/home.component';
-import { ProfileComponent } from './profile/profile.component';
-import { BoardAdminComponent } from './board-admin/board-admin.component';
-import { BoardModeratorComponent } from './board-moderator/board-moderator.component';
-import { BoardUserComponent } from './board-user/board-user.component';
+import { LoginComponent } from './auth/login/login.component';
+import { RegisterComponent } from './auth/register/register.component';
+import { HomeComponent } from './features/home/home.component';
+import { ProfileComponent } from './auth/profile/profile.component';
+import { BoardAdminComponent } from './features/board-admin/board-admin.component';
+import { BoardModeratorComponent } from './features/board-moderator/board-moderator.component';
+import { BoardUserComponent } from './features/board-user/board-user.component';
 
-import { httpInterceptorProviders } from './_helpers/http.interceptor';
+import { httpInterceptorProviders } from './core/interceptors/http.interceptor';
 import { NgOptimizedImage } from '@angular/common'
+import { RouterModule } from '@angular/router'
 
 @NgModule({
   declarations: [
@@ -33,8 +34,8 @@ import { NgOptimizedImage } from '@angular/common'
     FormsModule,
     HttpClientModule,
     NgOptimizedImage,
+    RouterModule
   ],
   providers: [httpInterceptorProviders],
-  bootstrap: [AppComponent]
 })
 export class AppModule { }

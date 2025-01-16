@@ -2,6 +2,7 @@ import { Component } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import jsPDF from 'jspdf'
 import { NgClass, NgForOf, NgIf, NgOptimizedImage } from '@angular/common'
+import { PatientService } from '../../../services/patient.service'
 
 @Component({
   selector: 'app-patients',
@@ -10,41 +11,7 @@ import { NgClass, NgForOf, NgIf, NgOptimizedImage } from '@angular/common'
   templateUrl: './patients.component.html',
 })
 export class PatientsComponent {
-  patients: {
-    id: string
-    firstname: string
-    lastname: string
-    birthdate: string
-    address: string
-    nationality: string
-    insured: string
-    occupation: string
-    priority: string
-    location: string
-    reason: string
-    complaints: string
-    diagnosis: string
-    status: string
-    height: string
-  }[] = [
-    {
-      id: '1234',
-      firstname: 'John',
-      lastname: 'Doe',
-      birthdate: '1985-01-01',
-      address: '123 Main Street, Springfield',
-      nationality: 'American',
-      insured: 'Yes',
-      occupation: 'Engineer',
-      priority: 'High',
-      location: 'Room 101',
-      reason: 'Routine Check-up',
-      complaints: 'Headache and nausea',
-      diagnosis: 'Migraine',
-      status: 'Stable',
-      height: '180cm',
-    },
-  ]
+  patients: any[] = [];
 
   showForm = false
   currentPage = 1
@@ -70,6 +37,17 @@ export class PatientsComponent {
     bloodGroup: '',
     weight: '',
     height: '',
+    photo: 'https://via.placeholder.com/150',
+  };
+
+  constructor(private patientService: PatientService) {}
+
+  ngOnInit(): void {
+    this.loadPatients(); // Fetch patients on component load
+  }
+
+  loadPatients(): void {
+    this.patients = this.patientService.getPatients(); // Get patients from service
   }
 
   openForm(): void {
@@ -91,9 +69,10 @@ export class PatientsComponent {
   }
 
   addPatient(): void {
-    this.newPatient.id = this.generateUniqueId()
-    this.patients.push({ status: '', ...this.newPatient })
-    this.closeForm()
+    this.newPatient.id = this.generateUniqueId();
+    this.patientService.patients.push({ status: '', ...this.newPatient });
+    this.loadPatients(); // Refresh the list
+    this.closeForm();
   }
 
   generateUniqueId(): string {
@@ -121,6 +100,7 @@ export class PatientsComponent {
       bloodGroup: '',
       weight: '',
       height: '',
+      photo: 'https://via.placeholder.com/150',
     }
   }
 

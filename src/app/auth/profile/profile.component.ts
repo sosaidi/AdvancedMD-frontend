@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { StorageService } from '../_services/storage.service';
+import { StorageService } from '../../core/services/storage.service';
 
 @Component({
   selector: 'app-profile',

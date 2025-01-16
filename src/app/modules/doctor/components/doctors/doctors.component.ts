@@ -1,6 +1,8 @@
 import { Component } from '@angular/core'
 import { NgClass, NgForOf, NgIf, NgOptimizedImage } from '@angular/common'
 import { FormsModule } from '@angular/forms'
+import { DoctorService } from '../../../services/docotor.service'
+import { Doctor } from '../../../patient/models/doctor.model'
 
 @Component({
   selector: 'app-doctors',
@@ -9,50 +11,7 @@ import { FormsModule } from '@angular/forms'
   templateUrl: './doctors.component.html',
 })
 export class DoctorsComponent {
-  doctors = [
-    {
-      name: 'Dr. Sarah Smith',
-      specialty: 'Cardiologist',
-      experience: '10 Years',
-      availability: 'Available',
-      photo: 'https://via.placeholder.com/150',
-    },
-    {
-      name: 'Dr. John Doe',
-      specialty: 'Neurologist',
-      experience: '8 Years',
-      availability: 'Busy',
-      photo: 'https://via.placeholder.com/150',
-    },
-    {
-      name: 'Dr. Lisa Brown',
-      specialty: 'Orthopedic Surgeon',
-      experience: '15 Years',
-      availability: 'Unavailable',
-      photo: 'https://via.placeholder.com/150',
-    },
-    {
-      name: 'Dr. David Miller',
-      specialty: 'Pediatrician',
-      experience: '12 Years',
-      availability: 'Available',
-      photo: 'https://via.placeholder.com/150',
-    },
-    {
-      name: 'Dr. Emily White',
-      specialty: 'Dermatologist',
-      experience: '5 Years',
-      availability: 'Busy',
-      photo: 'https://via.placeholder.com/150',
-    },
-    {
-      name: 'Dr. Michael Lee',
-      specialty: 'General Physician',
-      experience: '7 Years',
-      availability: 'Available',
-      photo: 'https://via.placeholder.com/150',
-    },
-  ]
+  doctors: Doctor[] = [];
 
   showForm = false
   newDoctor = {
@@ -61,6 +20,10 @@ export class DoctorsComponent {
     experience: '',
     availability: '',
     photo: '',
+  }
+
+  constructor(private doctorService: DoctorService) {
+    this.doctors = this.doctorService.getDoctors();
   }
 
   openForm(): void {
