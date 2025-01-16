@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { RouterLink, RouterLinkActive } from '@angular/router'
 import { NgIf, NgOptimizedImage } from '@angular/common'
 import { NameService } from '../../services/name.service'
@@ -10,14 +10,16 @@ import { NameService } from '../../services/name.service'
   templateUrl: './sidebar.component.html',
 })
 export class SidebarComponent implements OnInit {
-  collapsed = false
+  @Input() collapsed = false;
+  @Output() toggle = new EventEmitter<void>();
+
   firstName = 'John'
   lastName = 'Doe'
 
   constructor(private nameService: NameService) {}
 
-  toggleSidebar() {
-    this.collapsed = !this.collapsed
+  onToggle() {
+    this.toggle.emit(); // Emit toggle event
   }
 
   ngOnInit() {

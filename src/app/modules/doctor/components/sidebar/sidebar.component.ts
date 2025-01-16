@@ -1,4 +1,4 @@
-import { Component } from '@angular/core'
+import { Component, EventEmitter, Input, Output } from '@angular/core'
 import { RouterLink, RouterLinkActive } from '@angular/router'
 import { NgIf, NgOptimizedImage } from '@angular/common'
 
@@ -9,9 +9,10 @@ import { NgIf, NgOptimizedImage } from '@angular/common'
   templateUrl: './sidebar.component.html',
 })
 export class SidebarComponent {
-  collapsed = false
+  @Input() collapsed = false; // Sidebar state from layout
+  @Output() toggle = new EventEmitter<void>(); // "Notify" layout to toggle sidebar
 
-  toggleSidebar() {
-    this.collapsed = !this.collapsed
+  onToggle() {
+    this.toggle.emit();
   }
 }

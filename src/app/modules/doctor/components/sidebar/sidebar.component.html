@@ -241,10 +241,10 @@
     </ul>
   </nav>
 
-  <!-- Toggle Button -->
+  <!-- Toggle Button (Connected with the Layout.Component Now) -->
   <button
     class="toggle-btn mx-auto mb-6 w-12 h-12 bg-green-500 text-white rounded-full flex items-center justify-center shadow-lg hover:bg-green-600 hover:scale-110 transition-transform duration-300"
-    (click)="toggleSidebar()"
+    (click)="onToggle()"
   >
     <i [class]="collapsed ? 'bi bi-chevron-double-right' : 'bi bi-chevron-double-left'"></i>
   </button>

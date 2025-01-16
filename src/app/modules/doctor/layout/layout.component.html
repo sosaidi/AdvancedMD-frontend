@@ -1,26 +1,28 @@
-<div class="dashboard-container flex flex-col min-h-screen overflow-x-hidden">
+<div class="dashboard-container flex flex-col min-h-screen">
   <!-- Topbar -->
   <app-topbar class="fixed top-0 left-0 w-full bg-white shadow-lg z-50"></app-topbar>
 
   <!-- Main Layout -->
-  <div class="main-layout flex flex-1 mt-[70px] transition-all duration-300">
+  <div class="main-layout flex flex-1 mt-[70px]">
     <!-- Sidebar -->
     <app-sidebar
-      class="fixed top-[70px] left-0 h-[calc(100vh-70px)] bg-white shadow-lg z-40 transition-all duration-300"
-      [ngClass]="{ 'w-[250px]': !collapsed, 'w-[80px]': collapsed }"
+      class="sidebar"
+      [collapsed]="collapsed"
+      (toggle)="toggleSidebar()"
     ></app-sidebar>
 
     <!-- Main Content -->
     <div
-      class="content-area flex-1 p-10 bg-transparent overflow-y-auto transition-all duration-300"
-      [ngClass]="{ 'ml-[250px] w-[calc(100vw-250px)]': !collapsed, 'ml-[80px] w-[calc(100vw-80px)]': collapsed }"
+      class="main-content flex-1 bg-gray-50 p-4 transition-all duration-300"
+      [class.ml-64]="!collapsed"
+      [class.ml-20]="collapsed"
     >
       <router-outlet></router-outlet>
     </div>
   </div>
 
   <!-- Footer -->
-  <footer class="footer bg-white text-gray-700 text-sm text-center shadow-md py-4 sticky bottom-0 left-0 w-full z-30">
-    <p>© 2024 Advanced Medical Data. All rights reserved.</p>
+  <footer class="footer bg-white text-gray-700 text-sm text-center shadow-md py-4">
+    <p>© 2025 Advanced Medical Data. All rights reserved.</p>
   </footer>
 </div>
