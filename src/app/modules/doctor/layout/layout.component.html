@@ -12,8 +12,8 @@
 
     <!-- Main Content -->
     <div
-      class="content-area flex-1 p-10 bg-transparent overflow-y-auto transition-all duration-300"
-      [ngClass]="{ 'ml-[250px] w-[calc(100vw-250px)]': !collapsed, 'ml-[80px] w-[calc(100vw-80px)]': collapsed }"
+      class="content-area flex-1 bg-transparent overflow-y-auto transition-all duration-300"
+      [ngClass]="{ ' w-[calc(100vw-250px)]': !collapsed, 'ml-[80px] w-[calc(100vw-80px)]': collapsed }"
     >
       <router-outlet></router-outlet>
     </div>
