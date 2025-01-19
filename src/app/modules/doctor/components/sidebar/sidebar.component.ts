@@ -30,8 +30,8 @@ export class SidebarComponent {
     });
   }
 
-  getInitials(name: string): string {
-    return name
+  getInitials(): string {
+    return this.profileName
       .split(' ')
       .map((n) => n[0])
       .join('')
@@ -39,7 +39,11 @@ export class SidebarComponent {
   }
 
   generatePastelColor(): string {
-    const pastelColors = ['#FFD5E5', '#FFEBB7', '#B7E5E5', '#E5D5FF', '#C8E5B7'];
-    return pastelColors[Math.floor(Math.random() * pastelColors.length)];
+    // Generate a static pastel color based on the initials
+    const hash = Array.from(this.getInitials())
+      .map((char) => char.charCodeAt(0))
+      .reduce((sum, charCode) => sum + charCode, 0);
+    const hue = hash % 360;
+    return `hsl(${hue}, 70%, 80%)`;
   }
 }

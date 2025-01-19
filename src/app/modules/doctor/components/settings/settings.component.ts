@@ -1,12 +1,12 @@
 import { Component } from '@angular/core'
 import { FormsModule } from '@angular/forms'
-import { NgClass, NgIf } from '@angular/common'
+import { NgClass, NgIf, NgStyle } from '@angular/common'
 import { SharedDataService } from '../../services/shared-data.service'
 
 @Component({
   selector: 'app-settings',
   standalone: true,
-  imports: [FormsModule, NgIf, NgClass],
+  imports: [FormsModule, NgIf, NgClass, NgStyle],
   templateUrl: './settings.component.html',
 })
 export class SettingsComponent {
@@ -16,6 +16,7 @@ export class SettingsComponent {
     name: '',
     email: '',
     contact: '',
+    profilePicture: '',
   }
 
   preferences = {
@@ -136,7 +137,8 @@ export class SettingsComponent {
       const reader = new FileReader();
       reader.onload = () => {
         const picture = reader.result as string;
-        this.sharedDataService.setProfilePicture(picture);
+        this.profile.profilePicture = picture; // Update local profile
+        this.sharedDataService.setProfilePicture(picture); // Update shared state
       };
       reader.readAsDataURL(input.files[0]);
     }
@@ -160,5 +162,13 @@ export class SettingsComponent {
 
   saveHospitalInfo(): void {
     localStorage.setItem('hospital', JSON.stringify(this.hospital)); // Save hospital info
+  }
+
+  generatePastelColor(): string {
+    const hash = Array.from(this.profile.name || '')
+      .map((char) => char.charCodeAt(0))
+      .reduce((sum, charCode) => sum + charCode, 0);
+    const hue = hash % 360;
+    return `hsl(${hue}, 70%, 80%)`;
   }
 }

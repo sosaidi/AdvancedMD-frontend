@@ -28,6 +28,6 @@ export class SharedDataService {
 
   setProfilePicture(picture: string): void {
     this.profilePictureSource.next(picture);
-    localStorage.setItem('profilePicture', picture);
+    localStorage.setItem('profilePicture', picture); // Save to localStorage
   }
 }
