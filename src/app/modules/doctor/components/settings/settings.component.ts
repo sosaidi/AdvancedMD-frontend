@@ -1,6 +1,7 @@
 import { Component } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { NgClass, NgIf } from '@angular/common'
+import { SharedDataService } from '../../services/shared-data.service'
 
 @Component({
   selector: 'app-settings',
@@ -86,6 +87,14 @@ export class SettingsComponent {
     },
   }
 
+  constructor(private sharedDataService: SharedDataService) {}
+
+  ngOnInit(): void {
+    this.sharedDataService.profileName$.subscribe((name) => {
+      this.profile.name = name; // Sync initial name from the shared service
+    });
+  }
+
   // Change language dynamically
   changeLanguage(): void {
     const selectedLanguage = this.preferences.language
@@ -121,22 +130,19 @@ export class SettingsComponent {
   }
 
   saveProfile(): void {
-    console.log('Profile saved:', this.profile)
-    alert('Profile settings saved!')
+    this.sharedDataService.setProfileName(this.profile.name); // Update shared service
+    console.log('Profile updated:', this.profile);
   }
 
   savePreferences(): void {
     console.log('Preferences saved:', this.preferences)
-    alert('Preferences updated!')
   }
 
   saveSecuritySettings(): void {
     console.log('Security settings updated:', this.security)
-    alert('Security settings saved!')
   }
 
   saveHospitalInfo(): void {
     console.log('Hospital information updated:', this.hospital)
-    alert('Hospital information saved!')
   }
 }
