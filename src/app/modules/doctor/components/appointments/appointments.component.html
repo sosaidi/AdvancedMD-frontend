@@ -119,4 +119,39 @@
         </button>
       </div>
     </div>
+
+  <!-- Details Modal -->
+  <div
+    *ngIf="selectedAppointment"
+    class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+  >
+    <div class="bg-white rounded-lg shadow-2xl max-w-lg w-full p-8">
+      <!-- Modal Header -->
+      <div class="flex justify-between items-center border-b pb-4">
+        <h2 class="text-2xl font-bold text-gray-800">Appointment Details</h2>
+        <button (click)="closeDetailsModal()" class="text-gray-400 hover:text-red-500">
+          <i class="fas fa-times text-xl"></i>
+        </button>
+      </div>
+
+      <!-- Modal Content -->
+      <div class="mt-6 space-y-4">
+        <p><strong>Patient:</strong> {{ selectedAppointment.patient }}</p>
+        <p><strong>Date:</strong> {{ selectedAppointment.date }}</p>
+        <p><strong>Time:</strong> {{ selectedAppointment.time }}</p>
+        <p><strong>Status:</strong> {{ selectedAppointment.status }}</p>
+        <p><strong>Details:</strong> {{ selectedAppointment.details }}</p>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="flex justify-end mt-6">
+        <button
+          (click)="closeDetailsModal()"
+          class="px-6 py-3 bg-gray-200 rounded-lg hover:bg-gray-300 text-gray-700"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
