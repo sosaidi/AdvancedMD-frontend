@@ -130,9 +130,16 @@ export class SettingsComponent {
     console.log('Data export initiated...')
   }
 
-  uploadProfilePicture(event: any): void {
-    const file = event.target.files[0]
-    console.log('Uploaded file:', file)
+  uploadProfilePicture(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files?.length) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const picture = reader.result as string;
+        this.sharedDataService.setProfilePicture(picture);
+      };
+      reader.readAsDataURL(input.files[0]);
+    }
   }
 
   saveProfile(): void {

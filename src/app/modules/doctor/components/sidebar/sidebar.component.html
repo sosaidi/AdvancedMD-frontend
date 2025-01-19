@@ -4,12 +4,20 @@
 >
   <!-- Profile Section -->
   <div class="profile-section flex flex-col items-center py-8 mt-16 border-b border-gray-300">
-    <img
-      ngSrc="assets/doctor.jpg"
-      alt="Profile"
-      class="profile-picture w-16 h-16 rounded-full border-4 border-green-500 mb-4 transition-transform duration-300"
-      [class.scale-75]="collapsed"
-      height="3000" width="3000" />
+    <div
+      *ngIf="profilePicture; else initialsBlock"
+      class="profile-picture w-16 h-16 rounded-full border-4 border-green-500 mb-4"
+      [style.backgroundImage]="'url(' + profilePicture + ')'"
+      [style.backgroundSize]="'cover'"
+    ></div>
+    <ng-template #initialsBlock>
+      <div
+        class="w-16 h-16 flex items-center justify-center rounded-full text-white font-bold"
+        [style.backgroundColor]="generatePastelColor()"
+      >
+        {{ getInitials(profileName) }}
+      </div>
+    </ng-template>
     <div
       class="profile-details text-center transition-all duration-300"
       [class.opacity-0]="collapsed" [class.opacity-100]="!collapsed"
