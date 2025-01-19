@@ -7,13 +7,18 @@
     <div
       *ngIf="profilePicture; else initialsBlock"
       class="profile-picture w-16 h-16 rounded-full border-4 border-green-500 mb-4"
-      [style.backgroundImage]="'url(' + profilePicture + ')'"
-      [style.backgroundSize]="'cover'"
+      [ngStyle]="{
+      'background-image': 'url(' + profilePicture + ')',
+      'background-size': 'cover',
+      'background-position': 'center'
+    }"
     ></div>
     <ng-template #initialsBlock>
       <div
         class="w-16 h-16 flex items-center justify-center rounded-full text-white font-bold"
-        [style.backgroundColor]="generatePastelColor()"
+        [ngStyle]="{
+        'background-color': generatePastelColor()
+      }"
       >
         {{ getInitials(profileName) }}
       </div>

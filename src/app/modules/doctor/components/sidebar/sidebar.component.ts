@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core'
 import { RouterLink, RouterLinkActive } from '@angular/router'
-import { NgIf, NgOptimizedImage } from '@angular/common'
+import { NgIf, NgOptimizedImage, NgStyle } from '@angular/common'
 import { SharedDataService } from '../../services/shared-data.service'
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [RouterLink, NgIf, RouterLinkActive, NgOptimizedImage],
+  imports: [RouterLink, NgIf, RouterLinkActive, NgOptimizedImage, NgStyle],
   templateUrl: './sidebar.component.html',
 })
 export class SidebarComponent {
