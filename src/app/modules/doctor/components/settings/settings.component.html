@@ -165,7 +165,7 @@
       </div>
       <div class="flex justify-end">
         <button
-          type="submit"
+          (click)="savePreferences()"
           class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition"
           data-translate-key="savePreferences"
         >
@@ -229,7 +229,7 @@
       </div>
       <div class="flex justify-end">
         <button
-          type="submit"
+          (click)="saveSecuritySettings()"
           class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition"
         >
           Save Security Settings
@@ -284,7 +284,7 @@
       </div>
       <div class="flex justify-end">
         <button
-          type="submit"
+          (click)="saveHospitalInfo()"
           class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition"
         >
           Save Hospital Information

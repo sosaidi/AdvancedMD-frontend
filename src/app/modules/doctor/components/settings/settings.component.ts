@@ -90,9 +90,18 @@ export class SettingsComponent {
   constructor(private sharedDataService: SharedDataService) {}
 
   ngOnInit(): void {
+    // Load saved data on initialization
     this.sharedDataService.profileName$.subscribe((name) => {
-      this.profile.name = name; // Sync initial name from the shared service
+      this.profile.name = name;
     });
+    const savedPreferences = localStorage.getItem('preferences');
+    if (savedPreferences) {
+      this.preferences = JSON.parse(savedPreferences);
+    }
+    const savedHospital = localStorage.getItem('hospital');
+    if (savedHospital) {
+      this.hospital = JSON.parse(savedHospital);
+    }
   }
 
   // Change language dynamically
@@ -111,17 +120,14 @@ export class SettingsComponent {
 
   backupData(): void {
     console.log('Data backup initiated...')
-    alert('Backup successful!')
   }
 
   restoreData(): void {
     console.log('Data restoration initiated...')
-    alert('Data restored!')
   }
 
   exportData(): void {
     console.log('Data export initiated...')
-    alert('Data exported as a file!')
   }
 
   uploadProfilePicture(event: any): void {
@@ -130,19 +136,22 @@ export class SettingsComponent {
   }
 
   saveProfile(): void {
-    this.sharedDataService.setProfileName(this.profile.name); // Update shared service
-    console.log('Profile updated:', this.profile);
+    this.sharedDataService.setProfileName(this.profile.name); // Update shared state
   }
 
   savePreferences(): void {
-    console.log('Preferences saved:', this.preferences)
+    localStorage.setItem('preferences', JSON.stringify(this.preferences)); // Save preferences
   }
 
   saveSecuritySettings(): void {
-    console.log('Security settings updated:', this.security)
+    if (!this.security.newPassword) {
+      alert('Please enter a new password before saving.');
+      return;
+    }
+    console.log('Security settings updated:', this.security);
   }
 
   saveHospitalInfo(): void {
-    console.log('Hospital information updated:', this.hospital)
+    localStorage.setItem('hospital', JSON.stringify(this.hospital)); // Save hospital info
   }
 }
