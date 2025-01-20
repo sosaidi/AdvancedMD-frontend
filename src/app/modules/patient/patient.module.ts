@@ -9,6 +9,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component'
 import { TopbarComponent } from './components/topbar/topbar.component'
 import { LayoutComponent } from './layout/layout.component'
 import { HttpClientModule } from '@angular/common/http'
+import { FooterComponent } from './components/footer/footer.component'
 
 @NgModule({
   imports: [
@@ -22,6 +23,7 @@ import { HttpClientModule } from '@angular/common/http'
     TopbarComponent,
     LayoutComponent,
     HttpClientModule,
+    FooterComponent
   ],
 })
 export class DoctorModule {}

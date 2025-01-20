@@ -3,17 +3,17 @@
   <app-topbar class="fixed top-0 left-0 w-full bg-white shadow-lg z-50"></app-topbar>
 
   <!-- Main Layout -->
-  <div class="main-layout flex flex-1 mt-[70px]">
+  <div class="main-layout flex flex-1 h-screen mt-[70px]">
     <!-- Sidebar -->
     <app-sidebar
-      class="sidebar"
+      class="sidebar h-full fixed top-[70px] bg-gray-100 shadow-lg"
       [collapsed]="collapsed"
       (toggle)="toggleSidebar()"
     ></app-sidebar>
 
     <!-- Main Content -->
     <div
-      class="main-content flex-1 bg-gray-50 p-6 transition-all duration-300"
+      class="main-content flex-grow bg-gray-50 p-6 transition-all duration-300"
       [ngStyle]="{
         marginLeft: collapsed ? '80px' : '256px'
       }"
@@ -23,7 +23,5 @@
   </div>
 
   <!-- Footer -->
-  <footer class="footer bg-white text-gray-700 text-sm text-center shadow-md py-4">
-    <p>© 2025 Advanced Medical Data. All rights reserved.</p>
-  </footer>
+  <app-footer [collapsed]="collapsed"></app-footer>
 </div>

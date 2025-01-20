@@ -4,12 +4,13 @@ import { StorageService } from './core/services/storage.service';
 import { AuthService } from './core/services/auth.service';
 import { EventBusService } from './shared/event-bus.service';
 import { RouterModule } from '@angular/router'
+import { NgIf } from '@angular/common'
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule, NgIf],
 })
 export class AppComponent {
   private roles: string[] = [];

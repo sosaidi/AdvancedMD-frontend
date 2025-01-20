@@ -1,0 +1,39 @@
+<footer
+  class="fixed bottom-0 left-0 w-full
+             bg-white text-gray-700
+             shadow-md border-t border-gray-200
+             rounded-t-2xl
+             z-40 transition-all duration-300 ease-in-out
+             flex items-center justify-between
+             px-6 py-3"
+  [ngStyle]="{ marginLeft: collapsed ? '80px' : '256px' }"
+>
+  <!-- Left Section -->
+  <div class="flex items-center space-x-4 text-sm sm:text-base">
+    <!-- Hospital/Medical Icon -->
+    <i class="fas fa-stethoscope text-gray-500 text-base sm:text-lg"></i>
+
+    <!-- Copyright -->
+    <p>© {{ currentYear }} Advanced Medical Data. All rights reserved.</p>
+
+    <!-- Terms -->
+    <a
+      href="/terms"
+      class="flex items-center text-gray-600 hover:text-gray-900 hover:underline
+             transition-colors"
+    >
+      <i class="fas fa-file-contract mr-1"></i>
+      Terms
+    </a>
+
+    <!-- Privacy -->
+    <a
+      href="/privacy"
+      class="flex items-center text-gray-600 hover:text-gray-900 hover:underline
+             transition-colors"
+    >
+      <i class="fas fa-user-shield mr-1"></i>
+      Privacy
+    </a>
+  </div>
+</footer>
