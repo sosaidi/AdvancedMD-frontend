@@ -12,13 +12,18 @@
   </div>
 
   <!-- Patients List -->
-  <div *ngIf="patients.length > 0; else noPatients" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+  <div
+    *ngIf="patients.length > 0; else noPatients"
+    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-6"
+  >
     <div
       *ngFor="let patient of patients"
       class="bg-white rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
     >
       <div class="p-6">
-        <h2 class="text-xl font-bold text-gray-800">{{ patient.firstname }} {{ patient.lastname }}</h2>
+        <h2 class="text-xl font-bold text-gray-800">
+          {{ patient.firstname }} {{ patient.lastname }}
+        </h2>
         <p class="text-sm text-gray-600">Patient ID: {{ patient.id }}</p>
         <p class="text-sm text-gray-600">Complaints: {{ patient.complaints }}</p>
         <p class="text-sm text-gray-600">Diagnosis: {{ patient.diagnosis }}</p>
@@ -47,7 +52,9 @@
               ngSrc="/assets/pdf-icon.png"
               alt="PDF Logo"
               class="w-5 h-5 mr-2"
-              height="512" width="512" />
+              height="512"
+              width="512"
+            />
             Generate PDF
           </button>
         </div>
@@ -58,57 +65,96 @@
   <!-- No Patients Message -->
   <ng-template #noPatients>
     <div class="text-center py-20">
-      <img ngSrc="https://via.placeholder.com/150" alt="No Patients" class="w-40 mx-auto mb-6" fill>
+      <img
+        ngSrc="https://via.placeholder.com/150"
+        alt="No Patients"
+        class="w-40 mx-auto mb-6"
+        fill
+      />
       <h2 class="text-3xl font-bold text-gray-700">No patients found!</h2>
       <p class="text-gray-500 mt-2">Add a new patient to see them listed here.</p>
     </div>
   </ng-template>
 
   <!-- Add Patient Form Modal -->
-  <div *ngIf="showForm" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+  <div
+    *ngIf="showForm"
+    class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+  >
     <div class="bg-white rounded-lg shadow-2xl p-8 max-w-2xl w-full relative">
       <!-- Close Button -->
       <button
         (click)="closeForm()"
         class="absolute top-4 right-4 text-gray-400 hover:text-red-500 transition"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"
+          />
         </svg>
       </button>
 
-      <h2 class="text-2xl font-bold mb-6 text-gray-800 border-b pb-4">Add New Patient</h2>
+      <h2 class="text-2xl font-bold mb-6 text-gray-800 border-b pb-4">
+        Add New Patient
+      </h2>
 
       <!-- Form -->
       <form>
-        <!-- Page 1 -->
-        <div *ngIf="currentPage === 1">
-          <div class="mb-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label for="firstname" class="block text-sm font-medium text-gray-700">First Name</label>
-              <input
-                id="firstname"
-                [(ngModel)]="newPatient.firstname"
-                name="firstname"
-                type="text"
-                class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-                required
-              />
-            </div>
-            <div>
-              <label for="lastname" class="block text-sm font-medium text-gray-700">Last Name</label>
-              <input
-                id="lastname"
-                [(ngModel)]="newPatient.lastname"
-                name="lastname"
-                type="text"
-                class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-                required
-              />
-            </div>
-          </div>
+        <!-- PAGE 1: Personal Info -->
+        <div *ngIf="currentPage === 1" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- First Name -->
           <div class="mb-4">
-            <label for="birthdate" class="block text-sm font-medium text-gray-700">Birthdate</label>
+            <label
+              for="firstname"
+              class="block text-sm font-medium text-gray-700"
+            >
+              First Name
+            </label>
+            <input
+              id="firstname"
+              [(ngModel)]="newPatient.firstname"
+              name="firstname"
+              type="text"
+              class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+              required
+            />
+          </div>
+
+          <!-- Last Name -->
+          <div class="mb-4">
+            <label
+              for="lastname"
+              class="block text-sm font-medium text-gray-700"
+            >
+              Last Name
+            </label>
+            <input
+              id="lastname"
+              [(ngModel)]="newPatient.lastname"
+              name="lastname"
+              type="text"
+              class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+              required
+            />
+          </div>
+
+          <!-- Birthdate -->
+          <div class="mb-4">
+            <label
+              for="birthdate"
+              class="block text-sm font-medium text-gray-700"
+            >
+              Birthdate
+            </label>
             <input
               id="birthdate"
               [(ngModel)]="newPatient.birthdate"
@@ -116,6 +162,377 @@
               type="date"
               class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
               required
+            />
+          </div>
+
+          <!-- Address -->
+          <div class="mb-4">
+            <label
+              for="address"
+              class="block text-sm font-medium text-gray-700"
+            >
+              Address
+            </label>
+            <input
+              id="address"
+              [(ngModel)]="newPatient.address"
+              name="address"
+              type="text"
+              class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+            />
+          </div>
+
+          <!-- Nationality -->
+          <div class="mb-4">
+            <label
+              for="nationality"
+              class="block text-sm font-medium text-gray-700"
+            >
+              Nationality
+            </label>
+            <input
+              id="nationality"
+              [(ngModel)]="newPatient.nationality"
+              name="nationality"
+              type="text"
+              class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+            />
+          </div>
+
+          <!-- Insured -->
+          <div class="mb-4">
+            <label
+              for="insured"
+              class="block text-sm font-medium text-gray-700"
+            >
+              Insured
+            </label>
+            <select
+              id="insured"
+              [(ngModel)]="newPatient.insured"
+              name="insured"
+              class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+            >
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- PAGE 2: Visit Info -->
+        <div *ngIf="currentPage === 2" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Priority -->
+          <div class="mb-4">
+            <label
+              for="priority"
+              class="block text-sm font-medium text-gray-700"
+            >
+              Priority
+            </label>
+            <select
+              id="priority"
+              [(ngModel)]="newPatient.priority"
+              name="priority"
+              class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+            >
+              <option value="">Select Priority</option>
+              <option value="High">High</option>
+              <option value="Medium">Medium</option>
+              <option value="Low">Low</option>
+            </select>
+          </div>
+
+          <!-- Location -->
+          <div class="mb-4">
+            <label
+              for="location"
+              class="block text-sm font-medium text-gray-700"
+            >
+              Location (Room, Ward, etc.)
+            </label>
+            <input
+              id="location"
+              [(ngModel)]="newPatient.location"
+              name="location"
+              type="text"
+              class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+            />
+          </div>
+
+          <!-- Reason for Visit -->
+          <div class="mb-4">
+            <label
+              for="reason"
+              class="block text-sm font-medium text-gray-700"
+            >
+              Reason for Visit
+            </label>
+            <input
+              id="reason"
+              [(ngModel)]="newPatient.reason"
+              name="reason"
+              type="text"
+              class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+            />
+          </div>
+
+          <!-- Complaints -->
+          <div class="mb-4">
+            <label
+              for="complaints"
+              class="block text-sm font-medium text-gray-700"
+            >
+              Complaints
+            </label>
+            <textarea
+              id="complaints"
+              [(ngModel)]="newPatient.complaints"
+              name="complaints"
+              rows="2"
+              class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+            ></textarea>
+          </div>
+
+          <!-- Diagnosis -->
+          <div class="mb-4 md:col-span-2">
+            <label
+              for="diagnosis"
+              class="block text-sm font-medium text-gray-700"
+            >
+              Diagnosis
+            </label>
+            <textarea
+              id="diagnosis"
+              [(ngModel)]="newPatient.diagnosis"
+              name="diagnosis"
+              rows="2"
+              class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+            ></textarea>
+          </div>
+        </div>
+
+        <!-- PAGE 3: Medical Details -->
+        <div *ngIf="currentPage === 3" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Allergies -->
+          <div class="md:col-span-2 mb-4">
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+              Allergies
+            </label>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <!-- Medications -->
+              <div>
+                <label
+                  for="medAllergies"
+                  class="text-sm font-medium text-gray-600"
+                >
+                  Medications
+                </label>
+                <input
+                  id="medAllergies"
+                  [(ngModel)]="newPatient.allergies.medications"
+                  name="allergies.medications"
+                  type="text"
+                  class="mt-1 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                />
+              </div>
+              <!-- Food -->
+              <div>
+                <label
+                  for="foodAllergies"
+                  class="text-sm font-medium text-gray-600"
+                >
+                  Food
+                </label>
+                <input
+                  id="foodAllergies"
+                  [(ngModel)]="newPatient.allergies.food"
+                  name="allergies.food"
+                  type="text"
+                  class="mt-1 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                />
+              </div>
+              <!-- Others -->
+              <div>
+                <label
+                  for="otherAllergies"
+                  class="text-sm font-medium text-gray-600"
+                >
+                  Others
+                </label>
+                <input
+                  id="otherAllergies"
+                  [(ngModel)]="newPatient.allergies.others"
+                  name="allergies.others"
+                  type="text"
+                  class="mt-1 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Medical History -->
+          <div class="md:col-span-2 mb-4">
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+              Medical History
+            </label>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <!-- Chronic Diseases -->
+              <div>
+                <label
+                  for="chronicDiseases"
+                  class="text-sm font-medium text-gray-600"
+                >
+                  Chronic Diseases
+                </label>
+                <input
+                  id="chronicDiseases"
+                  [(ngModel)]="newPatient.medicalHistory.chronicDiseases"
+                  name="medicalHistory.chronicDiseases"
+                  type="text"
+                  class="mt-1 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                />
+              </div>
+              <!-- Medications -->
+              <div>
+                <label
+                  for="medications"
+                  class="text-sm font-medium text-gray-600"
+                >
+                  Medications
+                </label>
+                <input
+                  id="medications"
+                  [(ngModel)]="newPatient.medicalHistory.medications"
+                  name="medicalHistory.medications"
+                  type="text"
+                  class="mt-1 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                />
+              </div>
+              <!-- Surgeries -->
+              <div>
+                <label
+                  for="surgeries"
+                  class="text-sm font-medium text-gray-600"
+                >
+                  Surgeries
+                </label>
+                <input
+                  id="surgeries"
+                  [(ngModel)]="newPatient.medicalHistory.surgeries"
+                  name="medicalHistory.surgeries"
+                  type="text"
+                  class="mt-1 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Emergency Contact -->
+          <div class="md:col-span-2 mb-4">
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+              Emergency Contact
+            </label>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <!-- Name -->
+              <div>
+                <label
+                  for="emContactName"
+                  class="text-sm font-medium text-gray-600"
+                >
+                  Name
+                </label>
+                <input
+                  id="emContactName"
+                  [(ngModel)]="newPatient.emergencyContact.name"
+                  name="emergencyContact.name"
+                  type="text"
+                  class="mt-1 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                />
+              </div>
+              <!-- Phone -->
+              <div>
+                <label
+                  for="emContactPhone"
+                  class="text-sm font-medium text-gray-600"
+                >
+                  Phone
+                </label>
+                <input
+                  id="emContactPhone"
+                  [(ngModel)]="newPatient.emergencyContact.phone"
+                  name="emergencyContact.phone"
+                  type="text"
+                  class="mt-1 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                />
+              </div>
+              <!-- Relationship -->
+              <div>
+                <label
+                  for="emContactRelation"
+                  class="text-sm font-medium text-gray-600"
+                >
+                  Relationship
+                </label>
+                <input
+                  id="emContactRelation"
+                  [(ngModel)]="newPatient.emergencyContact.relationship"
+                  name="emergencyContact.relationship"
+                  type="text"
+                  class="mt-1 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Blood Group -->
+          <div class="mb-4">
+            <label
+              for="bloodGroup"
+              class="block text-sm font-medium text-gray-700"
+            >
+              Blood Group
+            </label>
+            <input
+              id="bloodGroup"
+              [(ngModel)]="newPatient.bloodGroup"
+              name="bloodGroup"
+              type="text"
+              placeholder="e.g., A+, O-, etc."
+              class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+            />
+          </div>
+
+          <!-- Weight -->
+          <div class="mb-4">
+            <label
+              for="weight"
+              class="block text-sm font-medium text-gray-700"
+            >
+              Weight (kg)
+            </label>
+            <input
+              id="weight"
+              [(ngModel)]="newPatient.weight"
+              name="weight"
+              type="text"
+              class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+            />
+          </div>
+
+          <!-- Height -->
+          <div class="mb-4">
+            <label
+              for="height"
+              class="block text-sm font-medium text-gray-700"
+            >
+              Height (cm)
+            </label>
+            <input
+              id="height"
+              [(ngModel)]="newPatient.height"
+              name="height"
+              type="text"
+              class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
             />
           </div>
         </div>
@@ -132,6 +549,7 @@
 
         <!-- Navigation Buttons -->
         <div class="flex justify-between items-center mt-6">
+          <!-- Previous -->
           <button
             *ngIf="currentPage > 1"
             type="button"
@@ -140,6 +558,8 @@
           >
             Previous
           </button>
+
+          <!-- Next -->
           <button
             *ngIf="currentPage < totalPages.length"
             type="button"
@@ -148,6 +568,8 @@
           >
             Next
           </button>
+
+          <!-- Save -->
           <button
             *ngIf="currentPage === totalPages.length"
             type="submit"
