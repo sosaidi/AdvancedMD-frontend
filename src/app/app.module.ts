@@ -19,7 +19,6 @@ import { RouterModule } from '@angular/router'
 
 @NgModule({
   declarations: [
-    AppComponent,
     LoginComponent,
     RegisterComponent,
     HomeComponent,
@@ -34,7 +33,8 @@ import { RouterModule } from '@angular/router'
     FormsModule,
     HttpClientModule,
     NgOptimizedImage,
-    RouterModule
+    RouterModule,
+    AppComponent,
   ],
   providers: [httpInterceptorProviders],
 })

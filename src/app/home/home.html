@@ -1,0 +1,74 @@
+<div
+  class="h-screen w-screen bg-gradient-to-br from-green-50 via-blue-50 to-pink-50
+         flex flex-col items-center justify-center p-8"
+>
+  <div class="text-center mb-12">
+    <h1 class="text-5xl sm:text-6xl font-bold text-gray-800 leading-tight">
+      Advanced Medical Data
+    </h1>
+    <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
+      Streamlined healthcare management for admins, doctors, and patients.
+    </p>
+  </div>
+
+  <!-- Card Container -->
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-4xl w-full">
+    <a
+      routerLink="/admin"
+      class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-transform
+             hover:scale-105 p-8 flex flex-col items-center text-center group"
+    >
+      <div
+        class="w-16 h-16 bg-green-100 text-green-600 flex items-center justify-center
+               rounded-full shadow-sm mb-4 text-2xl group-hover:bg-green-500
+               group-hover:text-white transition-colors"
+      >
+        <i class="bi bi-shield-lock"></i>
+      </div>
+      <h2 class="text-xl font-bold text-gray-800 group-hover:text-green-600 transition-colors">
+        Admin
+      </h2>
+      <p class="text-gray-500 mt-2 group-hover:text-green-500 text-sm">
+        Manage users, finances, data
+      </p>
+    </a>
+    <a
+      routerLink="/doctor"
+      class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-transform
+         hover:scale-105 p-8 flex flex-col items-center text-center group"
+    >
+      <div
+        class="w-16 h-16 bg-blue-100 text-blue-600 flex items-center justify-center
+           rounded-full shadow-sm mb-4 text-2xl group-hover:bg-blue-500
+           group-hover:text-white transition-colors"
+      >
+        <i class="bi bi-hospital"></i>
+      </div>
+      <h2 class="text-xl font-bold text-gray-800 group-hover:text-blue-600 transition-colors">
+        Doctor
+      </h2>
+      <p class="text-gray-500 mt-2 group-hover:text-blue-500 text-sm">
+        View appointments &amp; patient data
+      </p>
+    </a>
+    <a
+      routerLink="/patient"
+      class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-transform
+             hover:scale-105 p-8 flex flex-col items-center text-center group"
+    >
+      <div
+        class="w-16 h-16 bg-pink-100 text-pink-600 flex items-center justify-center
+               rounded-full shadow-sm mb-4 text-2xl group-hover:bg-pink-500
+               group-hover:text-white transition-colors"
+      >
+        <i class="bi bi-heart-pulse"></i>
+      </div>
+      <h2 class="text-xl font-bold text-gray-800 group-hover:text-pink-600 transition-colors">
+        Patient
+      </h2>
+      <p class="text-gray-500 mt-2 group-hover:text-pink-500 text-sm">
+        Book appointments &amp; track health
+      </p>
+    </a>
+  </div>
+</div>

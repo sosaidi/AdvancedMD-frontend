@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router'
+import { HomeComponent } from './home/home'
 
 export const routes: Routes = [
   /*{
@@ -23,6 +24,10 @@ export const routes: Routes = [
         (m) => m.PatientRoutingModule
       ),
   },
-  { path: '', redirectTo: '/doctor', pathMatch: 'full' },
-  { path: '**', redirectTo: '/doctor' },
+  {
+    path: 'home',
+    component: HomeComponent,
+  },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: '**', redirectTo: '/home' },
 ]
