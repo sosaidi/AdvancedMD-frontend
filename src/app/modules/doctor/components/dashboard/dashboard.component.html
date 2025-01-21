@@ -39,6 +39,13 @@
     <div class="bg-white rounded-lg shadow-lg p-6">
       <h3 class="text-lg font-bold mb-4">Todo List</h3>
       <ul>
+        <!-- Empty State: if no todos -->
+        <li
+          *ngIf="todos.length === 0"
+          class="p-4 text-gray-500 italic text-center"
+        >
+          Nothing to do right now
+        </li>
         <li
           *ngFor="let todo of todos"
           class="flex justify-between items-center p-4 border rounded-lg hover:bg-gray-50 transition"
@@ -47,13 +54,13 @@
           <span
             class="px-3 py-1 rounded-full text-sm font-semibold"
             [ngClass]="{
-              'bg-red-500 text-white': todo.priority === 'High',
-              'bg-yellow-500 text-white': todo.priority === 'Medium',
-              'bg-green-500 text-white': todo.priority === 'Low'
-            }"
+          'bg-red-500 text-white': todo.priority === 'High',
+          'bg-yellow-500 text-white': todo.priority === 'Medium',
+          'bg-green-500 text-white': todo.priority === 'Low'
+        }"
           >
-            {{ todo.priority }}
-          </span>
+        {{ todo.priority }}
+      </span>
         </li>
       </ul>
     </div>
