@@ -1,31 +1,39 @@
 <div class="fixed top-0 left-0 w-full bg-white shadow-md backdrop-blur-lg z-50">
   <div class="flex items-center justify-between px-8 py-3">
+
     <!-- Logo and Name Section -->
     <div class="flex items-center space-x-4">
-      <img
-        src="assets/favicon.ico"
-        alt="Logo"
-        class="w-12 h-12 rounded-full border-2 border-green-500 hover:scale-110 transition-transform duration-300 shadow-md"
-      />
-      <h1
-        class="text-2xl font-bold text-green-600 tracking-wider drop-shadow-md"
-      >
-        Advanced Medical Data
-      </h1>
+      <!-- Clicking the logo/name goes to HOME -->
+      <a routerLink="/home" class="flex items-center space-x-4">
+        <img
+          src="assets/favicon.ico"
+          alt="Logo"
+          class="w-12 h-12 rounded-full border-2 border-green-500
+                 hover:scale-110 transition-transform duration-300 shadow-md"
+        />
+        <h1 class="text-2xl font-bold text-green-600 tracking-wider drop-shadow-md">
+          Advanced Medical Data
+        </h1>
+      </a>
     </div>
 
-    <!-- Navigation Icons (Optional) -->
+    <!-- Navigation Icons/Links -->
     <div class="hidden lg:flex items-center space-x-6">
-      <button
-        class="text-gray-600 hover:text-green-600 font-medium transition-all duration-300"
+      <!-- “Home” button that actually routes to Doctor's Dashboard -->
+      <a
+        routerLink="/doctor/dashboard"
+        class="text-gray-600 hover:text-green-600 font-medium
+               transition-all duration-300"
       >
         Home
-      </button>
+      </a>
     </div>
 
     <!-- Logout Button -->
     <button
-      class="flex items-center px-5 py-2 bg-green-500 text-white hover:bg-green-600 rounded-full shadow-lg transition-all duration-300"
+      class="flex items-center px-5 py-2 bg-green-500 text-white
+             hover:bg-green-600 rounded-full shadow-lg
+             transition-all duration-300"
       (click)="logout()"
     >
       <i class="bi bi-box-arrow-right text-xl mr-2"></i>

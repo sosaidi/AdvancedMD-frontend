@@ -25,7 +25,7 @@ import { RouterModule } from '@angular/router'
     ProfileComponent,
     BoardAdminComponent,
     BoardModeratorComponent,
-    BoardUserComponent
+    BoardUserComponent,
   ],
   imports: [
     BrowserModule,
