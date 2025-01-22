@@ -1,4 +1,4 @@
-import { AppointmentsComponent } from "src/app/modules/doctor/components/appointments/appointments.component"
+import { AdminAppointmentsComponent } from "src/app/modules/admin/components/appointments/appointments.component"
 
 describe('AppointmentsComponent', () => {
     it('can mount', () => {
