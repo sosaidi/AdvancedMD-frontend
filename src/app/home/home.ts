@@ -8,4 +8,13 @@ import { NgIf } from '@angular/common'
   imports: [RouterLink, NgIf],
   templateUrl: './home.html',
 })
-export class HomeComponent {}
+export class HomeComponent {
+
+
+  setLocalStorage(param: string): void {
+    const value = param; // Replace this with the value you want to store
+    localStorage.setItem('role', value); // Dynamically set the local storage key
+  
+   
+  }
+}

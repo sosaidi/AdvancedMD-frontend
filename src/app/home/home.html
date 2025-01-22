@@ -14,7 +14,7 @@
   <!-- Card Container -->
   <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-4xl w-full">
     <a
-      routerLink="/admin"
+      routerLink="/login" (click)="setLocalStorage('ROLE_ADMIN')"
       class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-transform
              hover:scale-105 p-8 flex flex-col items-center text-center group"
     >
@@ -33,7 +33,7 @@
       </p>
     </a>
     <a
-      routerLink="/doctor"
+      routerLink="/login" (click)="setLocalStorage('ROLE_STAFF')"
       class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-transform
          hover:scale-105 p-8 flex flex-col items-center text-center group"
     >
@@ -52,7 +52,7 @@
       </p>
     </a>
     <a
-      routerLink="/patient"
+      routerLink="/login"   routerLink="/login" (click)="setLocalStorage('ROLE_PATIENT')"
       class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-transform
              hover:scale-105 p-8 flex flex-col items-center text-center group"
     >
