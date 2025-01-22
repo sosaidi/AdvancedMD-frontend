@@ -1,63 +1,30 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-
-export interface Payment {
-  id: string;
-  patient: string;
-  amount: number;
-  status: string;
-  date: string;
-  method: string;
-}
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AdminPaymentsService {
-  private payments: Payment[] = [
+export class PaymentsService {
+  private payments = [
     {
       id: 'P001',
-      patient: 'John Doe',
-      amount: 150,
-      status: 'Paid',
+      patientName: 'John Doe',
       date: '2024-12-01',
+      amount: '150.00',
+      status: 'Paid',
       method: 'Credit Card',
     },
     {
       id: 'P002',
-      patient: 'Jane Smith',
-      amount: 200,
+      patientName: 'Jane Smith',
+      date: '2024-11-01',
+      amount: '200.00',
       status: 'Pending',
-      date: '2024-11-20',
       method: 'Insurance',
     },
   ];
 
-  private paymentsSubject = new BehaviorSubject<Payment[]>(this.payments);
-
-  getPaymentsObservable() {
-    return this.paymentsSubject.asObservable();
-  }
-
-  getPayments() {
-    return this.payments;
-  }
-
-  addPayment(payment: Payment) {
-    this.payments.unshift(payment);
-    this.paymentsSubject.next(this.payments);
-  }
-
-  updatePaymentStatus(id: string, status: string) {
-    const index = this.payments.findIndex((payment) => payment.id === id);
-    if (index !== -1) {
-      this.payments[index].status = status;
-      this.paymentsSubject.next(this.payments);
-    }
-  }
-
-  deletePayment(id: string) {
-    this.payments = this.payments.filter((payment) => payment.id !== id);
-    this.paymentsSubject.next(this.payments);
+  getPayments(): Observable<any[]> {
+    return of(this.payments);
   }
 }
