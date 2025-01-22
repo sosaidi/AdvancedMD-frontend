@@ -1,4 +1,4 @@
-/*describe('AppComponent Routing', () => {
+describe('AppComponent Routing', () => {
   beforeEach(() => {
     cy.visit('/')
   })
@@ -21,4 +21,4 @@
     cy.visit('/patient')
     cy.get('app-patient-dashboard').should('exist')
   })
-})*/
+})
