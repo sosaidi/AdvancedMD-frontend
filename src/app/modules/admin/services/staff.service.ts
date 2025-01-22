@@ -4,10 +4,10 @@ import { BehaviorSubject } from 'rxjs';
 export interface Staff {
   staffId: string;
   name: string;
-  role: string; // e.g., 'Doctor', 'Nurse', 'Technician'
+  role: string;
   contact: string;
-  status: string; // e.g., 'Active', 'On Leave', 'Retired'
-  shifts: string; // e.g., 'Morning', 'Night', 'Rotation'
+  status: string;
+  shifts: string;
   priority: string;
 }
 
@@ -15,7 +15,7 @@ export interface Staff {
   providedIn: 'root',
 })
 export class AdminStaffService {
-  editStaff(_editStaff: (staffId: string) => void) {
+  updateStaffStatus(staffId: string, status: string) {
     throw new Error('Method not implemented.');
   }
   private staff: Staff[] = [
@@ -35,7 +35,7 @@ export class AdminStaffService {
       contact: '+9876543210',
       status: 'On Leave',
       shifts: 'Night',
-      priority: 'High'
+      priority: 'High',
     },
     {
       staffId: 'S003',
@@ -44,7 +44,7 @@ export class AdminStaffService {
       contact: '+4567891230',
       status: 'Active',
       shifts: 'Rotation',
-      priority: ''
+      priority: 'Low',
     },
   ];
 
@@ -58,15 +58,17 @@ export class AdminStaffService {
     return this.staff;
   }
 
-  addStaff(staff: Staff) {
-    this.staff.unshift(staff);
-    this.staffSubject.next(this.staff);
+  addStaff(staff: Staff): void {
+    staff.staffId = 'S' + (this.staff.length + 1).toString().padStart(3, '0');  
+    this.staff.unshift(staff); 
+    this.staffSubject.next(this.staff); 
   }
+  
 
-  updateStaffStatus(staffId: string, status: string) {
-    const index = this.staff.findIndex((s) => s.staffId === staffId);
+  updateStaff(staffId: string, updatedStaff: Staff) {
+    const index = this.staff.findIndex((s) => s.staffId === updatedStaff.staffId);
     if (index !== -1) {
-      this.staff[index].status = status;
+      this.staff[index] = updatedStaff;
       this.staffSubject.next(this.staff);
     }
   }
