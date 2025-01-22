@@ -1,5 +1,7 @@
 import { Routes } from '@angular/router'
 import { HomeComponent } from './home/home'
+import { LoginComponent } from './auth/login/login.component'
+import { RegisterComponent } from './auth/register/register.component'
 
 export const routes: Routes = [
   /*{
@@ -24,6 +26,8 @@ export const routes: Routes = [
         (m) => m.PatientRoutingModule
       ),
   },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
   { path: 'home', component: HomeComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', redirectTo: '/home' },
