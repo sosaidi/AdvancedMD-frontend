@@ -9,7 +9,7 @@ import { AdminDashboardComponent } from './components/dashboard/dashboard.compon
 import { AdminAppointmentsComponent } from './components/appointments/appointments.component';
 import { MedicalRecordsComponent } from './components/medical-records/medical-records.component';
 import { PaymentsComponent } from './components/payments/payments.component';
-import { AdminPatientsComponent } from './components/patients/patients.component';
+// import { PatientsComponent } from './components/patients/patients.component';
 import { StaffComponent } from './components/staff/staff.component';
 import { RoomsComponent } from './components/rooms/rooms.component';
 import { SettingsComponent } from './components/settings/settings.component';
@@ -25,7 +25,7 @@ import { SettingsComponent } from './components/settings/settings.component';
     AdminAppointmentsComponent,
     MedicalRecordsComponent,
     PaymentsComponent,
-    AdminPatientsComponent,
+    // PatientsComponent,
     StaffComponent,
     RoomsComponent,
     SettingsComponent,

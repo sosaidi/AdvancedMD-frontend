@@ -1,95 +1,134 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { NgForOf } from '@angular/common';
-import Chart from 'chart.js/auto';
-import { AdminPatientsService } from '../../services/patients.service';
 import { AdminAppointmentService } from '../../services/appointment.service';
-import { AdminStaffService } from '../../services/staff.service';
+import { AdminRoomsService } from '../../services/rooms.service';
+import { PaymentsService } from '../../services/payments.service';
+import Chart from 'chart.js/auto';
+import { NgFor, NgIf } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-admin-dashboard',
   templateUrl: './dashboard.component.html',
-  imports: [ NgForOf ],
-  standalone: true,
+  styleUrls: ['./dashboard.component.css'],
+  imports: [NgFor, NgIf, FormsModule]
 })
 export class AdminDashboardComponent implements OnInit, AfterViewInit {
-  totalPatients: number = 0;
-  totalStaff: number = 0;
-  pendingPayments: number = 0;
-  patients: any[] = [];
-  appointments: any[] = [];
-  staffMembers: any[] = [];
+  totalRooms: number = 3; // Example number of rooms
+  availableRooms: number = 2;
+  roomsUnderMaintenance: number = 1;
+  pendingPayments: number = 1;
+  payments: any[] = [
+    { id: 'P001', status: 'Paid' },
+    { id: 'P002', status: 'Pending' }
+  ];
+  appointments: any[] = [
+    { patientName: 'John Doe', assignedDoctor: 'Dr. Jacob Ryan', date: '2025-01-10', diseases: 'Fever' },
+    { patientName: 'Jane Smith', assignedDoctor: 'Dr. Rajesh', date: '2025-01-11', diseases: 'Cholera' }
+  ];
+  upcomingAppointments: number = 1;
+  completedAppointments: number = 0;
 
-  appointmentsChart: any;
-  patientsChart: any;
+  // Variables for editing
+  editingPayment: any = null;
+  editingAppointment: any = null;
+  editingRoom: any = null;
+  rooms: any[] = [
+    { id: 'R001', name: 'Room A', status: 'Available' },
+    { id: 'R002', name: 'Room B', status: 'Occupied' },
+    { id: 'R003', name: 'Room C', status: 'Under Maintenance' }
+  ];
 
   constructor(
-    private patientsService: AdminPatientsService,
+    private roomsService: AdminRoomsService,
     private appointmentsService: AdminAppointmentService,
-    private staffService: AdminStaffService
+    private paymentsService: PaymentsService
   ) {}
 
   ngOnInit(): void {
-    this.getPatients();
+    this.getRooms();
+    this.getPayments();
     this.getAppointments();
-    this.getStaffMembers();
   }
 
   ngAfterViewInit(): void {
-    this.initPatientsChart();
+    this.initRoomAvailabilityChart();
     this.initAppointmentsChart();
   }
 
-  // Fetch patients data
-  getPatients(): void {
-    this.patientsService.getPatientsObservable().subscribe((data) => {
-      this.patients = data;
-      this.totalPatients = data.length;
-    });
+  getRooms() {
+    // Simulate fetching room data
+    this.rooms = this.rooms; 
   }
 
-  // Fetch appointments data
-  getAppointments(): void {
-    this.appointmentsService.getAppointmentsObservable().subscribe((data) => {
-      this.appointments = data;
-    });
+  getPayments() {
+    this.payments = this.payments;
+    this.pendingPayments = this.payments.filter((payment) => payment.status === 'Pending').length;
   }
 
-  // Fetch staff data
-  getStaffMembers(): void {
-    this.staffService.getStaffObservable().subscribe((data) => {
-      this.staffMembers = data;
-      this.totalStaff = data.length;
-    });
+  getAppointments() {
+    this.appointments = this.appointments;
+    this.upcomingAppointments = this.appointments.filter((appointment) => appointment.status === 'Upcoming').length;
+    this.completedAppointments = this.appointments.filter((appointment) => appointment.status === 'Completed').length;
   }
 
-  private initPatientsChart(): void {
-    const ctx = document.getElementById('patientsChart') as HTMLCanvasElement;
-    if (ctx) {
-      new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-          labels: ['Active Patients', 'Recovered Patients'],
-          datasets: [
-            {
-              data: [70, 30],
-              backgroundColor: ['#D8F3DC', '#FDE2E4'],
-              hoverBackgroundColor: ['#A8DADC', '#FFA5A5'],
-            },
-          ],
-        },
-        options: {
-          responsive: true,
-          plugins: {
-            legend: {
-              position: 'bottom',
-            },
-          },
-        },
-      });
+  editPayment(payment: any): void {
+    this.editingPayment = { ...payment }; 
+  }
+
+  savePayment() {
+    const index = this.payments.findIndex((payment) => payment.id === this.editingPayment.id);
+    if (index !== -1) {
+      this.payments[index] = { ...this.editingPayment }; 
+      this.pendingPayments = this.payments.filter((payment) => payment.status === 'Pending').length;
     }
+    this.cancelEdit();
   }
 
-  private initAppointmentsChart(): void {
+  cancelEdit(): void {
+    this.editingPayment = null;
+    this.editingAppointment = null;
+    this.editingRoom = null;
+  }
+
+  deletePayment(payment: any): void {
+    this.payments = this.payments.filter((p) => p.id !== payment.id);
+    this.pendingPayments = this.payments.filter((payment) => payment.status === 'Pending').length;
+  }
+
+  editAppointment(appointment: any): void {
+    this.editingAppointment = { ...appointment };
+  }
+
+  saveAppointment() {
+    const index = this.appointments.findIndex((appointment) => appointment.patientName === this.editingAppointment.patientName);
+    if (index !== -1) {
+      this.appointments[index] = { ...this.editingAppointment }; 
+    }
+    this.cancelEdit();
+  }
+
+  deleteAppointment(appointment: any): void {
+    this.appointments = this.appointments.filter((a) => a.patientName !== appointment.patientName);
+    this.upcomingAppointments = this.appointments.filter((appointment) => appointment.status === 'Upcoming').length;
+  }
+
+  editRoom(room: any): void {
+    this.editingRoom = { ...room };
+  }
+
+  saveRoom(): void {
+    const index = this.rooms.findIndex((room) => room.id === this.editingRoom.id);
+    if (index !== -1) {
+      this.rooms[index] = { ...this.editingRoom };
+    }
+    this.cancelEdit();
+  }
+
+  deleteRoom(room: any): void {
+    this.rooms = this.rooms.filter((r) => r.id !== room.id);
+  }
+
+  initAppointmentsChart() {
     const ctx = document.getElementById('appointmentsChart') as HTMLCanvasElement;
     if (ctx) {
       new Chart(ctx, {
@@ -101,8 +140,8 @@ export class AdminDashboardComponent implements OnInit, AfterViewInit {
               label: 'Appointments Overview',
               data: [
                 this.appointments.length,
-                this.appointments.filter((a) => a.status === 'Upcoming').length,
-                this.appointments.filter((a) => a.status === 'Completed').length,
+                this.upcomingAppointments,
+                this.completedAppointments,
                 this.appointments.filter((a) => a.status === 'Cancelled').length,
               ],
               borderColor: '#A3C4F3',
@@ -140,6 +179,37 @@ export class AdminDashboardComponent implements OnInit, AfterViewInit {
                   size: 14,
                 },
               },
+            },
+          },
+        },
+      });
+    }
+  }
+
+  initRoomAvailabilityChart() {
+    const ctx = document.getElementById('roomsChart') as HTMLCanvasElement;
+    if (ctx) {
+      new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: ['Available', 'Occupied', 'Under Maintenance'],
+          datasets: [
+            {
+              data: [
+                this.availableRooms,
+                this.totalRooms - this.availableRooms - this.roomsUnderMaintenance,
+                this.roomsUnderMaintenance,
+              ],
+              backgroundColor: ['#4CAF50', '#FF9800', '#B0BEC5'],
+              borderWidth: 0.5,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              display: false,
             },
           },
         },

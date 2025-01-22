@@ -8,63 +8,118 @@
   <!-- Admin Metrics -->
   <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
     <div class="p-6 bg-gradient-to-r from-purple-100 to-purple-200 text-purple-800 rounded-lg shadow-md hover:shadow-lg transition">
-      <h2 class="text-lg font-semibold">Total Patients</h2>
-      <p class="text-3xl font-bold mt-2">{{ totalPatients }}</p>
+      <h2 class="text-lg font-semibold">Total Rooms</h2>
+      <p class="text-3xl font-bold mt-2">{{ totalRooms }}</p>
     </div>
     <div class="p-6 bg-gradient-to-r from-orange-100 to-orange-200 text-orange-800 rounded-lg shadow-md hover:shadow-lg transition">
-      <h2 class="text-lg font-semibold">Total Staff</h2>
-      <p class="text-3xl font-bold mt-2">{{ totalStaff }}</p>
+      <h2 class="text-lg font-semibold">Upcoming Appointments</h2>
+      <p class="text-3xl font-bold mt-2">{{ upcomingAppointments }}</p>
     </div>
-    <div class="p-6 bg-gradient-to-r from-green-100 to-green-200 text-green-800 rounded-lg shadow-md hover:shadow-lg transition">
+    <div class="p-6 bg-gradient-to-r from-red-100 to-red-200 text-red-800 rounded-lg shadow-md hover:shadow-lg transition">
       <h2 class="text-lg font-semibold">Pending Payments</h2>
       <p class="text-3xl font-bold mt-2">{{ pendingPayments }}</p>
     </div>
   </div>
 
-  <!-- Dashboard Content -->
-  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-    <!-- Patients Section -->
-    <div class="bg-white rounded-lg shadow-lg p-6">
-      <h3 class="text-lg font-bold mb-4">Patients Overview</h3>
-      <ul class="space-y-4">
-        <li *ngFor="let patient of patients" class="flex justify-between items-center">
-          <span class="text-gray-800 font-semibold">{{ patient.name }}</span>
-          <span class="text-gray-600">{{ patient.condition }}</span>
-        </li>
-      </ul>
-    </div>
-
-    <!-- Appointments Section -->
-    <div class="bg-white rounded-lg shadow-lg p-6">
-      <h3 class="text-lg font-bold mb-4">Upcoming Appointments</h3>
-      <ul>
-        <li *ngFor="let appointment of appointments" class="flex justify-between items-center p-4 border rounded-lg hover:bg-gray-50 transition">
-          <span class="text-gray-700">{{ appointment.date }} at {{ appointment.time }}</span>
-          <span class="text-gray-600">{{ appointment.patient }}</span>
-        </li>
-      </ul>
-    </div>
-
-    <!-- Staff Management Section -->
-    <div class="bg-white rounded-lg shadow-lg p-6">
-      <h3 class="text-lg font-bold mb-4">Staff Overview</h3>
-      <ul>
-        <li *ngFor="let staff of staffMembers" class="flex justify-between items-center p-4 border rounded-lg hover:bg-gray-50 transition">
-          <span class="text-gray-700">{{ staff.name }}</span>
-          <span class="text-gray-600">{{ staff.role }}</span>
-        </li>
-      </ul>
-    </div>
+  <!-- Payments Overview Section -->
+  <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+    <h3 class="text-2xl font-bold mb-4">Payments Overview</h3>
+    <ul class="space-y-4">
+      <li *ngFor="let payment of payments" class="flex justify-between items-center">
+        <span>{{ payment.id }} - {{ payment.status }}</span>
+        <div class="flex space-x-4">
+          <button (click)="editPayment(payment)" class="text-blue-500 hover:underline">Edit</button>
+          <button (click)="deletePayment(payment)" class="text-red-500 hover:underline">Delete</button>
+        </div>
+      </li>
+    </ul>
   </div>
 
-  <!-- Chart Section -->
+  <!-- Payments Edit Form -->
+  <div *ngIf="editingPayment" class="bg-white p-6 mb-8">
+    <h3 class="text-xl font-bold mb-4">Edit Payment</h3>
+    <form (ngSubmit)="savePayment()">
+      <div class="mb-4">
+        <label class="block text-gray-700">Payment Status</label>
+        <select [(ngModel)]="editingPayment.status" name="status" class="w-full p-2 mt-2 border border-gray-300 rounded">
+          <option value="Pending">Pending</option>
+          <option value="Completed">Completed</option>
+        </select>
+      </div>
+      <div class="flex space-x-4">
+        <button type="submit" class="text-blue-500 hover:underline">Save</button>
+        <button (click)="cancelEdit()" class="text-red-500 hover:underline">Cancel</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Upcoming Appointments Section -->
+  <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+    <h3 class="text-2xl font-bold mb-4">Upcoming Appointments</h3>
+    <table class="w-full table-auto">
+      <thead>
+        <tr class="text-left">
+          <th class="py-2 px-4 border-b font-semibold">Patient Name</th>
+          <th class="py-2 px-4 border-b font-semibold">Assigned Doctor</th>
+          <th class="py-2 px-4 border-b font-semibold">Date</th>
+          <th class="py-2 px-4 border-b font-semibold">Diseases</th>
+          <th class="py-2 px-4 border-b font-semibold">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let appointment of appointments" class="border-b hover:bg-gray-50">
+          <td class="py-2 px-4">{{ appointment.patientName }}</td>
+          <td class="py-2 px-4">{{ appointment.assignedDoctor }}</td>
+          <td class="py-2 px-4">{{ appointment.date }}</td>
+          <td class="py-2 px-4">{{ appointment.diseases }}</td>
+          <td class="py-2 px-4">
+            <div class="flex space-x-4">
+              <button (click)="editAppointment(appointment)" class="text-blue-500 hover:underline">Edit</button>
+              <button (click)="deleteAppointment(appointment)" class="text-red-500 hover:underline">Delete</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Appointments Edit Form -->
+  <div *ngIf="editingAppointment" class="bg-white p-6 mb-8">
+    <h3 class="text-xl font-bold mb-4">Edit Appointment</h3>
+    <form (ngSubmit)="saveAppointment()">
+      <div class="mb-4">
+        <label class="block text-gray-700">Patient Name</label>
+        <input [(ngModel)]="editingAppointment.patientName" name="patientName" class="w-full p-2 mt-2 border border-gray-300 rounded">
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700">Assigned Doctor</label>
+        <input [(ngModel)]="editingAppointment.assignedDoctor" name="assignedDoctor" class="w-full p-2 mt-2 border border-gray-300 rounded">
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700">Date</label>
+        <input [(ngModel)]="editingAppointment.date" name="date" class="w-full p-2 mt-2 border border-gray-300 rounded">
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700">Diseases</label>
+        <input [(ngModel)]="editingAppointment.diseases" name="diseases" class="w-full p-2 mt-2 border border-gray-300 rounded">
+      </div>
+      <div class="flex space-x-4">
+        <button type="submit" class="text-blue-500 hover:underline">Save</button>
+        <button (click)="cancelEdit()" class="text-red-500 hover:underline">Cancel</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Charts Section -->
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8">
+    <!-- Rooms Availability Chart -->
     <div class="bg-white rounded-lg shadow-lg p-6">
-      <h3 class="text-lg font-bold mb-4">Patients Overview</h3>
-      <canvas id="patientsChart" class="w-full"></canvas>
+      <h3 class="text-lg font-bold mb-4">Rooms Availability</h3>
+      <canvas id="roomsChart" class="w-full"></canvas>
     </div>
+    <!-- Appointments Overview Chart -->
     <div class="bg-white rounded-lg shadow-lg p-6">
-      <h3 class="text-lg font-bold mb-4">Appointments</h3>
+      <h3 class="text-lg font-bold mb-4">Appointments Overview</h3>
       <canvas id="appointmentsChart" class="w-full"></canvas>
     </div>
   </div>
