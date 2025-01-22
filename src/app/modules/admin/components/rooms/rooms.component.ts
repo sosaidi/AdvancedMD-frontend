@@ -26,7 +26,6 @@ export class RoomsComponent implements OnInit {
   }
 
   loadRooms(): void {
-    
     this.roomsService.getRooms().subscribe(
       (rooms: Room[]) => {
         this.rooms = rooms;  
@@ -48,23 +47,35 @@ export class RoomsComponent implements OnInit {
 
   addRoom(): void {
     if (!this.newRoom.type || this.newRoom.capacity <= 0) {
-      return;  
+      return; 
     }
-
+  
     this.loading = true;
+  
+    if (this.newRoom.roomId) {
 
-    // Add the room through the service and handle success or failure
-    this.roomsService.addRoom(this.newRoom);
-    this.rooms.push(this.newRoom);  
+      this.roomsService.updateRoom(this.newRoom);
+    } else {
+      this.roomsService.addRoom(this.newRoom);
+    }
 
     this.closeForm();
     this.roomAdded = true;  
     setTimeout(() => this.roomAdded = false, 3000); 
     this.loading = false;
   }
+  
 
   editRoom(room: Room): void {
-    console.log('Editing room:', room);
+    this.showForm = true;
+    this.newRoom = { ...room }; 
+    this.currentTab = "addRoom";
+    this.showForm = true;
+  }
+
+  updateRoom(): void {
+    this.roomsService.updateRoom(this.newRoom);  
+    this.showForm = false;  
   }
 
   deleteRoom(roomId: string): void {

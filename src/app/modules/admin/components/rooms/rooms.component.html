@@ -1,30 +1,16 @@
 <div class="p-8 bg-gradient-to-br from-gray-100 via-white to-gray-200 min-h-screen w-[130vh] mx-auto">
   <!-- Header -->
-  <div class="bg-gradient-to-r from-green-200 to-green-300 text-white rounded-lg shadow-lg p-8 mb-10 flex justify-between items-center">
+  <div class="bg-gradient-to-r from-green-200 to-green-300 text-green-600 rounded-lg shadow-lg p-8 mb-10 flex justify-between items-center">
     <h1 class="text-5xl font-bold">Rooms Management</h1>
   </div>
 
   <!-- Tab Navigation -->
   <div class="bg-white rounded-lg shadow-lg p-4 mb-6">
     <div class="flex justify-around border-b">
-      <button
-        (click)="setActiveTab('roomsList')"
-        [ngClass]="{
-          'border-green-500 text-green-500': currentTab === 'roomsList',
-          'text-gray-600': currentTab !== 'roomsList'
-        }"
-        class="py-2 px-4 border-b-2 font-semibold transition"
-      >
+      <button (click)="setActiveTab('roomsList')" [ngClass]="{ 'border-green-500 text-green-500': currentTab === 'roomsList', 'text-gray-600': currentTab !== 'roomsList' }" class="py-2 px-4 border-b-2 font-semibold transition">
         Rooms List
       </button>
-      <button
-        (click)="setActiveTab('addRoom')"
-        [ngClass]="{
-          'border-green-500 text-green-500': currentTab === 'addRoom',
-          'text-gray-600': currentTab !== 'addRoom'
-        }"
-        class="py-2 px-4 border-b-2 font-semibold transition"
-      >
+      <button (click)="setActiveTab('addRoom')" [ngClass]="{ 'border-green-500 text-green-500': currentTab === 'addRoom', 'text-gray-600': currentTab !== 'addRoom' }" class="py-2 px-4 border-b-2 font-semibold transition">
         Add New Room
       </button>
     </div>
@@ -35,7 +21,7 @@
     <h2 class="text-2xl font-bold text-gray-800 mb-4">Rooms List</h2>
     <ul class="space-y-4">
       <li *ngFor="let room of rooms" class="flex justify-between items-center py-2 border-b">
-        <span class="text-gray-800 font-semibold">{{ room.type }} - {{ room.status }}</span>
+        <span class="text-gray-800 font-semibold">{{ room.type }} - {{ room.status | titlecase }}</span>
         <div class="flex space-x-4">
           <button (click)="editRoom(room)" class="text-blue-500 hover:underline">Edit</button>
           <button (click)="deleteRoom(room.roomId)" class="text-red-500 hover:underline">Delete</button>
@@ -46,18 +32,12 @@
 
   <!-- Add Room -->
   <div *ngIf="currentTab === 'addRoom'" class="bg-white rounded-lg shadow-lg p-6">
-    <h2 class="text-2xl font-bold text-gray-800 mb-4">Add New Room</h2>
-    <form (ngSubmit)="addRoom()">
+    <h2 class="text-2xl font-bold text-gray-800 mb-4">{{ showForm ? 'Edit Room' : 'Add New Room' }}</h2>
+    <form (ngSubmit)="showForm ? updateRoom() : addRoom()">
       <div class="space-y-4">
         <div>
           <label for="roomType" class="block text-sm font-medium text-gray-700">Room Type</label>
-          <select
-            id="roomType"
-            [(ngModel)]="newRoom.type"
-            name="type"
-            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-            required
-          >
+          <select id="roomType" [(ngModel)]="newRoom.type" name="type" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
             <option value="ICU">ICU</option>
             <option value="General">General</option>
             <option value="Private">Private</option>
@@ -65,35 +45,19 @@
         </div>
         <div>
           <label for="roomCapacity" class="block text-sm font-medium text-gray-700">Room Capacity</label>
-          <input
-            id="roomCapacity"
-            [(ngModel)]="newRoom.capacity"
-            name="capacity"
-            type="number"
-            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-            required
-          />
+          <input id="roomCapacity" [(ngModel)]="newRoom.capacity" name="capacity" type="number" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required />
         </div>
         <div>
           <label for="roomStatus" class="block text-sm font-medium text-gray-700">Room Status</label>
-          <select
-            id="roomStatus"
-            [(ngModel)]="newRoom.status"
-            name="status"
-            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-            required
-          >
+          <select id="roomStatus" [(ngModel)]="newRoom.status" name="status" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
             <option value="available">Available</option>
             <option value="full">Full</option>
             <option value="underMaintenance">Under Maintenance</option>
           </select>
         </div>
         <div class="flex justify-end">
-          <button
-            type="submit"
-            class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition"
-          >
-            Add Room
+          <button type="submit" class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition">
+            {{ showForm ? 'Update Room' : 'Add Room' }}
           </button>
         </div>
       </div>
