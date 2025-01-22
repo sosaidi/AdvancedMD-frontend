@@ -1,10 +1,12 @@
 <div class="p-12 bg-gradient-to-br from-gray-100 via-gray-50 to-white min-h-screen space-y-12 w-[130vh] mx-auto">
   <!-- Header Section -->
-  <div class="bg-gradient-to-r from-green-200 to-green-300 text-white rounded-lg shadow-lg p-8 mb-10 flex flex-col md:flex-row justify-between items-start md:items-center">
+  <div class="bg-gradient-to-r from-green-200 to-green-300 text-green-600 rounded-lg shadow-lg p-8 mb-10 flex flex-col md:flex-row justify-between items-start md:items-center">
     <h1 class="text-5xl font-bold tracking-wide mb-2">Appointments</h1>
     <div class="flex items-center space-x-4">
-      <!-- Add Appointment Button -->
-      <button (click)="addAppointment()" class="mt-4 md:mt-0 px-6 py-3 bg-white text-green-600 rounded-lg shadow-lg hover:bg-gray-100 transition-all duration-300">+ Add Appointment</button>
+      <!-- Edit Appointment Button (When an appointment is being edited, display "Save Appointment" button instead of "Edit Appointment") -->
+      <button *ngIf="editingAppointment" (click)="saveAppointment()" class="mt-4 md:mt-0 px-6 py-3 bg-white text-green-600 rounded-lg shadow-lg hover:bg-gray-100 transition-all duration-300">Save Appointment</button>
+      <button *ngIf="editingAppointment" (click)="cancelEdit()" class="mt-4 md:mt-0 px-6 py-3 bg-gray-200 text-gray-600 rounded-lg shadow-lg hover:bg-gray-300 transition-all duration-300">Cancel Edit</button>
+      
       <!-- Export Button -->
       <button (click)="exportAppointments()" class="mt-4 md:mt-0 px-6 py-3 bg-white text-green-600 rounded-lg shadow-lg hover:bg-gray-100 transition-all duration-300">Export CSV</button>
     </div>
@@ -30,26 +32,6 @@
     </div>
   </div>
 
-  <!-- Filters Section -->
-  <div class="flex items-center justify-between bg-white rounded-lg shadow-md px-8 py-4 mt-6">
-    <div class="flex items-center space-x-6">
-      <!-- Filter by Date -->
-      <input type="date" [(ngModel)]="filterDate" (change)="filterAppointments()" class="px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500" />
-      <!-- Filter by Status -->
-      <select [(ngModel)]="filterStatus" (change)="filterAppointments()" class="px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500">
-        <option value="">All Statuses</option>
-        <option value="Upcoming">Upcoming</option>
-        <option value="Completed">Completed</option>
-        <option value="Cancelled">Cancelled</option>
-      </select>
-    </div>
-    <!-- Search Bar -->
-    <div class="relative">
-      <input type="text" [(ngModel)]="searchQuery" (input)="searchAppointments()" placeholder="Search appointments" class="px-6 py-3 w-96 rounded-full border border-gray-300 shadow-md focus:outline-none focus:ring-2 focus:ring-green-500" />
-      <i class="bi bi-search absolute top-4 right-6 text-gray-500"></i>
-    </div>
-  </div>
-
   <!-- Appointments Table -->
   <div class="bg-white rounded-xl shadow-lg p-8 overflow-auto">
     <table class="w-full text-left border-collapse">
@@ -68,22 +50,58 @@
           <td class="py-4 px-6 text-gray-800">{{ appointment.date }}</td>
           <td class="py-4 px-6 text-gray-800">{{ appointment.time }}</td>
           <td class="py-4 px-6 text-center">
-            <select class="px-4 py-2 rounded-full border border-gray-300 text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500" [(ngModel)]="appointment.status" (change)="updateAppointmentStatus({appointment : appointment, newStatus : appointment.status})">
+            <select class="px-4 py-2 rounded-full border border-gray-300 text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500" [(ngModel)]="appointment.status" (change)="updateAppointmentStatus(appointment, appointment.status)">
               <option value="Upcoming">Upcoming</option>
               <option value="Completed">Completed</option>
               <option value="Cancelled">Cancelled</option>
             </select>
           </td>
           <td class="py-4 px-6 text-center">
-            <button (click)="openDetailsModal(appointment)" class="px-5 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition shadow-md">View Details</button>
+            <!-- When clicked, it should call the editAppointment method and pass the current appointment -->
+            <button (click)="editAppointment(appointment)" class="px-5 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition shadow-md">Edit</button>
           </td>
         </tr>
       </tbody>
     </table>
-
-    <!-- Pagination -->
-    <div class="flex justify-center mt-10">
-      <button *ngFor="let page of [1, 2, 3, 4]" (click)="changePage(page)" [class.bg-green-500]="page === currentPage" [class.text-white]="page === currentPage" [class.bg-gray-200]="page !== currentPage" class="mx-2 px-5 py-3 rounded-full hover:bg-green-500 hover:text-white transition">{{ page }}</button>
-    </div>
   </div>
-</div>
+
+  <!-- Appointment Edit Form -->
+  <div *ngIf="editingAppointment" class="bg-white p-6 mb-8">
+    <h3 class="text-xl font-bold mb-4">Edit Appointment</h3>
+    <form (ngSubmit)="saveAppointment()">
+      <!-- Form fields for editing appointment -->
+      <div class="mb-4">
+        <label class="block text-gray-700">Patient Name</label>
+        <input [(ngModel)]="editingAppointment.patient" name="patient" class="w-full p-2 mt-2 border border-gray-300 rounded">
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700">Date</label>
+        <input [(ngModel)]="editingAppointment.date" name="date" class="w-full p-2 mt-2 border border-gray-300 rounded">
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700">Time</label>
+        <input [(ngModel)]="editingAppointment.time" name="time" class="w-full p-2 mt-2 border border-gray-300 rounded">
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700">Status</label>
+        <select [(ngModel)]="editingAppointment.status" name="status" class="w-full p-2 mt-2 border border-gray-300 rounded">
+          <option value="Upcoming">Upcoming</option>
+          <option value="Completed">Completed</option>
+          <option value="Cancelled">Cancelled</option>
+        </select>
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700">Diseases</label>
+        <input [(ngModel)]="editingAppointment.diseases" name="diseases" class="w-full p-2 mt-2 border border-gray-300 rounded">
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700">Assigned Doctor</label>
+        <input [(ngModel)]="editingAppointment.assignedDoctor" name="assignedDoctor" class="w-full p-2 mt-2 border border-gray-300 rounded">
+      </div>
+      <div class="flex space-x-4">
+        <button type="submit" class="text-blue-500 hover:underline">Save</button>
+        <button (click)="cancelEdit()" class="text-red-500 hover:underline">Cancel</button>
+      </div>
+    </form>
+  </div>
+  
