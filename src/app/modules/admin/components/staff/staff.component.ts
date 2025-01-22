@@ -33,26 +33,28 @@ export class StaffComponent implements OnInit {
 
   loadStaffMembers(): void {
     this.staffService.getStaffObservable().subscribe((staff) => {
-      this.staffMembers = staff;
+      this.staffMembers = staff; // Updating the staff list when changes occur
     });
   }
 
-  openForm(): void {
-    // Show the form to add a new staff member
+  openForm(staff?: Staff): void {
     this.showForm = true;
-    this.newStaff = {
-      staffId: '',
-      name: '',
-      role: '',
-      contact: '',
-      status: 'Active',
-      shifts: 'Morning',
-      priority: 'Medium'
-    };
+    if (staff) {
+      this.newStaff = { ...staff }; // Pre-fill the form for editing
+    } else {
+      this.newStaff = {
+        staffId: '',
+        name: '',
+        role: '',
+        contact: '',
+        status: 'Active',
+        shifts: 'Morning',
+        priority: 'Medium'
+      };
+    }
   }
 
   closeForm(): void {
-    // Close the form without saving
     this.showForm = false;
   }
 
@@ -61,8 +63,9 @@ export class StaffComponent implements OnInit {
     this.closeForm();
   }
 
-  editStaff(_staffId: string): void {
-    this.staffService.editStaff(this.editStaff);
+  editStaff(): void {
+    this.staffService.updateStaff(this.newStaff.staffId, this.newStaff);
+    this.closeForm();
   }
 
   deleteStaff(staffId: string): void {
