@@ -1,12 +1,12 @@
 import { Component } from '@angular/core'
 import { FormsModule } from '@angular/forms'
-import { NgClass, NgIf, NgStyle } from '@angular/common'
+import { NgClass, NgIf, NgStyle, UpperCasePipe } from '@angular/common'
 import { SharedDataService } from '../../services/shared-data.service'
 
 @Component({
   selector: 'app-settings',
   standalone: true,
-  imports: [FormsModule, NgIf, NgClass, NgStyle],
+  imports: [FormsModule, NgIf, NgClass, NgStyle, UpperCasePipe],
   templateUrl: './settings.component.html',
 })
 export class SettingsComponent {
