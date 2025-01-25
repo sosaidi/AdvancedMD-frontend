@@ -2,14 +2,18 @@ import { Component } from '@angular/core'
 import { DatePipe, NgClass, NgForOf, NgIf } from '@angular/common'
 import JsPDF from 'jspdf'
 import autoTable from 'jspdf-autotable'
+import { FormsModule } from '@angular/forms'
+import { Doctor, DoctorService } from '../../../services/doctor.service'
 
 @Component({
   selector: 'app-prescriptions',
-  imports: [NgForOf, NgClass, NgIf, DatePipe],
+  imports: [NgForOf, NgClass, NgIf, DatePipe, FormsModule],
   standalone: true,
   templateUrl: './prescriptions.component.html',
 })
 export class PrescriptionsComponent {
+  doctors: Doctor[] = []
+
   prescriptions = [
     {
       id: '#A348',
@@ -31,13 +35,6 @@ export class PrescriptionsComponent {
       doctor: 'Dr. Jay Soni',
       date: '12/05/2016',
       disease: 'Jaundice',
-    },
-    {
-      id: '#A927',
-      title: 'Prescription 4',
-      doctor: 'Dr. John Deo',
-      date: '12/05/2016',
-      disease: 'Typhoid',
     },
     {
       id: '#A228',
@@ -72,6 +69,19 @@ export class PrescriptionsComponent {
   deletedPrescriptions: any[] = []
   activeView = 'active'
   activeTab = 'active'
+
+  showForm = false
+  newPrescription = {
+    id: '',
+    title: '',
+    doctor: '',
+    date: '',
+    disease: 'Unknown',
+  }
+
+  constructor(private doctorService: DoctorService) {
+    this.doctors = this.doctorService.getDoctors()
+  }
 
   generatePDF(prescription: any): void {
     const doc = new JsPDF()
@@ -203,5 +213,31 @@ export class PrescriptionsComponent {
   // Method to switch tabs
   setActiveTab(tab: string): void {
     this.activeTab = tab
+  }
+
+  // Show the "Add Prescription" modal
+  openForm(): void {
+    this.showForm = true
+    // Reset
+    this.newPrescription = {
+      id: '',
+      title: '',
+      doctor: '',
+      date: '',
+      disease: 'Unknown',
+    }
+  }
+
+  // Hide the modal
+  closeForm(): void {
+    this.showForm = false
+  }
+
+  // On form submit
+  submitNewPrescription(): void {
+    this.newPrescription.id = '#' + Math.random().toString(36).substring(2, 6).toUpperCase()
+    this.prescriptions.unshift({ ...this.newPrescription })
+    this.closeForm()
+    alert('New prescription added successfully!')
   }
 }

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core'
 import { NgClass, NgForOf, NgIf, NgOptimizedImage, NgStyle } from '@angular/common'
 import { FormsModule } from '@angular/forms'
+import { Doctor, DoctorService } from '../../../services/doctor.service'
 
 @Component({
   selector: 'app-doctors',
@@ -9,77 +10,28 @@ import { FormsModule } from '@angular/forms'
   templateUrl: './doctors.component.html',
 })
 export class DoctorsComponent {
-  doctors = [
-    {
-      name: 'Dr. Sarah Smith',
-      specialty: 'Cardiologist',
-      experience: '10 Years',
-      availability: 'Available',
-      photo: '',
-      color: '',
-    },
-    {
-      name: 'Dr. John Doe',
-      specialty: 'Neurologist',
-      experience: '8 Years',
-      availability: 'Busy',
-      photo: '',
-      color: '',
-    },
-    {
-      name: 'Dr. Lisa Brown',
-      specialty: 'Orthopedic Surgeon',
-      experience: '15 Years',
-      availability: 'Unavailable',
-      photo: '',
-      color: '',
-    },
-    {
-      name: 'Dr. David Miller',
-      specialty: 'Pediatrician',
-      experience: '12 Years',
-      availability: 'Available',
-      photo: '',
-      color: '',
-    },
-    {
-      name: 'Dr. Emily White',
-      specialty: 'Dermatologist',
-      experience: '5 Years',
-      availability: 'Busy',
-      photo: '',
-      color: '',
-    },
-    {
-      name: 'Dr. Michael Lee',
-      specialty: 'General Physician',
-      experience: '7 Years',
-      availability: 'Available',
-      photo: '',
-      color: '',
-    },
-  ];
+  doctors: Doctor[] = []
 
-  showForm = false;
-  newDoctor = {
+  showForm = false
+  newDoctor: Doctor = {
     name: '',
     specialty: '',
     experience: '',
     availability: '',
     photo: '',
     color: '',
-  };
+  }
 
-  constructor() {
-    this.assignColorsToDoctors();
+  constructor(private doctorService: DoctorService) {
+    this.doctors = this.doctorService.getDoctors()
   }
 
   openForm(): void {
-    this.showForm = true;
+    this.showForm = true
   }
 
   closeForm(): void {
-    this.showForm = false;
+    this.showForm = false
     this.newDoctor = {
       name: '',
       specialty: '',
@@ -87,48 +39,43 @@ export class DoctorsComponent {
       availability: '',
       photo: '',
       color: '',
-    };
+    }
   }
 
   addDoctor(): void {
-    const newDoctor = {
-      ...this.newDoctor,
-      color: this.generateRandomColor(),
-    };
-    this.doctors.push(newDoctor);
-    this.closeForm();
+    // Generate a random color for the new doc
+    const color = this.generateRandomColor()
+    const newDoc: Doctor = { ...this.newDoctor, color }
+    this.doctorService.addDoctor(newDoc)
+    this.doctors = this.doctorService.getDoctors() // refresh the list
+    this.closeForm()
   }
 
   onPhotoSelected(event: Event): void {
-    const input = event.target as HTMLInputElement;
+    const input = event.target as HTMLInputElement
     if (input.files?.length) {
-      const reader = new FileReader();
+      const reader = new FileReader()
       reader.onload = () => {
-        this.newDoctor.photo = reader.result as string;
-      };
-      reader.readAsDataURL(input.files[0]);
+        this.newDoctor.photo = reader.result as string
+      }
+      reader.readAsDataURL(input.files[0])
     }
   }
 
   getInitials(name: string): string {
     return name
-      .replace(/Dr\.\s*/i, '') // Remove "Dr." prefix (case-insensitive)
+      .replace(/Dr\.\s*/i, '')
       .split(' ')
-      .map((n) => n[0]) // Take the first letter of each name part
+      .map((n) => n[0])
       .join('')
-      .toUpperCase();
+      .toUpperCase()
   }
 
-  generateRandomColor(): string {
+  private generateRandomColor(): string {
     const pastelColors = [
-      '#FFB3B3', '#FFD9B3', '#FFFFB3', '#B3FFB3', '#B3D9FF', '#D9B3FF', '#FFB3FF',
-    ];
-    return pastelColors[Math.floor(Math.random() * pastelColors.length)];
-  }
-
-  assignColorsToDoctors(): void {
-    this.doctors.forEach((doctor) => {
-      doctor['color'] = this.generateRandomColor();
-    });
+      '#FFB3B3', '#FFD9B3', '#FFFFB3', '#B3FFB3',
+      '#B3D9FF', '#D9B3FF', '#FFB3FF',
+    ]
+    return pastelColors[Math.floor(Math.random() * pastelColors.length)]
   }
 }
