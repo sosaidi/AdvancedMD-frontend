@@ -1,124 +1,147 @@
 <div class="p-10 bg-gradient-to-br from-green-50 via-white to-gray-100 rounded-2xl shadow-xl max-w-15xl mx-auto">
 
   <!-- Header Section -->
-    <div class="bg-gradient-to-r from-white to-white text-green-700 rounded-lg shadow-lg p-8 mb-10 flex flex-col md:flex-row justify-between items-start md:items-center">
-      <h1 class="text-5xl font-bold tracking-wide mb-2">Appointments</h1>
-      <div class="flex items-center space-x-4">
-        <button
-          (click)="addAppointment()"
-          class="mt-4 md:mt-0 px-6 py-3 bg-white text-green-600 rounded-lg shadow-lg hover:bg-gray-100 transition-all duration-300"
+  <div
+    class="bg-gradient-to-r from-white to-white text-green-700 rounded-lg shadow-lg p-8 mb-10 flex flex-col md:flex-row justify-between items-start md:items-center"
+  >
+    <h1 class="text-5xl font-bold tracking-wide mb-2">Appointments</h1>
+    <div class="flex items-center space-x-4">
+      <button
+        (click)="openAddForm()"
+        class="mt-4 md:mt-0 px-6 py-3 bg-white text-green-600 rounded-lg shadow-lg hover:bg-gray-100 transition-all duration-300"
+      >
+        + Add Appointment
+      </button>
+      <button
+        (click)="exportAppointments()"
+        class="mt-4 md:mt-0 px-6 py-3 bg-white text-green-600 rounded-lg shadow-lg hover:bg-gray-100 transition-all duration-300"
+      >
+        Export CSV
+      </button>
+    </div>
+  </div>
+
+  <!-- Summary Cards -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+    <div class="p-8 bg-white rounded-xl shadow-md text-center">
+      <h2 class="text-xl font-semibold text-gray-700">Total</h2>
+      <p class="text-4xl font-bold text-green-500 mt-4">{{ totalAppointments }}</p>
+    </div>
+    <div class="p-8 bg-white rounded-xl shadow-md text-center">
+      <h2 class="text-xl font-semibold text-gray-700">Upcoming</h2>
+      <p class="text-4xl font-bold text-blue-500 mt-4">{{ upcomingAppointments }}</p>
+    </div>
+    <div class="p-8 bg-white rounded-xl shadow-md text-center">
+      <h2 class="text-xl font-semibold text-gray-700">Completed</h2>
+      <p class="text-4xl font-bold text-gray-500 mt-4">{{ completedAppointments }}</p>
+    </div>
+    <div class="p-8 bg-white rounded-xl shadow-md text-center">
+      <h2 class="text-xl font-semibold text-gray-700">Cancelled</h2>
+      <p class="text-4xl font-bold text-red-500 mt-4">{{ cancelledAppointments }}</p>
+    </div>
+  </div>
+
+  <!-- Filters Section -->
+  <div class="flex items-center justify-between bg-white rounded-lg shadow-md px-8 py-4 mt-6">
+    <div class="flex items-center space-x-6">
+      <input
+        type="date"
+        [(ngModel)]="filterDate"
+        (change)="filterAppointments()"
+        class="px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500"
+      />
+      <select
+        [(ngModel)]="filterStatus"
+        (change)="filterAppointments()"
+        class="px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500"
+      >
+        <option value="">All Statuses</option>
+        <option value="Upcoming">Upcoming</option>
+        <option value="Completed">Completed</option>
+        <option value="Cancelled">Cancelled</option>
+      </select>
+    </div>
+    <div class="relative">
+      <input
+        type="text"
+        [(ngModel)]="searchQuery"
+        (input)="searchAppointments()"
+        placeholder="Search appointments"
+        class="px-6 py-3 w-96 rounded-full border border-gray-300 shadow-md focus:outline-none focus:ring-2 focus:ring-green-500"
+      />
+      <i class="bi bi-search absolute top-4 right-6 text-gray-500"></i>
+    </div>
+  </div>
+
+  <!-- Appointments Table -->
+  <div class="bg-white rounded-xl shadow-lg p-8 overflow-auto mt-6">
+    <table class="w-full text-left border-collapse">
+      <thead>
+      <tr>
+        <th
+          class="border-b-2 py-4 px-6 text-gray-600 font-semibold text-sm uppercase cursor-pointer hover:text-green-600 transition-colors"
+          (click)="toggleSort('patient')"
         >
-          + Add Appointment
-        </button>
-        <button
-          (click)="exportAppointments()"
-          class="mt-4 md:mt-0 px-6 py-3 bg-white text-green-600 rounded-lg shadow-lg hover:bg-gray-100 transition-all duration-300"
+          Patient
+        </th>
+        <th
+          class="border-b-2 py-4 px-6 text-gray-600 font-semibold text-sm uppercase cursor-pointer hover:text-green-600 transition-colors"
+          (click)="toggleSort('date')"
         >
-          Export CSV
-        </button>
-      </div>
-    </div>
-
-    <!-- Summary Cards -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-      <div class="p-8 bg-white rounded-xl shadow-md text-center">
-        <h2 class="text-xl font-semibold text-gray-700">Total</h2>
-        <p class="text-4xl font-bold text-green-500 mt-4">{{ totalAppointments }}</p>
-      </div>
-      <div class="p-8 bg-white rounded-xl shadow-md text-center">
-        <h2 class="text-xl font-semibold text-gray-700">Upcoming</h2>
-        <p class="text-4xl font-bold text-blue-500 mt-4">{{ upcomingAppointments }}</p>
-      </div>
-      <div class="p-8 bg-white rounded-xl shadow-md text-center">
-        <h2 class="text-xl font-semibold text-gray-700">Completed</h2>
-        <p class="text-4xl font-bold text-gray-500 mt-4">{{ completedAppointments }}</p>
-      </div>
-      <div class="p-8 bg-white rounded-xl shadow-md text-center">
-        <h2 class="text-xl font-semibold text-gray-700">Cancelled</h2>
-        <p class="text-4xl font-bold text-red-500 mt-4">{{ cancelledAppointments }}</p>
-      </div>
-    </div>
-
-    <!-- Filters Section -->
-    <div class="flex items-center justify-between bg-white rounded-lg shadow-md px-8 py-4 mt-6">
-      <div class="flex items-center space-x-6">
-        <input
-          type="date"
-          [(ngModel)]="filterDate"
-          (change)="filterAppointments()"
-          class="px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500"
-        />
-        <select
-          [(ngModel)]="filterStatus"
-          (change)="filterAppointments()"
-          class="px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500"
+          Date
+        </th>
+        <th
+          class="border-b-2 py-4 px-6 text-gray-600 font-semibold text-sm uppercase cursor-pointer hover:text-green-600 transition-colors"
+          (click)="toggleSort('time')"
         >
-          <option value="">All Statuses</option>
-          <option value="Upcoming">Upcoming</option>
-          <option value="Completed">Completed</option>
-          <option value="Cancelled">Cancelled</option>
-        </select>
-      </div>
-      <div class="relative">
-        <input
-          type="text"
-          [(ngModel)]="searchQuery"
-          (input)="searchAppointments()"
-          placeholder="Search appointments"
-          class="px-6 py-3 w-96 rounded-full border border-gray-300 shadow-md focus:outline-none focus:ring-2 focus:ring-green-500"
-        />
-        <i class="bi bi-search absolute top-4 right-6 text-gray-500"></i>
-      </div>
-    </div>
+          Time
+        </th>
+        <th class="border-b-2 py-4 px-6 text-gray-600 font-semibold text-sm uppercase">Status</th>
+        <th class="border-b-2 py-4 px-6 text-gray-600 font-semibold text-sm uppercase">Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let appointment of paginatedAppointments" class="hover:bg-green-50 transition">
+        <td class="py-4 px-6 text-gray-800 font-medium">{{ appointment.patient }}</td>
+        <td class="py-4 px-6 text-gray-800">{{ appointment.date }}</td>
+        <td class="py-4 px-6 text-gray-800">{{ appointment.time }}</td>
+        <td class="py-4 px-6 text-center">
+          <select
+            class="px-4 py-2 rounded-full border border-gray-300 text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500"
+            [(ngModel)]="appointment.status"
+            (change)="updateAppointmentStatus({ appointment: appointment, newStatus: appointment.status })"
+          >
+            <option value="Upcoming">Upcoming</option>
+            <option value="Completed">Completed</option>
+            <option value="Cancelled">Cancelled</option>
+          </select>
+        </td>
+        <td class="py-4 px-6 text-center">
+          <button
+            (click)="openDetailsModal(appointment)"
+            class="px-5 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition shadow-md"
+          >
+            View Details
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
 
-    <!-- Appointments Table -->
-    <div class="bg-white rounded-xl shadow-lg p-8 overflow-auto mt-6">
-      <table class="w-full text-left border-collapse">
-        <thead>
-        <tr>
-          <th class="border-b-2 py-4 px-6 text-gray-600 font-semibold text-sm uppercase cursor-pointer hover:text-green-600 transition-colors" (click)="toggleSort('patient')">Patient</th>
-          <th class="border-b-2 py-4 px-6 text-gray-600 font-semibold text-sm uppercase cursor-pointer hover:text-green-600 transition-colors" (click)="toggleSort('date')">Date</th>
-          <th class="border-b-2 py-4 px-6 text-gray-600 font-semibold text-sm uppercase cursor-pointer hover:text-green-600 transition-colors" (click)="toggleSort('time')">Time</th>
-          <th class="border-b-2 py-4 px-6 text-gray-600 font-semibold text-sm uppercase">Status</th>
-          <th class="border-b-2 py-4 px-6 text-gray-600 font-semibold text-sm uppercase">Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let appointment of paginatedAppointments" class="hover:bg-green-50 transition">
-          <td class="py-4 px-6 text-gray-800 font-medium">{{ appointment.patient }}</td>
-          <td class="py-4 px-6 text-gray-800">{{ appointment.date }}</td>
-          <td class="py-4 px-6 text-gray-800">{{ appointment.time }}</td>
-          <td class="py-4 px-6 text-center">
-            <select
-              class="px-4 py-2 rounded-full border border-gray-300 text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500"
-              [(ngModel)]="appointment.status"
-              (change)="updateAppointmentStatus({appointment : appointment, newStatus : appointment.status})"
-            >
-              <option value="Upcoming">Upcoming</option>
-              <option value="Completed">Completed</option>
-              <option value="Cancelled">Cancelled</option>
-            </select>
-          </td>
-          <td class="py-4 px-6 text-center">
-            <button (click)="openDetailsModal(appointment)" class="px-5 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition shadow-md">
-              View Details
-            </button>
-          </td>
-        </tr>
-        </tbody>
-      </table>
-
-      <!-- Pagination -->
-      <div class="flex justify-center mt-10">
-        <button *ngFor="let page of [1, 2, 3, 4]" (click)="changePage(page)"
-                [class.bg-green-500]="page === currentPage"
-                [class.text-white]="page === currentPage"
-                [class.bg-gray-200]="page !== currentPage"
-                class="mx-2 px-5 py-3 rounded-full hover:bg-green-500 hover:text-white transition">
-          {{ page }}
-        </button>
-      </div>
+    <!-- Pagination -->
+    <div class="flex justify-center mt-10">
+      <button
+        *ngFor="let page of [1, 2, 3, 4]"
+        (click)="changePage(page)"
+        [class.bg-green-500]="page === currentPage"
+        [class.text-white]="page === currentPage"
+        [class.bg-gray-200]="page !== currentPage"
+        class="mx-2 px-5 py-3 rounded-full hover:bg-green-500 hover:text-white transition"
+      >
+        {{ page }}
+      </button>
     </div>
+  </div>
 
   <!-- Details Modal -->
   <div
@@ -152,6 +175,101 @@
           Close
         </button>
       </div>
+    </div>
+  </div>
+
+  <!-- Add Appointment Form Modal -->
+  <div
+    *ngIf="showAddForm"
+    class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+  >
+    <div class="bg-white rounded-lg shadow-2xl max-w-2xl w-full p-6 relative">
+      <!-- Close Button -->
+      <button
+        (click)="closeAddForm()"
+        class="absolute top-4 right-4 text-gray-400 hover:text-red-500 transition"
+      >
+        <i class="fas fa-times"></i>
+      </button>
+
+      <h2 class="text-2xl font-bold text-gray-800 mb-4">Add New Appointment</h2>
+      <form (ngSubmit)="submitAppointment()">
+        <!-- Patient Name -->
+        <div class="mb-4">
+          <label for="patient" class="block text-sm font-medium text-gray-700 mb-1">Patient Name</label>
+          <input
+            id="patient"
+            [(ngModel)]="newAppointment.patient"
+            name="patient"
+            type="text"
+            class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+            required
+          />
+        </div>
+
+        <!-- Date -->
+        <div class="mb-4">
+          <label for="date" class="block text-sm font-medium text-gray-700 mb-1">Date</label>
+          <input
+            id="date"
+            [(ngModel)]="newAppointment.date"
+            name="date"
+            type="date"
+            class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+            required
+          />
+        </div>
+
+        <!-- Time -->
+        <div class="mb-4">
+          <label for="time" class="block text-sm font-medium text-gray-700 mb-1">Time</label>
+          <input
+            id="time"
+            [(ngModel)]="newAppointment.time"
+            name="time"
+            type="time"
+            class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+            required
+          />
+        </div>
+
+        <!-- Status -->
+        <div class="mb-4">
+          <label for="status" class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+          <select
+            id="status"
+            [(ngModel)]="newAppointment.status"
+            name="status"
+            class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+          >
+            <option value="Upcoming">Upcoming</option>
+            <option value="Completed">Completed</option>
+            <option value="Cancelled">Cancelled</option>
+          </select>
+        </div>
+
+        <!-- Details -->
+        <div class="mb-4">
+          <label for="details" class="block text-sm font-medium text-gray-700 mb-1">Details</label>
+          <textarea
+            id="details"
+            [(ngModel)]="newAppointment.details"
+            name="details"
+            rows="3"
+            class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+          ></textarea>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="text-right mt-6">
+          <button
+            type="submit"
+            class="px-6 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition"
+          >
+            Save
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 </div>

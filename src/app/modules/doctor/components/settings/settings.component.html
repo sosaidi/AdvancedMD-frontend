@@ -1,60 +1,93 @@
-<div class="p-10 bg-gradient-to-br from-green-50 via-white to-gray-100 rounded-2xl shadow-xl max-w-15xl mx-auto">
+<div class="max-w-7xl mx-auto p-8 bg-gradient-to-br from-green-50 via-white to-gray-100 rounded-2xl shadow-2xl">
 
-  <!-- Header -->
-  <div class="flex justify-between items-center mb-8">
-    <h2 class="text-5xl font-bold mb-8 text-green-700 text-center">Settings</h2>
+  <!-- Page Heading -->
+  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b border-gray-300 pb-4 mb-6">
+    <h2 class="text-4xl font-extrabold text-green-700 tracking-tight mb-4 sm:mb-0">
+      Settings
+    </h2>
   </div>
 
-  <!-- Tab Navigation -->
-  <div class="flex space-x-4 border-b pb-4 mb-6">
-      <button
-        (click)="currentTab = 'profile'"
-        [ngClass]="{ 'text-green-500 border-b-4 border-green-500': currentTab === 'profile', 'text-gray-500 hover:text-green-500': currentTab !== 'profile' }"
-        class="text-lg font-semibold focus:outline-none px-4 py-2 rounded-t-lg transition"
-        data-translate-key="profileSettings"
-      >
-        Profile Settings
-      </button>
-      <button
-        (click)="currentTab = 'preferences'"
-        [ngClass]="{ 'text-green-500 border-b-4 border-green-500': currentTab === 'password', 'text-gray-500 hover:text-green-500': currentTab !== 'password' }"
-        class="text-lg font-semibold focus:outline-none px-4 py-2 rounded-t-lg transition"
-        data-translate-key="appPreferences"
-      >
-        Application Preferences
-      </button>
-      <button
-        (click)="currentTab = 'data'"
-        [ngClass]="{ 'text-green-500 border-b-4 border-green-500': currentTab === 'notifications', 'text-gray-500 hover:text-green-500': currentTab !== 'notifications' }"
-        class="text-lg font-semibold focus:outline-none px-4 py-2 rounded-t-lg transition"
-        data-translate-key="dataManagement"
-      >
-        Data Management
-      </button>
-      <button
-        (click)="currentTab = 'security'"
-        [ngClass]="{ 'text-green-500 border-b-4 border-green-500': currentTab === 'contacts', 'text-gray-500 hover:text-green-500': currentTab !== 'contacts' }"
+  <!-- Tabs Navigation -->
+  <div class="flex items-center space-x-6 border-b border-gray-300 mb-6">
+    <!-- Profile Settings -->
+    <button
+      (click)="currentTab = 'profile'"
+      class="py-2 text-sm sm:text-base font-semibold border-b-4 transition-colors focus:outline-none"
+      [ngClass]="{
+        'text-green-600 border-green-600': currentTab === 'profile',
+        'text-gray-500 border-transparent hover:text-green-600 hover:border-green-300':
+          currentTab !== 'profile'
+      }"
+    >
+      <i class="bi bi-person-fill mr-1"></i> Profile
+    </button>
 
-        class="text-lg font-semibold focus:outline-none px-4 py-2 rounded-t-lg transition"
-        data-translate-key="securitySettings"
-      >
-        Security Settings
-      </button>
-      <button
-        (click)="currentTab = 'hospital'"
-        [ngClass]="{ 'text-green-500 border-b-4 border-green-500': currentTab === 'theme', 'text-gray-500 hover:text-green-500': currentTab !== 'theme' }"
-        class="text-lg font-semibold focus:outline-none px-4 py-2 rounded-t-lg transition"
-        data-translate-key="hospitalInfo"
-      >
-        Hospital Information
-      </button>
-    </div>
+    <!-- App Preferences -->
+    <button
+      (click)="currentTab = 'preferences'"
+      class="py-2 text-sm sm:text-base font-semibold border-b-4 transition-colors focus:outline-none"
+      [ngClass]="{
+        'text-green-600 border-green-600': currentTab === 'preferences',
+        'text-gray-500 border-transparent hover:text-green-600 hover:border-green-300':
+          currentTab !== 'preferences'
+      }"
+    >
+      <i class="bi bi-gear-fill mr-1"></i> Preferences
+    </button>
+
+    <!-- Data Management -->
+    <button
+      (click)="currentTab = 'data'"
+      class="py-2 text-sm sm:text-base font-semibold border-b-4 transition-colors focus:outline-none"
+      [ngClass]="{
+        'text-green-600 border-green-600': currentTab === 'data',
+        'text-gray-500 border-transparent hover:text-green-600 hover:border-green-300':
+          currentTab !== 'data'
+      }"
+    >
+      <i class="bi bi-hdd-stack-fill mr-1"></i> Data
+    </button>
+
+    <!-- Security Settings -->
+    <button
+      (click)="currentTab = 'security'"
+      class="py-2 text-sm sm:text-base font-semibold border-b-4 transition-colors focus:outline-none"
+      [ngClass]="{
+        'text-green-600 border-green-600': currentTab === 'security',
+        'text-gray-500 border-transparent hover:text-green-600 hover:border-green-300':
+          currentTab !== 'security'
+      }"
+    >
+      <i class="bi bi-shield-lock-fill mr-1"></i> Security
+    </button>
+
+    <!-- Hospital Information -->
+    <button
+      (click)="currentTab = 'hospital'"
+      class="py-2 text-sm sm:text-base font-semibold border-b-4 transition-colors focus:outline-none"
+      [ngClass]="{
+        'text-green-600 border-green-600': currentTab === 'hospital',
+        'text-gray-500 border-transparent hover:text-green-600 hover:border-green-300':
+          currentTab !== 'hospital'
+      }"
+    >
+      <i class="bi bi-building mr-1"></i> Hospital
+    </button>
   </div>
 
   <!-- Profile Settings -->
-  <div *ngIf="currentTab === 'profile'" class="bg-white rounded-lg shadow-lg p-6">
-    <h2 class="text-2xl font-bold text-gray-800 mb-4" data-translate-key="profileSettings">Profile Settings</h2>
+  <div
+    *ngIf="currentTab === 'profile'"
+    class="bg-white rounded-xl shadow-lg p-6 transition-all"
+  >
+    <h2
+      class="text-2xl font-bold text-gray-800 mb-6 pb-2 border-b-2 border-gray-200"
+    >
+      Profile Settings
+    </h2>
+
     <form class="space-y-4">
+      <!-- Name -->
       <div>
         <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
         <input
@@ -62,9 +95,11 @@
           [(ngModel)]="profile.name"
           name="name"
           type="text"
-          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+          class="mt-1 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none"
         />
       </div>
+
+      <!-- Email -->
       <div>
         <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
         <input
@@ -72,47 +107,58 @@
           [(ngModel)]="profile.email"
           name="email"
           type="email"
-          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+          class="mt-1 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none"
         />
       </div>
+
+      <!-- Contact -->
       <div>
         <label for="contact" class="block text-sm font-medium text-gray-700">Contact</label>
         <input
           [(ngModel)]="profile.contact"
           name="contact"
           type="text"
-          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+          class="mt-1 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none"
         />
       </div>
+
+      <!-- Profile Picture -->
       <div>
-        <label class="block text-gray-700 font-medium mb-1">Profile Picture</label>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Profile Picture</label>
         <div class="flex items-center space-x-4">
-          <!-- Profile Picture Preview -->
+          <!-- If we have a profile picture, show it -->
           <div *ngIf="profile.profilePicture; else initialsBlock">
             <img
               [src]="profile.profilePicture"
               alt="Profile Picture"
-              class="w-16 h-16 rounded-full border-2 border-green-500"
+              class="w-16 h-16 rounded-full border-2 border-green-500 object-cover"
             />
           </div>
-          <!-- Initials Block -->
+          <!-- Otherwise show initials -->
           <ng-template #initialsBlock>
             <div
               class="w-16 h-16 flex items-center justify-center rounded-full font-bold text-white"
               [ngStyle]="{ 'background-color': generatePastelColor() }"
             >
-              {{ profile.name ? profile.name[0] : '?' }}
+              {{ profile.name ? (profile.name[0] | uppercase) : '?' }}
             </div>
           </ng-template>
+
           <!-- Upload Button -->
-          <input type="file" (change)="uploadProfilePicture($event)" />
+          <input
+            type="file"
+            (change)="uploadProfilePicture($event)"
+            class="text-sm text-gray-500"
+          />
         </div>
       </div>
+
+      <!-- Save Button -->
       <div class="flex justify-end">
         <button
           (click)="saveProfile()"
-          class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition"
-          data-translate-key="saveChanges"
+          class="px-4 py-2 bg-green-600 text-white rounded-lg font-semibold
+                 hover:bg-green-700 transition-transform transform hover:scale-105"
         >
           Save Changes
         </button>
@@ -120,29 +166,40 @@
     </form>
   </div>
 
-  <!-- Application Preferences -->
-  <div *ngIf="currentTab === 'preferences'" class="bg-white rounded-lg shadow-lg p-6">
-    <h2 class="text-2xl font-bold text-gray-800 mb-4" data-translate-key="appPreferences">Application Preferences</h2>
+  <!-- App Preferences -->
+  <div
+    *ngIf="currentTab === 'preferences'"
+    class="bg-white rounded-xl shadow-lg p-6 transition-all"
+  >
+    <h2
+      class="text-2xl font-bold text-gray-800 mb-6 pb-2 border-b-2 border-gray-200"
+    >
+      Application Preferences
+    </h2>
+
     <form class="space-y-4">
+      <!-- Theme -->
       <div>
         <label for="theme" class="block text-sm font-medium text-gray-700">Theme</label>
         <select
           id="theme"
           [(ngModel)]="preferences.theme"
           name="theme"
-          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+          class="mt-1 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none"
         >
           <option value="light">Light</option>
           <option value="dark">Dark</option>
         </select>
       </div>
+
+      <!-- Language -->
       <div>
         <label for="language" class="block text-sm font-medium text-gray-700">Language</label>
         <select
           id="language"
           [(ngModel)]="preferences.language"
           name="language"
-          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+          class="mt-1 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none"
           (change)="changeLanguage()"
         >
           <option value="en">English</option>
@@ -151,38 +208,36 @@
           <option value="de">German</option>
         </select>
       </div>
+
+      <!-- Notifications -->
       <div>
-        <label for="notifications" class="block text-sm font-medium text-gray-700">
-          Notifications
-        </label>
-        <div id="notifications" class="flex items-center space-x-4">
-          <label for="emailNotifications">
+        <label class="block text-sm font-medium text-gray-700 mb-1">Notifications</label>
+        <div class="flex items-center space-x-4">
+          <label class="flex items-center space-x-2">
             <input
-              id="emailNotifications"
               type="checkbox"
               [(ngModel)]="preferences.notifications.email"
               name="notifications.email"
-              class="mr-2"
             />
-            Email Notifications
+            <span>Email Notifications</span>
           </label>
-          <label for="appNotifications">
+          <label class="flex items-center space-x-2">
             <input
-              id="appNotifications"
               type="checkbox"
               [(ngModel)]="preferences.notifications.app"
               name="notifications.app"
-              class="mr-2"
             />
-            App Notifications
+            <span>App Notifications</span>
           </label>
         </div>
       </div>
+
+      <!-- Save Button -->
       <div class="flex justify-end">
         <button
           (click)="savePreferences()"
-          class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition"
-          data-translate-key="savePreferences"
+          class="px-4 py-2 bg-green-600 text-white rounded-lg font-semibold
+                 hover:bg-green-700 transition-transform transform hover:scale-105"
         >
           Save Preferences
         </button>
@@ -191,25 +246,37 @@
   </div>
 
   <!-- Data Management -->
-  <div *ngIf="currentTab === 'data'" class="bg-white rounded-lg shadow-lg p-6">
-    <h2 class="text-2xl font-bold text-gray-800 mb-4">Data Management</h2>
-    <p class="text-gray-600">Manage exported files, backup data, or restore information from a saved backup.</p>
-    <div class="mt-4">
+  <div
+    *ngIf="currentTab === 'data'"
+    class="bg-white rounded-xl shadow-lg p-6 transition-all"
+  >
+    <h2
+      class="text-2xl font-bold text-gray-800 mb-6 pb-2 border-b-2 border-gray-200"
+    >
+      Data Management
+    </h2>
+    <p class="text-gray-600">
+      Manage backups, exports, and data restores.
+    </p>
+    <div class="mt-6 flex items-center space-x-4">
       <button
         (click)="backupData()"
-        class="px-6 py-3 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 transition"
+        class="px-5 py-2 bg-blue-500 text-white rounded-lg shadow-md
+               hover:bg-blue-600 transition-transform transform hover:scale-105"
       >
         Backup Data
       </button>
       <button
         (click)="restoreData()"
-        class="ml-4 px-6 py-3 bg-green-500 text-white rounded-lg shadow-md hover:bg-green-600 transition"
+        class="px-5 py-2 bg-green-500 text-white rounded-lg shadow-md
+               hover:bg-green-600 transition-transform transform hover:scale-105"
       >
         Restore Data
       </button>
       <button
         (click)="exportData()"
-        class="ml-4 px-6 py-3 bg-gray-500 text-white rounded-lg shadow-md hover:bg-gray-600 transition"
+        class="px-5 py-2 bg-gray-500 text-white rounded-lg shadow-md
+               hover:bg-gray-600 transition-transform transform hover:scale-105"
       >
         Export Data
       </button>
@@ -217,35 +284,51 @@
   </div>
 
   <!-- Security Settings -->
-  <div *ngIf="currentTab === 'security'" class="bg-white rounded-lg shadow-lg p-6">
-    <h2 class="text-2xl font-bold text-gray-800 mb-4">Security Settings</h2>
+  <div
+    *ngIf="currentTab === 'security'"
+    class="bg-white rounded-xl shadow-lg p-6 transition-all"
+  >
+    <h2
+      class="text-2xl font-bold text-gray-800 mb-6 pb-2 border-b-2 border-gray-200"
+    >
+      Security Settings
+    </h2>
     <form class="space-y-4">
+      <!-- Password -->
       <div>
-        <label for="password" class="block text-sm font-medium text-gray-700">Change Password</label>
+        <label for="password" class="block text-sm font-medium text-gray-700">
+          New Password
+        </label>
         <input
           id="password"
           type="password"
           [(ngModel)]="security.newPassword"
           name="password"
           placeholder="Enter new password"
-          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+          class="mt-1 w-full px-4 py-2 border rounded-lg
+                 focus:ring-2 focus:ring-green-500 focus:outline-none"
         />
       </div>
-      <div>
-        <label for="twoFA" class="block text-sm font-medium text-gray-700">Two-Factor Authentication</label>
+
+      <!-- 2FA -->
+      <div class="flex items-center space-x-2">
         <input
           id="twoFA"
           type="checkbox"
           [(ngModel)]="security.enableTwoFA"
           name="twoFA"
-          class="mr-2"
         />
-        Enable Two-Factor Authentication
+        <label for="twoFA" class="text-sm text-gray-700">
+          Enable Two-Factor Authentication
+        </label>
       </div>
+
+      <!-- Save Button -->
       <div class="flex justify-end">
         <button
           (click)="saveSecuritySettings()"
-          class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition"
+          class="px-4 py-2 bg-green-600 text-white rounded-lg font-semibold
+                 hover:bg-green-700 transition-transform transform hover:scale-105"
         >
           Save Security Settings
         </button>
@@ -254,56 +337,80 @@
   </div>
 
   <!-- Hospital Information -->
-  <div *ngIf="currentTab === 'hospital'" class="bg-white rounded-lg shadow-lg p-6">
-    <h2 class="text-2xl font-bold text-gray-800 mb-4">Hospital Information</h2>
+  <div
+    *ngIf="currentTab === 'hospital'"
+    class="bg-white rounded-xl shadow-lg p-6 transition-all"
+  >
+    <h2
+      class="text-2xl font-bold text-gray-800 mb-6 pb-2 border-b-2 border-gray-200"
+    >
+      Hospital Information
+    </h2>
     <form class="space-y-4">
       <div>
-        <label for="hospitalName" class="block text-sm font-medium text-gray-700">Hospital Name</label>
+        <label
+          for="hospitalName"
+          class="block text-sm font-medium text-gray-700"
+        >
+          Hospital Name
+        </label>
         <input
           id="hospitalName"
           [(ngModel)]="hospital.name"
           name="hospitalName"
           type="text"
-          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+          class="mt-1 w-full px-4 py-2 border rounded-lg
+                 focus:ring-2 focus:ring-green-500 focus:outline-none"
         />
       </div>
       <div>
-        <label for="contact" class="block text-sm font-medium text-gray-700">Hospital Contact</label>
+        <label for="contact" class="block text-sm font-medium text-gray-700">
+          Hospital Contact
+        </label>
         <input
           id="contact"
           [(ngModel)]="hospital.contact"
           name="contact"
           type="text"
-          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+          class="mt-1 w-full px-4 py-2 border rounded-lg
+                 focus:ring-2 focus:ring-green-500 focus:outline-none"
         />
       </div>
       <div>
-        <label for="address" class="block text-sm font-medium text-gray-700">Address</label>
+        <label for="address" class="block text-sm font-medium text-gray-700">
+          Address
+        </label>
         <input
           id="address"
           [(ngModel)]="hospital.address"
           name="address"
           type="text"
-          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+          class="mt-1 w-full px-4 py-2 border rounded-lg
+                 focus:ring-2 focus:ring-green-500 focus:outline-none"
         />
       </div>
       <div>
-        <label for="website" class="block text-sm font-medium text-gray-700">Website</label>
+        <label for="website" class="block text-sm font-medium text-gray-700">
+          Website
+        </label>
         <input
           id="website"
           [(ngModel)]="hospital.website"
           name="website"
           type="url"
-          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+          class="mt-1 w-full px-4 py-2 border rounded-lg
+                 focus:ring-2 focus:ring-green-500 focus:outline-none"
         />
       </div>
       <div class="flex justify-end">
         <button
           (click)="saveHospitalInfo()"
-          class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition"
+          class="px-4 py-2 bg-green-600 text-white rounded-lg font-semibold
+                 hover:bg-green-700 transition-transform transform hover:scale-105"
         >
-          Save Hospital Information
+          Save Hospital Info
         </button>
       </div>
     </form>
   </div>
+</div>

@@ -1,104 +1,207 @@
 <div class="p-10 bg-gradient-to-br from-green-50 via-white to-gray-100 rounded-2xl shadow-xl max-w-15xl mx-auto">
 
-    <!-- Billing Header -->
-    <h2 class="text-5xl font-bold mb-8 text-green-700 text-center">Billing Overview</h2>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-10"> <!-- Increased gap from 6 to 10 -->
-      <!-- Total Due -->
-      <div class="bg-red-50 text-red-700 rounded-lg p-6 shadow-md hover:shadow-lg transition">
-        <h3 class="text-lg font-semibold flex items-center gap-2">
-          <i class="bi bi-cash-coin text-red-500"></i> Total Due
-        </h3>
-        <p class="text-4xl font-bold mt-2">{{ billingSummary.totalDue | currency:'EUR':'symbol':'1.2-2' }}</p>
-      </div>
-      <!-- Total Paid -->
-      <div class="bg-green-50 text-green-700 rounded-lg p-6 shadow-md hover:shadow-lg transition">
-        <h3 class="text-lg font-semibold flex items-center gap-2">
-          <i class="bi bi-check-circle-fill text-green-500"></i> Total Paid
-        </h3>
-        <p class="text-4xl font-bold mt-2">{{ billingSummary.totalPaid | currency:'EUR':'symbol':'1.2-2' }}</p>
-      </div>
-      <!-- Pending Payments -->
-      <div class="bg-yellow-50 text-yellow-700 rounded-lg p-6 shadow-md hover:shadow-lg transition">
-        <h3 class="text-lg font-semibold flex items-center gap-2">
-          <i class="bi bi-exclamation-circle-fill text-yellow-500"></i> Pending Payments
-        </h3>
-        <p class="text-4xl font-bold mt-2">{{ billingSummary.pending | currency:'EUR':'symbol':'1.2-2' }}</p>
-      </div>
+  <!-- Billing Header -->
+  <h2 class="text-5xl font-bold mb-8 text-green-700 text-center">Billing Overview</h2>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+    <!-- Total Due -->
+    <div class="bg-red-50 text-red-700 rounded-lg p-6 shadow-md hover:shadow-lg transition">
+      <h3 class="text-lg font-semibold flex items-center gap-2">
+        <i class="bi bi-cash-coin text-red-500"></i> Total Due
+      </h3>
+      <p class="text-4xl font-bold mt-2">
+        {{ billingSummary.totalDue | currency:'EUR':'symbol':'1.2-2' }}
+      </p>
+    </div>
+
+    <!-- Total Paid -->
+    <div class="bg-green-50 text-green-700 rounded-lg p-6 shadow-md hover:shadow-lg transition">
+      <h3 class="text-lg font-semibold flex items-center gap-2">
+        <i class="bi bi-check-circle-fill text-green-500"></i> Total Paid
+      </h3>
+      <p class="text-4xl font-bold mt-2">
+        {{ billingSummary.totalPaid | currency:'EUR':'symbol':'1.2-2' }}
+      </p>
+    </div>
+
+    <!-- Pending Payments -->
+    <div class="bg-yellow-50 text-yellow-700 rounded-lg p-6 shadow-md hover:shadow-lg transition">
+      <h3 class="text-lg font-semibold flex items-center gap-2">
+        <i class="bi bi-exclamation-circle-fill text-yellow-500"></i> Pending Payments
+      </h3>
+      <p class="text-4xl font-bold mt-2">
+        {{ billingSummary.pending | currency:'EUR':'symbol':'1.2-2' }}
+      </p>
     </div>
   </div>
+</div>
 
-  <!-- Invoices Table -->
-  <div class="bg-white rounded-lg shadow-lg p-6 mt-10"> <!-- Added mt-10 for spacing -->
-    <div class="flex justify-between items-center mb-6">
-      <h3 class="text-3xl font-bold text-gray-800">Invoices</h3>
-      <button
-        class="mt-4 md:mt-0 px-6 py-3 bg-white text-green-600 rounded-lg shadow-lg hover:bg-gray-100 transition-all duration-300"
-      >
-        + Add Invoice
-      </button>
-    </div>
+<!-- Invoices Table -->
+<div class="bg-white rounded-lg shadow-lg p-6 mt-10">
+  <div class="flex justify-between items-center mb-6">
+    <h3 class="text-3xl font-bold text-gray-800">Invoices</h3>
+    <button
+      (click)="openAddInvoiceModal()"
+      class="mt-4 md:mt-0 px-6 py-3 bg-white text-green-600 rounded-lg shadow-lg hover:bg-gray-100 transition-all duration-300"
+    >
+      + Add Invoice
+    </button>
+  </div>
 
-    <div class="overflow-auto">
-      <table class="min-w-full bg-white border border-gray-200">
-        <thead class="bg-gray-100">
-        <tr>
-          <th class="px-6 py-3 text-left font-semibold text-gray-600">Invoice ID</th>
-          <th class="px-6 py-3 text-left font-semibold text-gray-600">Date</th>
-          <th class="px-6 py-3 text-left font-semibold text-gray-600">Amount</th>
-          <th class="px-6 py-3 text-left font-semibold text-gray-600">Status</th>
-          <th class="px-6 py-3 text-center font-semibold text-gray-600">Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr
-          *ngFor="let invoice of invoices"
-          class="hover:bg-gray-50 transition"
+  <div class="overflow-auto">
+    <table class="min-w-full bg-white border border-gray-200">
+      <thead class="bg-gray-100">
+      <tr>
+        <th class="px-6 py-3 text-left font-semibold text-gray-600">Invoice ID</th>
+        <th class="px-6 py-3 text-left font-semibold text-gray-600">Date</th>
+        <th class="px-6 py-3 text-left font-semibold text-gray-600">Amount</th>
+        <th class="px-6 py-3 text-left font-semibold text-gray-600">Status</th>
+        <th class="px-6 py-3 text-center font-semibold text-gray-600">Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let invoice of invoices" class="hover:bg-gray-50 transition">
+        <td class="px-6 py-4 font-medium text-gray-800">{{ invoice.id }}</td>
+        <td class="px-6 py-4 text-gray-600">
+          {{ invoice.date | date:'dd.MM.yyyy' }}
+        </td>
+        <td class="px-6 py-4 text-gray-800">
+          {{ invoice.amount | currency:'EUR':'symbol':'1.2-2' }}
+        </td>
+        <td class="px-6 py-4">
+          <span
+            class="px-3 py-1 text-sm rounded-full font-medium"
+            [ngClass]="{
+              'bg-green-100 text-green-600': invoice.status === 'Paid',
+              'bg-yellow-100 text-yellow-600': invoice.status === 'Pending',
+              'bg-red-100 text-red-600': invoice.status === 'Overdue'
+            }"
+          >
+            {{ invoice.status }}
+          </span>
+        </td>
+        <td class="px-6 py-4 flex justify-center space-x-3">
+          <button
+            (click)="downloadInvoice(invoice)"
+            class="text-blue-500 hover:text-blue-700 transition"
+          >
+            <i class="bi bi-download"></i>
+          </button>
+          <button
+            (click)="viewInvoice(invoice)"
+            class="text-green-500 hover:text-green-700 transition"
+          >
+            <i class="bi bi-eye"></i>
+          </button>
+          <button
+            (click)="deleteInvoice(invoice.id)"
+            class="text-red-500 hover:text-red-700 transition"
+          >
+            <i class="bi bi-trash"></i>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="invoices.length === 0" class="text-center mt-8">
+    <i class="bi bi-file-earmark-excel text-gray-400 text-6xl"></i>
+    <p class="mt-4 text-gray-600 text-lg">No invoices available. Add one to get started!</p>
+  </div>
+</div>
+
+<!-- Modal for adding a new invoice -->
+<div
+  *ngIf="showAddForm"
+  class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+>
+  <div class="bg-white rounded-lg shadow-2xl p-6 w-full max-w-lg relative">
+    <!-- Close Button -->
+    <button
+      (click)="closeAddInvoiceModal()"
+      class="absolute top-4 right-4 text-gray-400 hover:text-red-500 transition"
+    >
+      <i class="bi bi-x text-2xl"></i>
+    </button>
+
+    <h2 class="text-2xl font-bold mb-6 text-gray-800">Add New Invoice</h2>
+    <form (ngSubmit)="submitNewInvoice()">
+      <!-- ID Field -->
+      <div class="mb-4">
+        <label for="invoiceId" class="block text-sm font-medium text-gray-700"
+        >Invoice ID</label
         >
-          <td class="px-6 py-4 font-medium text-gray-800">{{ invoice.id }}</td>
-          <td class="px-6 py-4 text-gray-600">{{ invoice.date | date:'dd.MM.yyyy' }}</td>
-          <td class="px-6 py-4 text-gray-800">
-            {{ invoice.amount | currency:'EUR':'symbol':'1.2-2' }}
-          </td>
-          <td class="px-6 py-4">
-              <span
-                class="px-3 py-1 text-sm rounded-full font-medium"
-                [ngClass]="{
-                  'bg-green-100 text-green-600': invoice.status === 'Paid',
-                  'bg-yellow-100 text-yellow-600': invoice.status === 'Pending',
-                  'bg-red-100 text-red-600': invoice.status === 'Overdue'
-                }"
-              >
-                {{ invoice.status }}
-              </span>
-          </td>
-          <td class="px-6 py-4 flex justify-center space-x-3">
-            <button
-              (click)="downloadInvoice(invoice)"
-              class="text-blue-500 hover:text-blue-700 transition"
-            >
-              <i class="bi bi-download"></i>
-            </button>
-            <button
-              (click)="viewInvoice(invoice)"
-              class="text-green-500 hover:text-green-700 transition"
-            >
-              <i class="bi bi-eye"></i>
-            </button>
-            <button
-              (click)="deleteInvoice(invoice.id)"
-              class="text-red-500 hover:text-red-700 transition"
-            >
-              <i class="bi bi-trash"></i>
-            </button>
-          </td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
+        <input
+          id="invoiceId"
+          [(ngModel)]="newInvoice.id"
+          name="invoiceId"
+          type="text"
+          required
+          placeholder="e.g. INV-105"
+          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+        />
+      </div>
 
-    <!-- Empty State -->
-    <div *ngIf="invoices.length === 0" class="text-center mt-8">
-      <i class="bi bi-file-earmark-excel text-gray-400 text-6xl"></i>
-      <p class="mt-4 text-gray-600 text-lg">No invoices available. Add one to get started!</p>
-    </div>
+      <!-- Date Field -->
+      <div class="mb-4">
+        <label for="date" class="block text-sm font-medium text-gray-700"
+        >Date</label
+        >
+        <input
+          id="date"
+          [(ngModel)]="newInvoice.date"
+          name="date"
+          type="date"
+          required
+          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+        />
+      </div>
+
+      <!-- Amount Field -->
+      <div class="mb-4">
+        <label for="amount" class="block text-sm font-medium text-gray-700"
+        >Amount (EUR)</label
+        >
+        <input
+          id="amount"
+          [(ngModel)]="newInvoice.amount"
+          name="amount"
+          type="number"
+          min="0"
+          step="0.01"
+          required
+          placeholder="e.g. 150"
+          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+        />
+      </div>
+
+      <!-- Status -->
+      <div class="mb-4">
+        <label for="status" class="block text-sm font-medium text-gray-700"
+        >Status</label
+        >
+        <select
+          id="status"
+          [(ngModel)]="newInvoice.status"
+          name="status"
+          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+        >
+          <option value="Pending">Pending</option>
+          <option value="Paid">Paid</option>
+          <option value="Overdue">Overdue</option>
+        </select>
+      </div>
+
+      <!-- Submit -->
+      <div class="flex justify-end mt-6">
+        <button
+          type="submit"
+          class="px-6 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition"
+        >
+          Save Invoice
+        </button>
+      </div>
+    </form>
+  </div>
 </div>

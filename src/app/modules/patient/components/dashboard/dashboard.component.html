@@ -166,14 +166,24 @@
     </div>
   </div>
 
-      <!-- Blood Pressure Trends -->
+  <!-- Blood Pressure Trends -->
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
     <div class="bg-white rounded-lg shadow-lg p-6 lg:col-span-2">
       <h3 class="text-lg font-bold mb-4">Blood Pressure Trends</h3>
-      <canvas id="bloodPressureChart" class="w-full"></canvas>
+      <canvas
+        id="bloodPressureChart"
+        class="w-full"
+        *ngIf="bloodPressureReadings.length > 0"
+      ></canvas>
+      <p
+        *ngIf="bloodPressureReadings.length === 0"
+        class="text-gray-500 text-center mt-4"
+      >
+        Add your trends in the lab results to see something.
+      </p>
     </div>
 
-  <!-- Reminders -->
+    <!-- Reminders -->
     <div class="bg-gradient-to-br from-purple-50 to-blue-50 p-6 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300">
       <h2 class="text-xl font-bold text-purple-600 flex items-center gap-2">
         <i class="bi bi-alarm text-purple-500 text-lg"></i> Today's Reminders
