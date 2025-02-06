@@ -4,17 +4,32 @@
 >
   <!-- Profile Section -->
   <div class="profile-section flex flex-col items-center py-8 mt-16 border-b border-gray-300">
-    <img
-      ngSrc="assets/doctor.jpg"
-      alt="Profile"
-      class="profile-picture w-16 h-16 rounded-full border-4 border-green-500 mb-4 transition-transform duration-300"
-      [class.scale-75]="collapsed"
-      height="3000" width="3000" />
+    <div
+      *ngIf="profilePicture; else initialsBlock"
+      class="profile-picture w-16 h-16 rounded-full border-4 border-green-500 mb-4"
+    >
+      <img
+        [src]="profilePicture"
+        alt="Profile Picture"
+        class="w-full h-full rounded-full object-cover"
+      />
+    </div>
+    <ng-template #initialsBlock>
+      <div
+        class="w-16 h-16 flex items-center justify-center rounded-full text-white font-bold"
+        [ngStyle]="{
+          'background-color': generatePastelColor()
+        }"
+      >
+        {{ getInitials() }}
+      </div>
+    </ng-template>
     <div
       class="profile-details text-center transition-all duration-300"
-      [class.opacity-0]="collapsed" [class.opacity-100]="!collapsed"
+      [class.opacity-0]="collapsed"
+      [class.opacity-100]="!collapsed"
     >
-      <span class="name text-lg font-semibold text-gray-800 block">Dr. John Doe</span>
+      <span class="name text-lg font-semibold text-gray-800 block">{{ profileName }}</span>
       <span class="role text-sm text-gray-600 block mt-1">Cardiologist</span>
     </div>
   </div>
@@ -241,10 +256,10 @@
     </ul>
   </nav>
 
-  <!-- Toggle Button -->
+  <!-- Toggle Button (Connected with the Layout.Component Now) -->
   <button
     class="toggle-btn mx-auto mb-6 w-12 h-12 bg-green-500 text-white rounded-full flex items-center justify-center shadow-lg hover:bg-green-600 hover:scale-110 transition-transform duration-300"
-    (click)="toggleSidebar()"
+    (click)="onToggle()"
   >
     <i [class]="collapsed ? 'bi bi-chevron-double-right' : 'bi bi-chevron-double-left'"></i>
   </button>

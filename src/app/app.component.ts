@@ -1,17 +1,16 @@
 import { Component } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { StorageService } from './_services/storage.service';
-import { AuthService } from './_services/auth.service';
-import { EventBusService } from './_shared/event-bus.service';
+import { StorageService } from './core/services/storage.service';
+import { AuthService } from './core/services/auth.service';
+import { EventBusService } from './shared/event-bus.service';
+import { RouterModule } from '@angular/router'
 import { NgIf } from '@angular/common';
-import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
-  imports: [NgIf, RouterModule ]
+  standalone: true,
+  imports: [RouterModule],
 })
 export class AppComponent {
   private roles: string[] = [];

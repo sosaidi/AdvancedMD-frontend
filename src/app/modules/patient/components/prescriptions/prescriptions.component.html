@@ -1,81 +1,51 @@
 <div class="p-10 bg-gradient-to-br from-green-50 via-white to-gray-100 rounded-2xl shadow-xl max-w-15xl mx-auto">
-  <div class="bg-white rounded-2xl shadow-2xl p-9 max-w-9xl w-[143vh] mx-auto">
-
   <!-- Header and Tabs -->
-    <div class="flex justify-between items-center mb-6">
-      <h2 class="text-5xl font-bold mb-8 text-green-700 text-center">Prescriptions</h2>
-      <div class="flex items-center space-x-4">
-        <button
-          class="px-6 py-3 bg-blue-500 text-white rounded-lg shadow-lg hover:bg-blue-600 transition"
-          (click)="addPrescription()"
-        >
-          + Add Prescription
-        </button>
-        <label class="flex items-center px-6 py-3 bg-green-500 text-white rounded-lg shadow-lg hover:bg-green-600 transition cursor-pointer">
-          <i class="bi bi-upload mr-2"></i>
-          Import
-          <input
-            type="file"
-            accept=".json"
-            (change)="importPrescriptions($event)"
-            class="hidden"
-          />
-        </label>
-      </div>
-    </div>
-
-    <!-- Tabs -->
-    <div class="flex border-b border-gray-200">
+  <div class="flex justify-between items-center mb-6">
+    <h2 class="text-5xl font-bold mb-8 text-green-700 text-center">Prescriptions</h2>
+    <div class="flex items-center space-x-4">
+      <!-- Button: Opens form modal -->
       <button
-        (click)="setActiveTab('active')"
-        [class.border-b-2]="activeTab === 'active'"
-        [class.border-blue-500]="activeTab === 'active'"
-        [class.text-blue-600]="activeTab === 'active'"
-        class="py-2 px-6 text-gray-600 hover:text-blue-500 hover:border-blue-500 transition font-semibold"
+        class="px-6 py-3 bg-blue-500 text-white rounded-lg shadow-lg hover:bg-blue-600 transition"
+        (click)="openForm()"
       >
-        Active Prescriptions
+        + Add Prescription
       </button>
-      <button
-        (click)="setActiveTab('deleted')"
-        [class.border-b-2]="activeTab === 'deleted'"
-        [class.border-red-500]="activeTab === 'deleted'"
-        [class.text-red-600]="activeTab === 'deleted'"
-        class="py-2 px-6 text-gray-600 hover:text-red-500 hover:border-red-500 transition font-semibold"
+      <!-- Import Button (unchanged) -->
+      <label
+        class="flex items-center px-6 py-3 bg-green-500 text-white rounded-lg shadow-lg hover:bg-green-600 transition cursor-pointer"
       >
-        Deleted Prescriptions ({{ deletedPrescriptions.length }})
-      </button>
+        <i class="bi bi-upload mr-2"></i>
+        Import
+        <input
+          type="file"
+          accept=".json"
+          (change)="importPrescriptions($event)"
+          class="hidden"
+        />
+      </label>
     </div>
   </div>
 
-  <div class="flex space-x-4 mb-4">
+  <!-- Tabs -->
+  <div class="flex border-b border-gray-200">
     <button
-      (click)="setView('list')"
-      [class.bg-blue-500]="activeView === 'list'"
-      class="px-4 py-2 rounded bg-gray-200 hover:bg-blue-500 hover:text-white"
+      (click)="setActiveTab('active')"
+      [class.border-b-2]="activeTab === 'active'"
+      [class.border-blue-500]="activeTab === 'active'"
+      [class.text-blue-600]="activeTab === 'active'"
+      class="py-2 px-6 text-gray-600 hover:text-blue-500 hover:border-blue-500 transition font-semibold"
     >
-      List View
+      Active Prescriptions
     </button>
     <button
-      (click)="setView('grid')"
-      [class.bg-blue-500]="activeView === 'grid'"
-      class="px-4 py-2 rounded bg-gray-200 hover:bg-blue-500 hover:text-white"
+      (click)="setActiveTab('deleted')"
+      [class.border-b-2]="activeTab === 'deleted'"
+      [class.border-red-500]="activeTab === 'deleted'"
+      [class.text-red-600]="activeTab === 'deleted'"
+      class="py-2 px-6 text-gray-600 hover:text-red-500 hover:border-red-500 transition font-semibold"
     >
-      Grid View
+      Deleted Prescriptions ({{ deletedPrescriptions.length }})
     </button>
-  </div>
-
-  <div *ngIf="activeView === 'list'">
-    <!-- List View Content -->
-    <div *ngFor="let prescription of prescriptions" class="mb-4 p-4 border">
-      {{ prescription.title }} - {{ prescription.doctor }}
-    </div>
-  </div>
-
-  <div *ngIf="activeView === 'grid'" class="grid grid-cols-2 gap-4">
-    <!-- Grid View Content -->
-    <div *ngFor="let prescription of prescriptions" class="p-4 border">
-      {{ prescription.title }} - {{ prescription.doctor }}
-    </div>
   </div>
 
   <!-- Active Prescriptions Tab -->
@@ -175,5 +145,95 @@
     <p *ngIf="deletedPrescriptions.length === 0" class="text-center text-gray-500 mt-4">
       No deleted prescriptions.
     </p>
+  </div>
+</div>
+
+<!-- Add Prescription Form Modal -->
+<div
+  *ngIf="showForm"
+  class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+>
+  <div class="bg-white rounded-lg shadow-2xl p-6 w-full max-w-2xl relative">
+    <!-- Close Button -->
+    <button
+      (click)="closeForm()"
+      class="absolute top-4 right-4 text-gray-400 hover:text-red-500 transition"
+    >
+      <i class="bi bi-x text-2xl"></i>
+    </button>
+
+    <h2 class="text-2xl font-bold mb-6 text-gray-800">Add New Prescription</h2>
+    <form (ngSubmit)="submitNewPrescription()" #addPrescriptionForm="ngForm">
+      <!-- Title -->
+      <div class="mb-4">
+        <label for="title" class="block text-sm font-medium text-gray-700">Title</label>
+        <input
+          id="title"
+          [(ngModel)]="newPrescription.title"
+          name="title"
+          type="text"
+          required
+          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+      </div>
+
+      <!-- Doctor -->
+      <div class="mb-4">
+        <label for="doctor" class="block text-sm font-medium text-gray-700">Doctor</label>
+        <select
+          id="doctor"
+          [(ngModel)]="newPrescription.doctor"
+          name="doctorName"
+          required
+          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          <option value="">-- Choose a doctor --</option>
+          <option *ngFor="let doc of doctors" [value]="doc.name">
+            {{ doc.name }} ({{ doc.specialty }})
+          </option>
+        </select>
+      </div>
+
+      <!-- Date -->
+      <div class="mb-4">
+        <label for="date" class="block text-sm font-medium text-gray-700">Date</label>
+        <input
+          id="date"
+          [(ngModel)]="newPrescription.date"
+          name="date"
+          type="date"
+          required
+          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+      </div>
+
+      <!-- Disease -->
+      <div class="mb-4">
+        <label for="disease" class="block text-sm font-medium text-gray-700">Disease</label>
+        <select
+          id="disease"
+          [(ngModel)]="newPrescription.disease"
+          name="disease"
+          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          <option value="Fever">Fever</option>
+          <option value="Cholera">Cholera</option>
+          <option value="Jaundice">Jaundice</option>
+          <option value="Malaria">Malaria</option>
+          <option value="Infection">Infection</option>
+          <option value="Unknown">Unknown</option>
+        </select>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="flex justify-end">
+        <button
+          type="submit"
+          class="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition"
+        >
+          Save
+        </button>
+      </div>
+    </form>
   </div>
 </div>

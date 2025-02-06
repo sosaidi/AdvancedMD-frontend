@@ -1,11 +1,12 @@
 import { Component } from '@angular/core'
 import { FormsModule } from '@angular/forms'
-import { NgClass, NgIf } from '@angular/common'
+import { NgClass, NgIf, NgStyle, UpperCasePipe } from '@angular/common'
+import { SharedDataService } from '../../services/shared-data.service'
 
 @Component({
   selector: 'app-settings',
   standalone: true,
-  imports: [FormsModule, NgIf, NgClass],
+  imports: [FormsModule, NgIf, NgClass, NgStyle, UpperCasePipe],
   templateUrl: './settings.component.html',
 })
 export class SettingsComponent {
@@ -15,6 +16,7 @@ export class SettingsComponent {
     name: '',
     email: '',
     contact: '',
+    profilePicture: '',
   }
 
   preferences = {
@@ -86,6 +88,23 @@ export class SettingsComponent {
     },
   }
 
+  constructor(private sharedDataService: SharedDataService) {}
+
+  ngOnInit(): void {
+    // Load saved data on initialization
+    this.sharedDataService.profileName$.subscribe((name) => {
+      this.profile.name = name;
+    });
+    const savedPreferences = localStorage.getItem('preferences');
+    if (savedPreferences) {
+      this.preferences = JSON.parse(savedPreferences);
+    }
+    const savedHospital = localStorage.getItem('hospital');
+    if (savedHospital) {
+      this.hospital = JSON.parse(savedHospital);
+    }
+  }
+
   // Change language dynamically
   changeLanguage(): void {
     const selectedLanguage = this.preferences.language
@@ -102,41 +121,54 @@ export class SettingsComponent {
 
   backupData(): void {
     console.log('Data backup initiated...')
-    alert('Backup successful!')
   }
 
   restoreData(): void {
     console.log('Data restoration initiated...')
-    alert('Data restored!')
   }
 
   exportData(): void {
     console.log('Data export initiated...')
-    alert('Data exported as a file!')
   }
 
-  uploadProfilePicture(event: any): void {
-    const file = event.target.files[0]
-    console.log('Uploaded file:', file)
+  uploadProfilePicture(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files?.length) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const picture = reader.result as string;
+        this.profile.profilePicture = picture; // Update local profile
+        this.sharedDataService.setProfilePicture(picture); // Update shared state
+      };
+      reader.readAsDataURL(input.files[0]);
+    }
   }
 
   saveProfile(): void {
-    console.log('Profile saved:', this.profile)
-    alert('Profile settings saved!')
+    this.sharedDataService.setProfileName(this.profile.name); // Update shared state
   }
 
   savePreferences(): void {
-    console.log('Preferences saved:', this.preferences)
-    alert('Preferences updated!')
+    localStorage.setItem('preferences', JSON.stringify(this.preferences)); // Save preferences
   }
 
   saveSecuritySettings(): void {
-    console.log('Security settings updated:', this.security)
-    alert('Security settings saved!')
+    if (!this.security.newPassword) {
+      alert('Please enter a new password before saving.');
+      return;
+    }
+    console.log('Security settings updated:', this.security);
   }
 
   saveHospitalInfo(): void {
-    console.log('Hospital information updated:', this.hospital)
-    alert('Hospital information saved!')
+    localStorage.setItem('hospital', JSON.stringify(this.hospital)); // Save hospital info
+  }
+
+  generatePastelColor(): string {
+    const hash = Array.from(this.profile.name || '')
+      .map((char) => char.charCodeAt(0))
+      .reduce((sum, charCode) => sum + charCode, 0);
+    const hue = hash % 360;
+    return `hsl(${hue}, 70%, 80%)`;
   }
 }

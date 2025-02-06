@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core'
 import { FormsModule } from '@angular/forms'
-import { NgClass, NgForOf, NgIf } from '@angular/common'
+import { NgClass, NgForOf, NgIf, NgStyle } from '@angular/common'
 import { EmergencyContactsService } from '../../services/contact.service'
 import { NameService } from '../../services/name.service'
 
 @Component({
   selector: 'app-settings',
-  imports: [FormsModule, NgForOf, NgIf, NgClass],
+  imports: [FormsModule, NgForOf, NgIf, NgClass, NgStyle],
   standalone: true,
   templateUrl: './settings.component.html',
 })
@@ -16,6 +16,7 @@ export class SettingsComponent implements OnInit {
     lastName: 'Doe',
     email: 'john.doe@example.com',
     phone: '123-456-7890',
+    profilePicture: '',
   }
 
   password = {
@@ -107,5 +108,28 @@ export class SettingsComponent implements OnInit {
 
   removeLabTest(file: File) {
     this.labTests = this.labTests.filter((f) => f !== file)
+  }
+
+  uploadProfilePicture(event: any): void {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const profilePicture = reader.result as string;
+        this.profile.profilePicture = profilePicture; // Update local profile
+        this.nameService.updateProfile({ profilePicture }); // Update service
+        alert('Profile picture updated successfully!');
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  generatePastelColor(): string {
+    const initials = `${this.profile.firstName[0] || ''}${this.profile.lastName[0] || ''}`;
+    const hash = Array.from(initials)
+      .map((char) => char.charCodeAt(0))
+      .reduce((sum, charCode) => sum + charCode, 0);
+    const hue = hash % 360; // Generate a hue value between 0 and 360
+    return `hsl(${hue}, 70%, 80%)`; // Create a pastel color
   }
 }

@@ -18,20 +18,8 @@ interface Appointment {
   imports: [FormsModule, NgClass, NgIf, NgForOf],
 })
 export class AppointmentsComponent implements OnInit {
-  appointments: {
-    patient: string
-    date: string
-    time: string
-    status: string
-    details: string
-  }[] = []
-  filteredAppointments: {
-    patient: string
-    date: string
-    time: string
-    status: string
-    details: string
-  }[] = []
+  appointments: Appointment[] = []
+  filteredAppointments: Appointment[] = []
   searchQuery = ''
   currentPage = 1
   pageSize = 5
@@ -44,10 +32,21 @@ export class AppointmentsComponent implements OnInit {
   completedAppointments = 0
   cancelledAppointments = 0
 
+  filterDate = ''
+  filterStatus = ''
+
+  showAddForm = false
+  newAppointment: Appointment = {
+    patient: '',
+    date: '',
+    time: '',
+    status: 'Upcoming',
+    details: '',
+  }
+
   constructor(private appointmentService: AppointmentService) {}
 
   ngOnInit(): void {
-    // Mock Data
     this.appointments = [
       {
         patient: 'John Doe',
@@ -78,82 +77,66 @@ export class AppointmentsComponent implements OnInit {
         details: 'Post-op check-up.',
       },
     ]
+
+    // Then load from service
     this.filteredAppointments = this.appointments.slice()
     this.calculateAppointmentStats()
     this.appointments = this.appointmentService.getAppointments()
     this.loadAppointments()
   }
 
+  openAddForm(): void {
+    this.showAddForm = true
+    // Clear the form each time
+    this.newAppointment = {
+      patient: '',
+      date: '',
+      time: '',
+      status: 'Upcoming',
+      details: '',
+    }
+  }
+
+  closeAddForm(): void {
+    this.showAddForm = false
+  }
+
+  submitAppointment(): void {
+    // Add new appointment to the service
+    this.appointmentService.addAppointment(this.newAppointment)
+    // Hide the modal
+    this.closeAddForm()
+    // Reload data
+    this.loadAppointments()
+  }
+
   searchAppointments(): void {
     this.filteredAppointments = this.appointments.filter((appointment) => {
       const matchesSearch =
-        appointment.patient
-          .toLowerCase()
-          .includes(this.searchQuery.toLowerCase()) ||
+        appointment.patient.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
         appointment.date.includes(this.searchQuery)
-      const matchesDate = this.filterDate
-        ? appointment.date === this.filterDate
-        : true
-      const matchesStatus = this.filterStatus
-        ? appointment.status === this.filterStatus
-        : true
+      const matchesDate = this.filterDate ? appointment.date === this.filterDate : true
+      const matchesStatus = this.filterStatus ? appointment.status === this.filterStatus : true
       return matchesSearch && matchesDate && matchesStatus
     })
   }
 
-  sortAppointments(): void {
-    this.filteredAppointments.sort((a: Appointment, b: Appointment) => {
-      const valueA = a[this.sortColumn as keyof Appointment]
-      const valueB = b[this.sortColumn as keyof Appointment]
-
-      // If the value is a string, use localeCompare
-      if (typeof valueA === 'string' && typeof valueB === 'string') {
-        return this.sortDirection
-          ? valueA.localeCompare(valueB)
-          : valueB.localeCompare(valueA)
-      }
-
-      // If the value is a date or time, compare as dates
-      if (this.sortColumn === 'date' || this.sortColumn === 'time') {
-        const dateA = new Date(valueA as string).getTime()
-        const dateB = new Date(valueB as string).getTime()
-        return this.sortDirection ? dateA - dateB : dateB - dateA
-      }
-
-      // Default numeric comparison for other cases (if needed in the future)
-      return 0
-    })
-  }
-
-  filterDate = ''
-  filterStatus = ''
-
   filterAppointments(): void {
     this.filteredAppointments = this.appointments.filter((appointment) => {
       const matchesSearch =
-        appointment.patient
-          .toLowerCase()
-          .includes(this.searchQuery.toLowerCase()) ||
+        appointment.patient.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
         appointment.date.includes(this.searchQuery)
 
       const matchesDate = this.filterDate
-        ? new Date(appointment.date).toISOString().slice(0, 10) ===
-          this.filterDate
+        ? new Date(appointment.date).toISOString().slice(0, 10) === this.filterDate
         : true
 
-      const matchesStatus = this.filterStatus
-        ? appointment.status === this.filterStatus
-        : true
-
+      const matchesStatus = this.filterStatus ? appointment.status === this.filterStatus : true
       return matchesSearch && matchesDate && matchesStatus
     })
 
     this.sortAppointments()
     this.calculateAppointmentStats()
-  }
-
-  changePage(page: number): void {
-    this.currentPage = page
   }
 
   toggleSort(column: string): void {
@@ -166,9 +149,34 @@ export class AppointmentsComponent implements OnInit {
     this.sortAppointments()
   }
 
+  sortAppointments(): void {
+    this.filteredAppointments.sort((a: Appointment, b: Appointment) => {
+      const valueA = a[this.sortColumn as keyof Appointment]
+      const valueB = b[this.sortColumn as keyof Appointment]
+
+      // If string => localeCompare
+      if (typeof valueA === 'string' && typeof valueB === 'string') {
+        return this.sortDirection ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA)
+      }
+
+      // If date/time => compare as dates
+      if (this.sortColumn === 'date' || this.sortColumn === 'time') {
+        const dateA = new Date(valueA as string).getTime()
+        const dateB = new Date(valueB as string).getTime()
+        return this.sortDirection ? dateA - dateB : dateB - dateA
+      }
+
+      return 0
+    })
+  }
+
   get paginatedAppointments(): Appointment[] {
     const start = (this.currentPage - 1) * this.pageSize
     return this.filteredAppointments.slice(start, start + this.pageSize)
+  }
+
+  changePage(page: number): void {
+    this.currentPage = page
   }
 
   openDetailsModal(appointment: Appointment): void {
@@ -181,21 +189,16 @@ export class AppointmentsComponent implements OnInit {
 
   private loadAppointments(): void {
     this.appointments = this.appointmentService.getAppointments()
+    // Filter or copy to keep table updated
     this.filteredAppointments = [...this.appointments]
     this.calculateAppointmentStats()
   }
 
   private calculateAppointmentStats(): void {
     this.totalAppointments = this.appointments.length
-    this.upcomingAppointments = this.appointments.filter(
-      (a) => a.status === 'Upcoming'
-    ).length
-    this.completedAppointments = this.appointments.filter(
-      (a) => a.status === 'Completed'
-    ).length
-    this.cancelledAppointments = this.appointments.filter(
-      (a) => a.status === 'Cancelled'
-    ).length
+    this.upcomingAppointments = this.appointments.filter((a) => a.status === 'Upcoming').length
+    this.completedAppointments = this.appointments.filter((a) => a.status === 'Completed').length
+    this.cancelledAppointments = this.appointments.filter((a) => a.status === 'Cancelled').length
   }
 
   exportAppointments(): void {
@@ -210,9 +213,7 @@ export class AppointmentsComponent implements OnInit {
 
     const csvContent =
       'data:text/csv;charset=utf-8,' +
-      [headers, ...rows]
-        .map((e) => e.map((field) => `"${field}"`).join(','))
-        .join('\n')
+      [headers, ...rows].map((e) => e.map((field) => `"${field}"`).join(',')).join('\n')
 
     const encodedUri = encodeURI(csvContent)
     const link = document.createElement('a')
@@ -223,23 +224,7 @@ export class AppointmentsComponent implements OnInit {
     document.body.removeChild(link)
   }
 
-  addAppointment(): void {
-    const newAppointment: Appointment = {
-      patient: 'New Patient',
-      date: new Date().toISOString().slice(0, 10), // Today's date
-      time: '9:00 AM',
-      status: 'Upcoming',
-      details: 'Newly added appointment.',
-    }
-
-    this.appointmentService.addAppointment(newAppointment)
-    this.loadAppointments()
-  }
-
-  updateAppointmentStatus({
-    appointment,
-    newStatus,
-  }: {
+  updateAppointmentStatus({ appointment, newStatus, }: {
     appointment: Appointment
     newStatus: string
   }): void {

@@ -1,16 +1,17 @@
-<div class="p-12 bg-gradient-to-br from-gray-100 via-gray-50 to-white min-h-screen space-y-12 w-[130vh] mx-auto">
+<div class="p-10 bg-gradient-to-br from-green-50 via-white to-gray-100 rounded-2xl shadow-xl max-w-15xl mx-auto">
+
   <!-- Header Section -->
-  <div class="bg-gradient-to-r from-green-200 to-green-300 text-white rounded-lg shadow-lg p-8 mb-10 flex flex-col md:flex-row justify-between items-start md:items-center">
+  <div
+    class="bg-gradient-to-r from-white to-white text-green-700 rounded-lg shadow-lg p-8 mb-10 flex flex-col md:flex-row justify-between items-start md:items-center"
+  >
     <h1 class="text-5xl font-bold tracking-wide mb-2">Appointments</h1>
     <div class="flex items-center space-x-4">
-      <!-- Add Appointment Button -->
       <button
-        (click)="addAppointment()"
+        (click)="openAddForm()"
         class="mt-4 md:mt-0 px-6 py-3 bg-white text-green-600 rounded-lg shadow-lg hover:bg-gray-100 transition-all duration-300"
       >
         + Add Appointment
       </button>
-      <!-- Export Button -->
       <button
         (click)="exportAppointments()"
         class="mt-4 md:mt-0 px-6 py-3 bg-white text-green-600 rounded-lg shadow-lg hover:bg-gray-100 transition-all duration-300"
@@ -43,14 +44,12 @@
   <!-- Filters Section -->
   <div class="flex items-center justify-between bg-white rounded-lg shadow-md px-8 py-4 mt-6">
     <div class="flex items-center space-x-6">
-      <!-- Filter by Date -->
       <input
         type="date"
         [(ngModel)]="filterDate"
         (change)="filterAppointments()"
         class="px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500"
       />
-      <!-- Filter by Status -->
       <select
         [(ngModel)]="filterStatus"
         (change)="filterAppointments()"
@@ -62,7 +61,6 @@
         <option value="Cancelled">Cancelled</option>
       </select>
     </div>
-    <!-- Search Bar -->
     <div class="relative">
       <input
         type="text"
@@ -76,7 +74,7 @@
   </div>
 
   <!-- Appointments Table -->
-  <div class="bg-white rounded-xl shadow-lg p-8 overflow-auto">
+  <div class="bg-white rounded-xl shadow-lg p-8 overflow-auto mt-6">
     <table class="w-full text-left border-collapse">
       <thead>
       <tr>
@@ -103,10 +101,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr
-        *ngFor="let appointment of paginatedAppointments"
-        class="hover:bg-green-50 transition"
-      >
+      <tr *ngFor="let appointment of paginatedAppointments" class="hover:bg-green-50 transition">
         <td class="py-4 px-6 text-gray-800 font-medium">{{ appointment.patient }}</td>
         <td class="py-4 px-6 text-gray-800">{{ appointment.date }}</td>
         <td class="py-4 px-6 text-gray-800">{{ appointment.time }}</td>
@@ -114,7 +109,7 @@
           <select
             class="px-4 py-2 rounded-full border border-gray-300 text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500"
             [(ngModel)]="appointment.status"
-            (change)="updateAppointmentStatus({appointment : appointment, newStatus : appointment.status})"
+            (change)="updateAppointmentStatus({ appointment: appointment, newStatus: appointment.status })"
           >
             <option value="Upcoming">Upcoming</option>
             <option value="Completed">Completed</option>
@@ -145,6 +140,136 @@
       >
         {{ page }}
       </button>
+    </div>
+  </div>
+
+  <!-- Details Modal -->
+  <div
+    *ngIf="selectedAppointment"
+    class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+  >
+    <div class="bg-white rounded-lg shadow-2xl max-w-lg w-full p-8">
+      <!-- Modal Header -->
+      <div class="flex justify-between items-center border-b pb-4">
+        <h2 class="text-2xl font-bold text-gray-800">Appointment Details</h2>
+        <button (click)="closeDetailsModal()" class="text-gray-400 hover:text-red-500">
+          <i class="fas fa-times text-xl"></i>
+        </button>
+      </div>
+
+      <!-- Modal Content -->
+      <div class="mt-6 space-y-4">
+        <p><strong>Patient:</strong> {{ selectedAppointment.patient }}</p>
+        <p><strong>Date:</strong> {{ selectedAppointment.date }}</p>
+        <p><strong>Time:</strong> {{ selectedAppointment.time }}</p>
+        <p><strong>Status:</strong> {{ selectedAppointment.status }}</p>
+        <p><strong>Details:</strong> {{ selectedAppointment.details }}</p>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="flex justify-end mt-6">
+        <button
+          (click)="closeDetailsModal()"
+          class="px-6 py-3 bg-gray-200 rounded-lg hover:bg-gray-300 text-gray-700"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Appointment Form Modal -->
+  <div
+    *ngIf="showAddForm"
+    class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+  >
+    <div class="bg-white rounded-lg shadow-2xl max-w-2xl w-full p-6 relative">
+      <!-- Close Button -->
+      <button
+        (click)="closeAddForm()"
+        class="absolute top-4 right-4 text-gray-400 hover:text-red-500 transition"
+      >
+        <i class="fas fa-times"></i>
+      </button>
+
+      <h2 class="text-2xl font-bold text-gray-800 mb-4">Add New Appointment</h2>
+      <form (ngSubmit)="submitAppointment()">
+        <!-- Patient Name -->
+        <div class="mb-4">
+          <label for="patient" class="block text-sm font-medium text-gray-700 mb-1">Patient Name</label>
+          <input
+            id="patient"
+            [(ngModel)]="newAppointment.patient"
+            name="patient"
+            type="text"
+            class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+            required
+          />
+        </div>
+
+        <!-- Date -->
+        <div class="mb-4">
+          <label for="date" class="block text-sm font-medium text-gray-700 mb-1">Date</label>
+          <input
+            id="date"
+            [(ngModel)]="newAppointment.date"
+            name="date"
+            type="date"
+            class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+            required
+          />
+        </div>
+
+        <!-- Time -->
+        <div class="mb-4">
+          <label for="time" class="block text-sm font-medium text-gray-700 mb-1">Time</label>
+          <input
+            id="time"
+            [(ngModel)]="newAppointment.time"
+            name="time"
+            type="time"
+            class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+            required
+          />
+        </div>
+
+        <!-- Status -->
+        <div class="mb-4">
+          <label for="status" class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+          <select
+            id="status"
+            [(ngModel)]="newAppointment.status"
+            name="status"
+            class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+          >
+            <option value="Upcoming">Upcoming</option>
+            <option value="Completed">Completed</option>
+            <option value="Cancelled">Cancelled</option>
+          </select>
+        </div>
+
+        <!-- Details -->
+        <div class="mb-4">
+          <label for="details" class="block text-sm font-medium text-gray-700 mb-1">Details</label>
+          <textarea
+            id="details"
+            [(ngModel)]="newAppointment.details"
+            name="details"
+            rows="3"
+            class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+          ></textarea>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="text-right mt-6">
+          <button
+            type="submit"
+            class="px-6 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition"
+          >
+            Save
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 </div>

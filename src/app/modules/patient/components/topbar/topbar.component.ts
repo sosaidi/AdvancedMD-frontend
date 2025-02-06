@@ -1,8 +1,11 @@
 import { Component } from '@angular/core'
+import { RouterLink } from '@angular/router'
 
 @Component({
   selector: 'app-topbar',
-  imports: [],
+  imports: [
+    RouterLink,
+  ],
   standalone: true,
   templateUrl: './topbar.component.html',
 })

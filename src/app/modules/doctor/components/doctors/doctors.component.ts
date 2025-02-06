@@ -1,66 +1,29 @@
 import { Component } from '@angular/core'
-import { NgClass, NgForOf, NgIf, NgOptimizedImage } from '@angular/common'
+import { NgClass, NgForOf, NgIf, NgOptimizedImage, NgStyle } from '@angular/common'
 import { FormsModule } from '@angular/forms'
+import { Doctor, DoctorService } from '../../../services/doctor.service'
 
 @Component({
   selector: 'app-doctors',
   standalone: true,
-  imports: [NgClass, FormsModule, NgForOf, NgIf, NgOptimizedImage],
+  imports: [NgClass, FormsModule, NgForOf, NgIf, NgOptimizedImage, NgStyle],
   templateUrl: './doctors.component.html',
 })
 export class DoctorsComponent {
-  doctors = [
-    {
-      name: 'Dr. Sarah Smith',
-      specialty: 'Cardiologist',
-      experience: '10 Years',
-      availability: 'Available',
-      photo: 'https://via.placeholder.com/150',
-    },
-    {
-      name: 'Dr. John Doe',
-      specialty: 'Neurologist',
-      experience: '8 Years',
-      availability: 'Busy',
-      photo: 'https://via.placeholder.com/150',
-    },
-    {
-      name: 'Dr. Lisa Brown',
-      specialty: 'Orthopedic Surgeon',
-      experience: '15 Years',
-      availability: 'Unavailable',
-      photo: 'https://via.placeholder.com/150',
-    },
-    {
-      name: 'Dr. David Miller',
-      specialty: 'Pediatrician',
-      experience: '12 Years',
-      availability: 'Available',
-      photo: 'https://via.placeholder.com/150',
-    },
-    {
-      name: 'Dr. Emily White',
-      specialty: 'Dermatologist',
-      experience: '5 Years',
-      availability: 'Busy',
-      photo: 'https://via.placeholder.com/150',
-    },
-    {
-      name: 'Dr. Michael Lee',
-      specialty: 'General Physician',
-      experience: '7 Years',
-      availability: 'Available',
-      photo: 'https://via.placeholder.com/150',
-    },
-  ]
+  doctors: Doctor[] = []
 
   showForm = false
-  newDoctor = {
+  newDoctor: Doctor = {
     name: '',
     specialty: '',
     experience: '',
     availability: '',
     photo: '',
+    color: '',
+  }
+
+  constructor(private doctorService: DoctorService) {
+    this.doctors = this.doctorService.getDoctors()
   }
 
   openForm(): void {
@@ -75,11 +38,16 @@ export class DoctorsComponent {
       experience: '',
       availability: '',
       photo: '',
+      color: '',
     }
   }
 
   addDoctor(): void {
-    this.doctors.push({ ...this.newDoctor })
+    // Generate a random color for the new doc
+    const color = this.generateRandomColor()
+    const newDoc: Doctor = { ...this.newDoctor, color }
+    this.doctorService.addDoctor(newDoc)
+    this.doctors = this.doctorService.getDoctors() // refresh the list
     this.closeForm()
   }
 
@@ -94,20 +62,20 @@ export class DoctorsComponent {
     }
   }
 
-  onFileUpload(event: Event): void {
-    const input = event.target as HTMLInputElement
-    if (input.files?.length) {
-      const file = input.files[0]
-      const reader = new FileReader()
-      reader.onload = () => {
-        const content = reader.result as string
-        const [name, specialty, experience, availability] = content.split('\n')
-        this.newDoctor.name = name.trim()
-        this.newDoctor.specialty = specialty.trim()
-        this.newDoctor.experience = experience.trim()
-        this.newDoctor.availability = availability.trim()
-      }
-      reader.readAsText(file)
-    }
+  getInitials(name: string): string {
+    return name
+      .replace(/Dr\.\s*/i, '')
+      .split(' ')
+      .map((n) => n[0])
+      .join('')
+      .toUpperCase()
+  }
+
+  private generateRandomColor(): string {
+    const pastelColors = [
+      '#FFB3B3', '#FFD9B3', '#FFFFB3', '#B3FFB3',
+      '#B3D9FF', '#D9B3FF', '#FFB3FF',
+    ]
+    return pastelColors[Math.floor(Math.random() * pastelColors.length)]
   }
 }

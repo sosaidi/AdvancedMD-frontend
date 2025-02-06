@@ -1,9 +1,10 @@
-<div class="p-8 bg-gradient-to-br from-gray-100 via-white to-gray-200 min-h-screen">
+<div class="p-10 bg-gradient-to-br from-green-50 via-white to-gray-100 rounded-2xl shadow-xl max-w-15xl mx-auto">
+
   <!-- Header Section -->
-  <div class="bg-gradient-to-r from-green-200 to-green-300 text-white rounded-lg shadow-lg p-8 mb-10 flex flex-col md:flex-row justify-between items-start md:items-center">
+  <div class="flex justify-between items-center border-b-2 border-gray-300 pb-4">
     <div>
-      <h1 class="text-5xl font-bold tracking-wide mb-2">Doctors</h1>
-      <p class="text-lg">Meet our professional medical team</p>
+      <h1 class="text-5xl font-bold mb-4 text-green-700">Doctors</h1>
+      <p class="text-lg text-gray-500">Meet our professional medical team</p>
     </div>
     <button
       (click)="openForm()"
@@ -14,48 +15,45 @@
   </div>
 
   <!-- Doctors List -->
-  <div *ngIf="doctors.length > 0; else noDoctors" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10">
+  <div *ngIf="doctors.length > 0; else noDoctors" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-10">
     <div
       *ngFor="let doctor of doctors"
-      class="bg-white rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+      class="bg-gradient-to-b from-white to-gray-50 rounded-lg shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 p-6"
     >
-      <div class="p-6 flex flex-col items-center">
+      <div class="flex flex-col items-center">
         <!-- Profile Picture -->
-        <div class="w-28 h-28 rounded-full overflow-hidden border-4 border-green-400 shadow-md mb-4">
-          <img
-            ngSrc="doctor.photo || 'https://via.placeholder.com/150'"
-            alt="Doctor Profile"
-            class="w-full h-full object-cover"
-            fill />
+        <div class="w-28 h-28 rounded-full flex items-center justify-center text-white font-bold text-3xl mb-4 shadow-md"
+             [ngStyle]="{'background-color': doctor.color}">
+          <span *ngIf="!doctor.photo">{{ getInitials(doctor.name) }}</span>
+          <img *ngIf="doctor.photo"
+               [src]="doctor.photo"
+               alt="Doctor Profile"
+               class="w-full h-full object-cover rounded-full" />
         </div>
 
         <!-- Doctor Info -->
         <h2 class="text-2xl font-bold text-gray-800 text-center">{{ doctor.name }}</h2>
         <p class="text-gray-500 text-sm text-center">{{ doctor.specialty }}</p>
 
-        <div class="mt-4 space-y-1 text-center">
-          <p class="text-sm text-gray-600">
-            <strong>Experience:</strong> {{ doctor.experience }}
+        <!-- Experience and Availability -->
+        <div class="mt-4 space-y-2 text-center">
+          <p class="text-sm text-gray-600 font-medium">
+            <i class="fas fa-briefcase text-gray-500 mr-1"></i> {{ doctor.experience }} Years Experience
           </p>
           <p
-            class="text-sm font-semibold"
+            class="text-sm font-semibold inline-block px-3 py-1 rounded-full"
             [ngClass]="{
+              'bg-green-100 text-green-600': doctor.availability === 'Available',
+              'bg-yellow-100 text-yellow-600': doctor.availability === 'Busy',
+              'bg-red-100 text-red-600': doctor.availability === 'Unavailable'
+            }"
+          >
+            <i class="fas fa-circle mr-1" [ngClass]="{
               'text-green-500': doctor.availability === 'Available',
               'text-yellow-500': doctor.availability === 'Busy',
               'text-red-500': doctor.availability === 'Unavailable'
-            }"
-          >
-            <strong>Availability:</strong>
-            <span
-              class="inline-block px-3 py-1 rounded-full"
-              [ngClass]="{
-                'bg-green-100': doctor.availability === 'Available',
-                'bg-yellow-100': doctor.availability === 'Busy',
-                'bg-red-100': doctor.availability === 'Unavailable'
-              }"
-            >
-              {{ doctor.availability }}
-            </span>
+            }"></i>
+            {{ doctor.availability }}
           </p>
         </div>
       </div>
