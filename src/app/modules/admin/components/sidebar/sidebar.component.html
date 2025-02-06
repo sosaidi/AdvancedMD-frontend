@@ -1,0 +1,220 @@
+<div
+  class="sidebar bg-gradient-to-t from-green-100 via-white to-gray-50 shadow-lg fixed top-0 left-0 h-screen overflow-y-auto transition-all duration-300 flex flex-col"
+  [class.w-64]="!collapsed" [class.w-20]="collapsed"
+>
+  <!-- Profile Section -->
+  <div class="profile-section flex flex-col items-center py-8 mt-16 border-b border-gray-300">
+    <img
+      ngSrc="assets/Admin_image.jpg"
+      alt="Profile"
+      class="profile-picture w-16 h-16 rounded-full border-4 border-green-500 mb-4 transition-transform duration-300"
+      [class.scale-75]="collapsed"
+      height="3000" width="3000" />
+    <div
+      class="profile-details text-center transition-all duration-300"
+      [class.opacity-0]="collapsed" [class.opacity-100]="!collapsed"
+    >
+      <span class="name text-lg font-semibold text-gray-800 block">Admin User</span>
+      <span class="role text-sm text-gray-600 block mt-1">Administrator</span>
+    </div>
+  </div>
+
+  <!-- Navigation Links -->
+  <nav class="flex-grow mt-6 px-2">
+    <ul class="space-y-3">
+      <!-- Dashboard -->
+      <li>
+        <a
+          routerLink="/admin/dashboard"
+          routerLinkActive="bg-green-100 text-green-600"
+          class="flex items-center gap-4 px-4 py-3 rounded-md text-gray-700 hover:bg-green-50 transition-all relative group"
+        >
+          <i class="bi bi-speedometer2 text-xl"></i>
+          <span
+            class="transition-all duration-300"
+            [class.opacity-0]="collapsed" [class.opacity-100]="!collapsed"
+          >
+            Dashboard
+          </span>
+          <span
+            *ngIf="collapsed"
+            class="absolute left-20 bg-gray-700 text-white text-xs font-semibold rounded-lg px-3 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"
+          >
+            Dashboard
+          </span>
+        </a>
+      </li>
+
+      <!-- Appointments -->
+<li>
+  <a
+    routerLink="/admin/appointments"
+    routerLinkActive="bg-green-100 text-green-600"
+    class="flex items-center gap-4 px-4 py-3 rounded-md text-gray-700 hover:bg-green-50 transition-all relative group"
+  >
+    <i class="bi bi-calendar-event text-xl"></i>
+    <span
+      class="transition-all duration-300"
+      [class.opacity-0]="collapsed" [class.opacity-100]="!collapsed"
+    >
+      Appointments
+    </span>
+    <span
+      *ngIf="collapsed"
+      class="absolute left-20 bg-gray-700 text-white text-xs font-semibold rounded-lg px-3 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"
+    >
+      Appointments
+    </span>
+  </a>
+</li>
+
+
+      <!-- Patients -->
+      <!-- <li>
+        <a
+          routerLink="/admin/patients"
+          routerLinkActive="bg-green-100 text-green-600"
+          class="flex items-center gap-4 px-4 py-3 rounded-md text-gray-700 hover:bg-green-50 transition-all relative group"
+        >
+          <i class="bi bi-people text-xl"></i>
+          <span
+            class="transition-all duration-300"
+            [class.opacity-0]="collapsed" [class.opacity-100]="!collapsed"
+          >
+            Patients
+          </span>
+          <span
+            *ngIf="collapsed"
+            class="absolute left-20 bg-gray-700 text-white text-xs font-semibold rounded-lg px-3 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"
+          >
+            Patients
+          </span>
+        </a>
+      </li> -->
+
+      <!-- Staff -->
+      <li>
+        <a
+          routerLink="/admin/staff"
+          routerLinkActive="bg-green-100 text-green-600"
+          class="flex items-center gap-4 px-4 py-3 rounded-md text-gray-700 hover:bg-green-50 transition-all relative group"
+        >
+          <i class="bi bi-person-badge text-xl"></i>
+          <span
+            class="transition-all duration-300"
+            [class.opacity-0]="collapsed" [class.opacity-100]="!collapsed"
+          >
+            Staff
+          </span>
+          <span
+            *ngIf="collapsed"
+            class="absolute left-20 bg-gray-700 text-white text-xs font-semibold rounded-lg px-3 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"
+          >
+            Staff
+          </span>
+        </a>
+      </li>
+
+      <!-- Rooms -->
+      <li>
+        <a
+          routerLink="/admin/rooms"
+          routerLinkActive="bg-green-100 text-green-600"
+          class="flex items-center gap-4 px-4 py-3 rounded-md text-gray-700 hover:bg-green-50 transition-all relative group"
+        >
+          <i class="bi bi-door-open text-xl"></i>
+          <span
+            class="transition-all duration-300"
+            [class.opacity-0]="collapsed" [class.opacity-100]="!collapsed"
+          >
+            Rooms
+          </span>
+          <span
+            *ngIf="collapsed"
+            class="absolute left-20 bg-gray-700 text-white text-xs font-semibold rounded-lg px-3 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"
+          >
+            Rooms
+          </span>
+        </a>
+      </li>
+
+      <!-- Payments -->
+      <li>
+        <a
+          routerLink="/admin/payments"
+          routerLinkActive="bg-green-100 text-green-600"
+          class="flex items-center gap-4 px-4 py-3 rounded-md text-gray-700 hover:bg-green-50 transition-all relative group"
+        >
+          <i class="bi bi-credit-card text-xl"></i>
+          <span
+            class="transition-all duration-300"
+            [class.opacity-0]="collapsed" [class.opacity-100]="!collapsed"
+          >
+            Payments
+          </span>
+          <span
+            *ngIf="collapsed"
+            class="absolute left-20 bg-gray-700 text-white text-xs font-semibold rounded-lg px-3 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"
+          >
+            Payments
+          </span>
+        </a>
+      </li>
+      <!-- Medical Records -->
+<!-- <li>
+  <a
+    routerLink="/admin/medical-records"
+    routerLinkActive="bg-green-100 text-green-600"
+    class="flex items-center gap-4 px-4 py-3 rounded-md text-gray-700 hover:bg-green-50 transition-all relative group"
+  >
+    <i class="bi bi-file-earmark-medical text-xl"></i>
+    <span
+      class="transition-all duration-300"
+      [class.opacity-0]="collapsed" [class.opacity-100]="!collapsed"
+    >
+      Medical Records
+    </span>
+    <span
+      *ngIf="collapsed"
+      class="absolute left-20 bg-gray-700 text-white text-xs font-semibold rounded-lg px-3 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"
+    >
+      Medical Records
+    </span>
+  </a>
+</li> -->
+
+
+      <!-- Settings -->
+      <li>
+        <a
+          routerLink="/admin/settings"
+          routerLinkActive="bg-green-100 text-green-600"
+          class="flex items-center gap-4 px-4 py-3 rounded-md text-gray-700 hover:bg-green-50 transition-all relative group"
+        >
+          <i class="bi bi-gear text-xl"></i>
+          <span
+            class="transition-all duration-300"
+            [class.opacity-0]="collapsed" [class.opacity-100]="!collapsed"
+          >
+            Settings
+          </span>
+          <span
+            *ngIf="collapsed"
+            class="absolute left-20 bg-gray-700 text-white text-xs font-semibold rounded-lg px-3 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"
+          >
+            Settings
+          </span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+  
+
+  <!-- Toggle Button -->
+  <button
+    class="toggle-btn mx-auto mb-6 w-12 h-12 bg-green-500 text-white rounded-full flex items-center justify-center shadow-lg hover:bg-green-600 hover:scale-110 transition-transform duration-300"
+    (click)="toggleSidebar()"
+  >
+    <i [class]="collapsed ? 'bi bi-chevron-double-right' : 'bi bi-chevron-double-left'"></i>
+  </button>
+</div>

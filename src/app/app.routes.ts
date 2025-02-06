@@ -4,13 +4,13 @@ import { LoginComponent } from './auth/login/login.component'
 import { RegisterComponent } from './auth/register/register.component'
 
 export const routes: Routes = [
-  /*{
+  {
     path: 'admin',
     loadChildren: () =>
       import('./modules/admin/admin-routing.module').then(
         (m) => m.AdminRoutingModule
       ),
-  },*/
+  },
   {
     path: 'doctor',
     loadChildren: () =>

@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  imports:[NgIf, NgForOf, NgClass,   FormsModule ]
+  imports:[NgIf, FormsModule]
 })
 export class RegisterComponent {
   form: any = {

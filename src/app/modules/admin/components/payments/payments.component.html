@@ -1,0 +1,112 @@
+<!-- Payments Table -->
+<div *ngIf="filteredPayments.length > 0; else noPayments" class="bg-white rounded-lg shadow-lg p-8 overflow-auto">
+  <table class="w-full text-left border-collapse">
+    <thead>
+      <tr class="bg-gray-100">
+        <th class="border-b py-4 px-6 text-gray-600 font-semibold">Payment ID</th>
+        <th class="border-b py-4 px-6 text-gray-600 font-semibold">Patient Name</th>
+        <th class="border-b py-4 px-6 text-gray-600 font-semibold">Date</th>
+        <th class="border-b py-4 px-6 text-gray-600 font-semibold">Amount</th>
+        <th class="border-b py-4 px-6 text-gray-600 font-semibold">Status</th>
+        <th class="border-b py-4 px-6 text-gray-600 font-semibold">Actions</th> <!-- Actions Column -->
+        <th class="border-b py-4 px-6 text-gray-600 font-semibold">Method</th> <!-- Method Column -->
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let payment of filteredPayments" class="hover:bg-blue-50 transition-colors">
+        <td class="py-4 px-6 text-gray-800">{{ payment.id }}</td>
+        <td class="py-4 px-6 text-gray-800">{{ payment.patientName }}</td>
+        <td class="py-4 px-6 text-gray-800">{{ payment.date }}</td>
+        <td class="py-4 px-6 text-gray-800">{{ payment.amount | currency }}</td>
+        <td class="py-4 px-6" [ngClass]="{ 
+              'text-green-500 font-bold': payment.status === 'Paid', 
+              'text-yellow-500 font-bold': payment.status === 'Pending', 
+              'text-red-500 font-bold': payment.status === 'Overdue' }">
+          {{ payment.status }}
+        </td>
+        
+        <!-- Actions items -->
+        <td class="py-4 px-6">
+          <button class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
+                  (click)="editPayment(payment)">
+            Edit
+          </button>
+          <button class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition ml-4"
+                  (click)="generatePaymentReport(payment)">
+            Generate PDF
+          </button>
+        </td>
+
+        <!-- Method -->
+        <td class="py-4 px-6 text-gray-800">
+          {{ payment.method }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Edit Payment Form Modal -->
+<div *ngIf="showForm" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+  <div class="bg-white rounded-lg shadow-lg p-8 max-w-lg w-full relative">
+    <!-- Close Button -->
+    <button (click)="closeForm()" class="absolute top-4 right-4 text-gray-400 hover:text-red-500 transition">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+
+    <h2 class="text-2xl font-bold mb-6 text-gray-800 border-b pb-4">{{ editing ? 'Edit Payment' : 'Add Payment' }}</h2>
+
+    <form (ngSubmit)="savePayment()">
+      <div class="mb-4">
+        <label for="patientName" class="block text-sm font-medium text-gray-700">Patient Name</label>
+        <input id="patientName" [(ngModel)]="newPayment.patientName" name="patientName" type="text" 
+               class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required />
+      </div>
+      <div class="mb-4">
+        <label for="amount" class="block text-sm font-medium text-gray-700">Amount</label>
+        <input id="amount" [(ngModel)]="newPayment.amount" name="amount" type="number" 
+               class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required />
+      </div>
+      <div class="mb-4">
+        <label for="date" class="block text-sm font-medium text-gray-700">Date</label>
+        <input id="date" [(ngModel)]="newPayment.date" name="date" type="date" 
+               class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required />
+      </div>
+      <div class="mb-4">
+        <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
+        <select id="status" [(ngModel)]="newPayment.status" name="status" 
+                class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <option value="Paid">Paid</option>
+          <option value="Pending">Pending</option>
+          <option value="Overdue">Overdue</option>
+        </select>
+      </div>
+      <div class="mb-4">
+        <label for="method" class="block text-sm font-medium text-gray-700">Method</label>
+        <select id="method" [(ngModel)]="newPayment.method" name="method" 
+                class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <option value="Credit Card">Credit Card</option>
+          <option value="Insurance">Insurance</option>
+          <option value="Cash">Cash</option>
+        </select>
+      </div>
+      <div class="mb-4">
+        <label for="notes" class="block text-sm font-medium text-gray-700">Notes</label>
+        <textarea id="notes" [(ngModel)]="newPayment.notes" name="notes" rows="3" 
+                  class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+      </div>
+
+      <button type="submit" class="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition">
+        {{ editing ? 'Update Payment' : 'Add Payment' }}
+      </button>
+    </form>
+  </div>
+</div>
+
+<ng-template #noPayments>
+  <div class="text-center py-8">
+    <h3 class="text-lg font-semibold text-gray-600">No payments available.</h3>
+  </div>
+</ng-template>
